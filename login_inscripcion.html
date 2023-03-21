@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<title>LOKALES TRAINING SPOT</title>
+<meta charset="UTF-8">
+<meta name="description" content="COMPLEJO DEPORTIVO EXTREMO --- ACTION SPORTS COMPLEX --- Centro deportivo de entrenamiento para deportes de accion">
+<meta name="keywords" content="deportes, extremos, acrobacia, parkour, calistenia, escalada, palestra, skate, bmx, roller, surf, mountainboard, snow, ski, snowboard, mountainboarding, trial, kite, kitesurf, tablas, boards">
+<meta name="author" content="Lokales Training Spot">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="estilo.css" rel="stylesheet" type="text/css">
+<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/jquery-3.6.0.js"></script>
+
+<script>
+function buscar_cliente(dni)
+{	
+  //alert("DNI: "+dni);
+  $.ajax({			
+    url: 'buscar_cliente_inscripcion.php',
+    data: 'dni_cli=' + dni,
+    success: function(resp) {
+      $('#cliente_encontrado').html(resp)
+    }
+  });
+}
+</script>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <form action="login_inscripcion_procesa.php" method="post" enctype="multipart/form-data" name="form1">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="dni" class="form-label">Dni  <span class="badge badge-warning">*</span> (obligatorio)</label>
+            <input type="text" class="form-control" id="dni" name="dni" onkeyup="buscar_cliente(this.value)" placeholder="Dni" pattern="[0-9]+" required>
+          </div>
+          <div class="form-group col-md-5">
+            <label for="nombre">Nombre <span class="badge badge-warning">*</span></label>
+            <div id="cliente_encontrado"><input type="text" class="form-control" id="nom" name="nom" placeholder="Nombre" required></div>
+          </div>
+          <div class="form-group col-md-5">
+            <label for="apellido">Apellido</label>
+            <input type="text" class="form-control" id="ape" name="ape" placeholder="Apellido">
+          </div>
+        </div>
+        <div class="form-row">
+          
+          <div class="form-group col-md-3">
+            <label for="nacimiento">Nacimiento</label>
+            <input type="date" class="form-control" id="nac" name="nac">
+            MM-DD-AAAA
+          </div>
+          <div class="form-group col-md-3">
+            <label for="teléfono">Teléfono <span class="badge badge-warning">*</span></label>
+            <input type="tel" class="form-control" id="tel" name="tel" placeholder="3515123456" maxlength="12" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-10">
+              <label for="comentario">Comentrario</label>
+              <input type="text" class="form-control" id="com" name="com" placeholder="Teléfono de emergencia, contacto de emergencia, obra social">
+            </div>
+          </div>
+          
+          <!--<div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="foto">Foto</label>
+              <input type="file" id="archivo1" name="archivo1"/>
+            </div>-->
+
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="text">Email <span class="badge badge-warning">*</span></label>
+              <!--<input name="mai" type="text" class="form-control" id="mai" value="<? echo $re['mail'];?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>-->
+              <input type="email" class="form-control" id="mai" name="mai" placeholder="Email" required>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="clave">Clave <span class="badge badge-warning">*</span></label>
+              <input type="password" maxlength="15" class="form-control" id="cla" name="cla" placeholder="Clave" required>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="clave2">Clave <span class="badge badge-warning">*</span></label>
+              <input type="password" maxlength="15" class="form-control" id="cl2" name="cla2" placeholder="Repetir clave" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrame</button>
+      </form><br><br>
+    </div>
+<h6><a href="login.html">Ya estoy inscripto <span class="badge badge-success">Entrar</span></a></h6>
+</body>
+</html>
