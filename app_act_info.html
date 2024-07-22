@@ -1,0 +1,78 @@
+<?
+session_start();
+include("conex.php");
+$actividades=mysqli_query($mysqli,"SELECT * FROM actividad ORDER BY nombre");
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<title>Lokales Socio</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="estilo.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+      <a class="navbar-brand" href="app_actividades.php"><img src="logo.gif" class="img-fluid" alt="Lokales Training spot logo image" width="200"></a>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="app_actividades.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Entrar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+      </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col caja_actividad">
+            <img src="imagenes_actividades/escalada.jpg" class="img-fluid" alt="escalada">
+        </div>
+        <div class="col caja_actividad">
+            <img src="imagenes_actividades/escalada.jpg" class="img-fluid" alt="escalada">
+        </div>
+        <div class="col caja_actividad">
+            <img src="imagenes_actividades/escalada.jpg" class="img-fluid" alt="escalada">
+        </div>
+    </div>    
+</div>
+
+<footer class="footer fixed-bottom">
+      <div class="div-footer">
+        <ul class="navbar">
+        <li>
+          <a class="nav-link" href="app_actividades.php"><img src="svg/svgbike.svg" class="nav-item barra" alt="Actividades"></a><h6 class="chica">Actividades</h6>
+        </li>
+        <li>
+          <a href="app_actividades.php"><img src="svg/svghora.svg" class="barra" alt="Horarios"/></a><h6 class="chica">Agenda</h6>
+        </li>
+        <li>
+          <a href="app_actividades.php"><img src="svg/svgmessage.svg" class="barra" alt="Mensajes"/></a><h6 class="chica">Mensajes</h6>
+        </li>
+        <li>
+          <a href="app_actividades.php"><img src="svg/svgsettings-brain.svg" class="barra" alt="Ajustes"/></a><h6 class="chica">Ajustes</h6>
+        </li>
+      </ul>
+      </div>
+</footer>
+
+</body>
+</html>
