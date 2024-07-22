@@ -10,7 +10,7 @@ if ($_SESSION['autentificado'] != "SI" || ($_SESSION['tipo_usuario_act'] != 1 &&
 }
 */
 
-if ($_POST['ac'] == "cambiar_asistencia")
+if (isset($_POST['ac']) == "cambiar_asistencia")
 {
     $dni = $_POST['dni'];
     $asiste = $_POST['asiste'];
@@ -28,7 +28,7 @@ if ($_POST['ac'] == "cambiar_asistencia")
     die("1");
 }
 
-if ($_GET['idactividad'])
+if (isset($_GET['idactividad']))
 {
     $enActividad = true;   
     $query = mysqli_query($mysqli,"SELECT * FROM actividad WHERE id_actividad = " . intval($_GET['idactividad']) . " LIMIT 1");
@@ -63,6 +63,10 @@ else
     {
         $actividades[$fetch_actividad["id_actividad"]]["id"] = $fetch_actividad["id_actividad"];
         $actividades[$fetch_actividad["id_actividad"]]["nombre"] = $fetch_actividad["nombre"];
+        
+        
+        $actividad = $fetch_actividad["nombre"];
+         $enActividad = false;   
     }
     
 }
@@ -103,7 +107,7 @@ else
                         </thead>
                         <tbody>
                             <?php
-                             if($alumnos){ foreach ($alumnos as $alumno=>$id)
+                             if(isset($alumnos)){ foreach ($alumnos as $alumno=>$id)
                             {
                                 ?>
                             <tr id="tr_<?php echo $id["dni"];?>" <?php echo ($id["asistencia"] ? "class=\"asiste\"" : "");?>>

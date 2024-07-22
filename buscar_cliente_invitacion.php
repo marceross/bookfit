@@ -1,4 +1,4 @@
-<?
+<?php
 include("conex.php");	
 include("local_controla_app.php");
 include("biblioteca.php");
@@ -13,7 +13,7 @@ $dni_cli=$_GET['dni_cli'];
     <input type="nombre" name="nom" id="nom" value="<? echo $cliente['nombre'].' '.$cliente['apellido'];?>" class="form-control" required>
     <label>Mail</label>
     <input type="email" name="mai" id="mai" value="<? echo $cliente['mail'];?>" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
-  <?
+  <?php
   }
   else
   {
@@ -22,11 +22,11 @@ $dni_cli=$_GET['dni_cli'];
     <input type="nombre" name="nom" id="nom" value="" class="form-control" required> 
     <label>Mail</label>
     <input type="email" name="mai" id="mai" value="" class="form-control" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
-  <?
+  <?php
   }
 ?>
 
-<?
+<?php
 /*
 $clientes=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni=".$dni_cli);
   if(mysqli_num_rows($clientes)==1)

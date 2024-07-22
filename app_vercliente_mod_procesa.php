@@ -1,4 +1,6 @@
-<?
+<?php
+session_name("app_admin");
+session_start();
 include("conex.php");
 include("local_controla.php"); // para el admin
 //include("local_controla_app.php"); para el cliente
@@ -24,7 +26,7 @@ $clave=$_POST['cla'];
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
 </head>
 
 <body>
@@ -32,7 +34,7 @@ $clave=$_POST['cla'];
 <div class="div-menu">
 	<div class="form-group col-md-6">	
 		<h4>
-		<?
+		<?php
 
 		/*
 		if (mysqli_query($mysqli,"UPDATE registrados SET nombre='$nombre',apellido='$apellido',dni='$dni',nacimiento='$nacimiento',celular='$celular',comentario='$comentario',mail='$mail', clave='$clave', actividad='$actividad',profesor='$profesor',autorizacion='$autorizacion',certificado='$certificado' WHERE dni='$dni'"))
@@ -64,6 +66,6 @@ $clave=$_POST['cla'];
 </body>
 </html>
 
-<?
+<?php
 // ERA registrados_modprocesa.php
 ?>

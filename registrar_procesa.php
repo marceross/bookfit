@@ -1,4 +1,4 @@
-<?
+<?php
 include("conex.php");
 $nom=$_POST['nom'];
 $ape=$_POST['ape'];
@@ -95,13 +95,8 @@ $fecha=strval($array_fecha['year'])."-".strval($array_fecha['mon'])."-".strval($
 <table width="75%" border="0" align="center">
   <tr>
     <td colspan="3"><div align="center">
-    <?
-//if($error==1) cuando habia clave y se comprobaba si coincidian
-//{
-//	echo "Las claves ingresadas no coinciden<br><br>";
-//	echo "<input type=button value=Atrás onclick=history.back() style=font-family: Verdana; font-size: 8 pt>";
-//	exit();
-//}
+    <?php
+
 if($error==3)
 {
 	echo "El archivo de imagen no puede tener mas de 100K<br><br>";
@@ -126,11 +121,10 @@ else
 	}
 	if(mysqli_query($mysqli,"INSERT INTO registrados(nombre,apellido,dni,nacimiento,comentario,foto,mail,actividad,profesor,fecha,celular,autorizacion,certificado)VALUES ('$nom','$ape','$dni','$nac','$com','$ruta','$mai','$act','$pro','$fecha','$numero_completo','$per','$cer')"))
 	{
-	//	mail("mibanez23@hotmail.com","LOKALES ALTA REGISTRADOS",$nom." ".$ape,"From:".$mai);
-	//	mail($mai,"CONFIRMA REGISTRO LOKALES","Usuario: ".$mai."\nClave: ".$cla."\nGracias por registrarte, hace clic acá para confirmar tu registro:\nhttp://www.lokales.com.ar/park_confirmar.php?usuario=".$mai,"From:comunidad@lokales.com.ar");
+
 		echo "SE HA REGISTRADO CON EXITO<br><br>";
 		echo "<input type=button value=Atrás onclick=history.back() style=font-family: Verdana; font-size: 8 pt>";
-	//	echo "Te mandamos un mail, agregalo a tu lista segura y para que el registro se complete hace clic en el enlace asi confirmas tu registro";
+
 	}
 	else
 	{

@@ -1,4 +1,6 @@
-<?
+<?php
+session_name("app_admin");
+session_start();
 include("conex.php");
 include("local_controla.php");
 include("biblioteca.php");
@@ -31,7 +33,7 @@ else
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
 
 <script>
 //no funciona todavía
@@ -52,10 +54,10 @@ function buscar_alias(dni)
 
 <div class="container">
 
-  <h6><span class="badge badge-pill badge-light"><? echo $re['nombre'];?></span><span class="badge badge-pill badge-dark"><? echo $re['credito'];?></span> puntos
-  <span class="badge badge-pill <? echo $clase_vencido; ?> "><? echo formato_latino ($re['vencimiento']);?></span> vencimiento</h6>
+  <h6><span class="badge badge-pill badge-light"><?php echo $re['nombre'];?></span><span class="badge badge-pill badge-dark"><?php echo $re['credito'];?></span> puntos
+  <span class="badge badge-pill <?php echo $clase_vencido; ?> "><?php echo formato_latino ($re['vencimiento']);?></span> vencimiento</h6>
 
-  <form name="form1" method="post" action="app_vercliente_mod_procesa.php?dni=<? echo $dni;?>">
+  <form name="form1" method="post" action="app_vercliente_mod_procesa.php?dni=<?php echo $dni;?>">
   <div class="div-menu">
     <!--<div class="form-group col-md-4">
       <label for="nombre">Alias</label>
@@ -63,52 +65,52 @@ function buscar_alias(dni)
     </div>-->
     <div class="form-group col-md-6">
       <label for="nombre">Nombre</label>
-      <input name="nom" type="text" class="form-control" id="nom" value="<? echo $re['nombre'];?>" required>
+      <input name="nom" type="text" class="form-control" id="nom" value="<?php echo $re['nombre'];?>" required>
     </div>
     <div class="form-group col-md-6">
       <label for="apellido">Apellido</label>
-      <input name="ape" type="text" class="form-control" id="ape" value="<? echo $re['apellido'];?>"/>
+      <input name="ape" type="text" class="form-control" id="ape" value="<?php echo $re['apellido'];?>"/>
     </div>
     <div class="form-group col-md-6">
       <label for="dni">Dni</label>
-      <input name="dni" type="text" class="form-control" id="dni" value="<? echo $re['dni'];?>" readonly/>
+      <input name="dni" type="text" class="form-control" id="dni" value="<?php echo $re['dni'];?>" readonly/>
     </div>
     <div class="form-group col-md-6">
       <label for="fecha de nacimento ">fecha de nacimento</label>
-      <input name="nac" type="date" class="form-control" id="nac" value="<? echo $re['nacimiento'];?>"/>
+      <input name="nac" type="date" class="form-control" id="nac" value="<?php echo $re['nacimiento'];?>"/>
       MM-DD-AAAA
     </div>
     <div class="form-group col-md-6">
       <label for="celular">celular</label>
-      <input name="cel" type="text" class="form-control" id="cel" value="<? echo $re['celular'];?>"/>
+      <input name="cel" type="text" class="form-control" id="cel" value="<?php echo $re['celular'];?>"/>
     </div>
     <!--<div class="form-group col-md-6">
       <label for="comentario">comentario</label>
-      <input name="com" type="text" class="form-control" id="com" value="<? echo $re['comentario'];?>" size="80" maxlength="500"/>
+      <input name="com" type="text" class="form-control" id="com" value="<?php echo $re['comentario'];?>" size="80" maxlength="500"/>
     </div>-->
     <div class="form-group col-md-6">
       <label for="mail">mail</label>
     
       <!--<input name="mai" type="text" class="form-control" id="mai" value="<?// echo $re['mail'];?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>-->
-      <input name="mai" type="email" class="form-control" id="mai" value="<? echo $re['mail'];?>" required>
+      <input name="mai" type="email" class="form-control" id="mai" value="<?php echo $re['mail'];?>" required>
       <!--<a href="login_recuperar2.php" class="badge badge-info">Re-enviar mail</a>-->
     </div>
     <div class="form-group col-md-6">
       <label for="clave">clave</label>
-        <input name="cla" type="password" class="form-control" id="cla" value="<? echo $re['clave'];?>" readonly>
+        <input name="cla" type="password" class="form-control" id="cla" value="<?php echo $re['clave'];?>" readonly>
     </div>
 
           <!--<p>actividad
             <select name="act" id="act">
         
-      <?
+      <?php
     while($actividad=mysqli_fetch_array($actividades))
     {
       if($actividad['id_actividad']<>$re['actividad'])
       {
     ?>
           <option value="<? echo $actividad['id_actividad'];?>"><? echo $actividad['nombre'];?></option>
-      <?
+      <?php
           }
           else
           {
@@ -116,7 +118,7 @@ function buscar_alias(dni)
           <option selected value="<? echo $actividad['id_actividad'];?>"><? echo $actividad['nombre'];?></option>
             
           
-      <?
+      <?php
       }
     }
     ?>
@@ -125,21 +127,21 @@ function buscar_alias(dni)
           <p>profesor 
             <select name="pro" id="pro">
         
-      <?
+      <?php
     while($profesor=mysqli_fetch_array($profesores))
     {
       if($profesor['id_profesor']<>$re['profesor'])
       {
       
     ?>
-          <option value="<? echo $profesor['id_profesor'];?>"><? echo $profesor['nombre'];?></option>
-      <?
+          <option value="<?php echo $profesor['id_profesor'];?>"><? echo $profesor['nombre'];?></option>
+      <?php
       }
       else
       {
     ?>
-          <option selected value="<? echo $profesor['id_profesor'];?>"><? echo $profesor['nombre'];?></option>
-      <?
+          <option selected value="<?php echo $profesor['id_profesor'];?>"><? echo $profesor['nombre'];?></option>
+      <?php
       }
     }
     ?>
@@ -147,35 +149,35 @@ function buscar_alias(dni)
           </p>
           <p>
             autorizacion 
-            <?
+            <?php
         if($re['autorizacion']=='N')
         {
         ?>
               <input name="aut" type="checkbox" id="aut" value="S">
-          <?
+          <?php
         }
         else
         {
       ?>
             <input checked name="aut" type="checkbox" id="aut" value="S">
-          <?
+          <?php
         }
       ?>
           </p>
           <p>
             certificado
-              <?
+              <?php
         if($re['certificado']=='N')
         {
         ?>
               <input name="cer" type="checkbox" id="cer" value="S">
-          <?
+          <?php
         }
         else
         {
       ?>
             <input checked name="cer" type="checkbox" id="cer" value="S">
-          <?
+          <?php
         }
       ?>
           </p>-->
@@ -195,6 +197,6 @@ function buscar_alias(dni)
 </body>
 </html>
 
-<?
+<?php
 // ERA registrados_mod.php
 ?>

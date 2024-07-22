@@ -1,4 +1,4 @@
-<?
+<?php
 	//Funcion que sustituye espacios en blanco con %20
 	function sin_espacios($x)
 	{

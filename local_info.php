@@ -1,4 +1,8 @@
-<?
+<?php
+session_name('app_admin');
+session_start();
+
+
 include ("conex.php");
 include("local_controla.php");
 include("biblioteca.php");
@@ -59,7 +63,7 @@ cambiar de usuario)</font></font></p>
     <td width="23%" align="center"><div align="center">Vendedor</div></td>
     <td width="5%" align="center">Confirmar</td>
   </tr>
-  <?
+  <?php
   if(mysqli_num_rows($ventas)>0)//busca que no haya datos, que sea cero el valor que arroja la consulta
   {
 	mysqli_data_seek($ventas,0);//nos posiciona en el inicio de la consulta para el nuevo array
@@ -82,17 +86,17 @@ while($venta=mysqli_fetch_array($ventas))
     <td><div align="center"><? echo $venta[11];?></div></td>
     <td><div align="center"><? echo $venta[10];?></div></td>
     <td><div align="center">
-    <?
+    <?php
 	if($venta['confirmada']<>'S')
 	{
 	?>
     	<a href="confirmar_venta.php?id_venta=<? echo $venta['id_venta'];?>"><img src="Check-icon.png" width="32" height="32" border="0"></a>
-    <?
+    <?php
 	}
 	?>
     </div></td>
   </tr>
-  <?
+  <?php
 }
 ?>
 </table>
@@ -101,34 +105,34 @@ while($venta=mysqli_fetch_array($ventas))
   <label>Fecha 1 </label>
   <label>dia 
   <select name="d1" id="d1">
-    <?
+    <?php
 	  		for($i=1;$i<=31;$i++)
 	  		{
 	  	?>
     <option value="<? echo $i;?>"><? echo $i;?></option>
-    <?
+    <?php
 		}
 		?>
   </select>
   mes 
   <select name="m1" id="m1">
-    <?
+    <?php
 	  		for($i=1;$i<=12;$i++)
 	  		{
 	  	?>
     <option value="<? echo $i;?>"><? echo $i;?></option>
-    <?
+    <?php
 		}
 		?>
   </select>
   a�o 
   <select name="a1" id="a1">
-    <?
+    <?php
 	  		for($i=2008;$i<=2030;$i++)
 	  		{
 	  	?>
     <option value="<? echo $i;?>"><? echo $i;?></option>
-    <?
+    <?php
 		}
 		?>
   </select>
@@ -137,36 +141,36 @@ while($venta=mysqli_fetch_array($ventas))
     <label>Fecha 2 </label>
     <label>dia 
     <select name="d2" id="d2">
-      <?
+      <?php
 	  		for($i=1;$i<=31;$i++)
 	  		{
 	  	?>
       <option value="<? echo $i;?>"><? echo $i;?></option>
-      <?
+      <?php
 		}
 		?>
     </select>
     </label>
     <label>mes 
     <select name="m2" id="m2">
-      <?
+      <?php
 	  		for($i=1;$i<=12;$i++)
 	  		{
 	  	?>
       <option value="<? echo $i;?>"><? echo $i;?></option>
-      <?
+      <?php
 		}
 		?>
     </select>
     </label>
     <label>a�o 
     <select name="a2" id="a2">
-      <?
+      <?php
 	  		for($i=2008;$i<=2030;$i++)
 	  		{
 	  	?>
-      <option value="<? echo $i;?>"><? echo $i;?></option>
-      <?
+      <option value="<?php echo $i;?>"><? echo $i;?></option>
+      <?php
 		}
 		?>
     </select>
@@ -188,7 +192,7 @@ while($venta=mysqli_fetch_array($ventas))
     <td width="18%"><div align="center">Concepto</div></td>
     <td width="18%"><div align="center">Comentarios</div></td>
   </tr>
-  <?
+  <?php
 while($caj=mysqli_fetch_array($caja))
 {
 ?>
@@ -201,7 +205,7 @@ while($caj=mysqli_fetch_array($caja))
     <td><div align="center"><? echo $caj[2];?></div></td>
     <td><div align="center"><? echo $caj['comentarios'];?></div></td>
   </tr>
-  <?
+  <?php
 }
 ?>
 </table>

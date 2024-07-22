@@ -1,4 +1,6 @@
-<?
+<?php
+    session_name('app_reservas');
+session_start();
     include("local_controla_app.php");// es el controla de app_reservas
 	include("conex.php");
 	date_default_timezone_set('America/Argentina/Cordoba'); // poner en todos los archivos

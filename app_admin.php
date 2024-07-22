@@ -1,4 +1,8 @@
-<?
+<?php
+
+
+session_name("app_admin");
+session_start();
 	include("local_controla.php");//controla usuario admin, que esté logueado
   include("conex.php");	
 	$_SESSION['total_compra']=0;
@@ -91,7 +95,7 @@ while($extraccion=mysqli_fetch_array($extracciones))
     <td bgcolor="#FFFFCC"><font size="4"><a href="local_caja.php">cargar</a></font></td>
     <td bgcolor="#FFFFCC"><font size="4"><a href="local_caja_mod.php">modificar</a></font></td>
     <td bgcolor="#FFFFCC">&nbsp;</td>
-    <td bgcolor="#FFFFCC"><font size="4">HOY ($ <? echo $datos_caja_actual['billetes']+$datos_caja_actual['monedas'];?>)</font></td>
+    <td bgcolor="#FFFFCC"><font size="4">HOY ($ <?php echo $datos_caja_actual['billetes']+$datos_caja_actual['monedas'];?>)</font></td>
   </tr>
   <tr> 
     <td><font color="#333333" size="4"> <strong>CAJA CIERRE</strong></font></td>
@@ -107,7 +111,7 @@ while($extraccion=mysqli_fetch_array($extracciones))
     <td><font size="4"><a href="local_cajaaporte.php">cargar</a></font><font size="4">&nbsp;</font></td>
     <td><font size="4"><a href="local_cajaaporte_mod.php">modificar</a></font></td>
     <td>&nbsp;</td>
-    <td><font color="#009900" size="4">HOY ($ <? echo $total_aportes;?>)</font></td>
+    <td><font color="#009900" size="4">HOY ($ <?php echo $total_aportes;?>)</font></td>
   </tr>
   <tr bgcolor="#FFFFCC"> 
     <td><font color="#FF0000" size="4"> <strong>CAJA EXTRACCION (-)</strong></font></td>
@@ -115,7 +119,7 @@ while($extraccion=mysqli_fetch_array($extracciones))
     <td><font size="4"><a href="local_cajaextraccion.php">cargar</a></font></td>
     <td><p><font size="4"><a href="local_cajaextraccion_mod.php">modificar</a></font></p></td>
     <td>&nbsp;</td>
-    <td><font color="#FF0000" size="4">HOY ($ <? echo $total_extracciones;?>)</font></td>
+    <td><font color="#FF0000" size="4">HOY ($ <?php echo $total_extracciones;?>)</font></td>
   </tr>
   <tr> 
     <td><strong><font color="#333333" size="4">CIERRE DIARIO</font></strong></td>
@@ -146,13 +150,13 @@ while($extraccion=mysqli_fetch_array($extracciones))
 <table width="100%" border="1">
   <tr> 
     <td width="12%"><font color="#333333" size="4"><strong>contactos</strong></font></td>
-    <td width="7%"><font size="4"><a href="ver_contacto.php">ver</a><? echo "(".$cant_contactos.")";?></font></td>
+    <td width="7%"><font size="4"><a href="ver_contacto.php">ver</a><?php echo "(".$cant_contactos.")";?></font></td>
     <td width="11%"><font size="4"><a href="contactos_mod.php">modificar</a></font></td>
     <td width="70%" align="right"><a href="ver_mensajes2.php">ver_mensajes</a></td>
   </tr>
   <tr> 
     <td><font color="#333333" size="4"> <strong>consultas</strong></font></td>
-    <td><font size="4"><a href="ver_consultas.php">ver</a></font><? echo "(".$cant_consultas.")";?></td>
+    <td><font size="4"><a href="ver_consultas.php">ver</a></font><?php echo "(".$cant_consultas.")";?></td>
     <td><font size="4"><a href="consultas_mod.php">modificar</a></font></td>
     <td>&nbsp;</td>
   </tr>

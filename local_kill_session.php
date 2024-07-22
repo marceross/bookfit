@@ -1,4 +1,4 @@
-<?
+<?php
 include("conex.php");
 //session_start();
 include("local_controla.php");		

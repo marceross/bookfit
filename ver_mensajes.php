@@ -1,5 +1,6 @@
-<?
+<?php
 session_name('app_admin');
+session_start();
 include ("conex.php");
 include("local_controla.php");
 include("biblioteca.php");
@@ -24,14 +25,14 @@ $usuarios=mysqli_query($mysqli, "SELECT * FROM usuarios WHERE activo='S' AND id_
     <td width="30%"><div align="center">Confirmado</div></td>
     <td width="9%"><div align="center">Fecha</div></td>
   </tr>
-<?
+<?php
 while($mensaje=mysql_fetch_array($mensajes))
 {
 ?>
   <tr> 
-    <td><div align="center"><? echo $mensaje['usuario'];?></div></td>
-    <td><div align="center"><? echo $mensaje['mensaje'];?></div></td>
-    <td><div align="center"><? 
+    <td><div align="center"><?php echo $mensaje['usuario'];?></div></td>
+    <td><div align="center"><?php echo $mensaje['mensaje'];?></div></td>
+    <td><div align="center"><?php 
 	if($mensaje['confirmado']=='S')
 	{
 		echo "S";
@@ -40,13 +41,13 @@ while($mensaje=mysql_fetch_array($mensajes))
 	{
 	?>
     	<a href="confirmar_mensaje.php?id=<? echo $mensaje['id_mensaje'];?>"><img src="Check-icon.png" width="32" height="32" border="0"></a>
-	<?
+	<?php
 	}
 	?>        
     </div></td>
     <td><div align="center"><? echo formato_latino ($mensaje['fecha']);?></div></td>
   </tr>
-<?
+<?php
 }
 ?>
   <tr> 
@@ -56,17 +57,17 @@ while($mensaje=mysql_fetch_array($mensajes))
           <textarea name="texto_mensaje" cols="100" rows="5" id="texto_mensaje"></textarea>
         </p>
         <table width="141" border="0" align="center">
-          <?
+          <?php
 	while($usuario=mysql_fetch_array($usuarios))
 	{
 ?>
           <tr>
-            <td width="107"><? echo $usuario['usuario'];?></td>
+            <td width="107"><?php echo $usuario['usuario'];?></td>
             <td width="24"><label>
-              <input type="checkbox" name="dest[<? echo $usuario['id_usuario'];?>]" id="checkbox" value="<? echo $usuario['id_usuario'];?>">
+              <input type="checkbox" name="dest[<?php echo $usuario['id_usuario'];?>]" id="checkbox" value="<?php echo $usuario['id_usuario'];?>">
             </label></td>
           </tr>
-<?
+<?php
 	}
 ?>          
         </table>
