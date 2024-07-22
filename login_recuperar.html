@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<title>LOKALES TRAINING SPOT</title>
+<meta charset="UTF-8">
+<meta name="description" content="COMPLEJO DEPORTIVO EXTREMO --- ACTION SPORTS COMPLEX --- Centro deportivo de entrenamiento para deportes de accion">
+<meta name="keywords" content="deportes, extremos, acrobacia, parkour, calistenia, escalada, palestra, skate, bmx, roller, surf, mountainboard, snow, ski, snowboard, mountainboarding, trial, kite, kitesurf, tablas, boards">
+<meta name="author" content="Lokales Training Spot">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="estilo.css" rel="stylesheet" type="text/css">
+<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+
+<script src="js/jquery-3.6.0.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+          <a class="navbar-brand" href="app_actividades.php"><img src="logo.gif" class="img-fluid" alt="Lokales Training spot logo image" width="200"></a>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="login.html">Entrar</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+              </li>
+            </ul>
+            <!--
+            <form class="form-inline mt-2 mt-md-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+            -->
+          </div>
+        </nav>
+    </header>
+
+<div class="container">
+  <br>
+  <h2>Recuparar clave</h2>
+  <br><br>
+  <h6><span id=span1>Ingresa tu datos y recibirás un e-mail con tu clave</h6>
+  <form action="login_recuperar2.php" method="post" name="" id="">
+    <div class="form-group col-6">
+      <label for="usuario">Usuario</label>
+      <input type="text" class="form-control" id="dni" placeholder="dni" name="dni" pattern="[0-9]+" required>
+    </div>
+    <div class="form-group col-6">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Mandar link</button>
+    </div>
+    </form>
+    <br>
+    <h6>O si no recuerdas el mail pidele a tu profesor!</h6>
+    <br>
+    <p><a href="login.html" class="badge badge-info">Volver</a></p>
+</div>
+
+</body>
+</html>

@@ -105,13 +105,17 @@ document.addEventListener("DOMContentLoaded", function(){
     ?>
       <div class="col-xs-12 col-md-4 caja_actividad">
             <div class="card text-center caja_individual">
-                    <img src="<? echo $actividad['imagen'];?>" class="img-fluid caja_imagen" alt="<? echo $actividad['nombre'];?>">
+                    
                     <div class="card-body">
-                      <h5 class="card-title"><? echo $actividad['nombre'];?></h5>
-                      <p class="card-text">Hacé click <!--<span class="badge badge-pill badge-light">reservar</span>-->para ver horarios disponibles y el valor</p>
-                      <!--<p class="card-text"><?// echo $actividad['descripcion'];?></p>-->
+                      <!--<h5 class="card-title titulo"><?// echo $actividad['nombre'];?></h5>-->
+                      <h5><a href="app_reserva.php?act_seleccionada=<? echo $actividad['id_actividad'];?>" id="btn-act"><? echo $actividad['nombre'];?></a></h5>
+                      
+                      <img src="<? echo $actividad['imagen'];?>" class="img-fluid caja_imagen" alt="<? echo $actividad['nombre'];?>">
+                      <!--<p class="card-text">Hacé click <span class="badge badge-pill badge-light">reservar</span>para ver horarios disponibles y el valor</p>-->
+                      <p class="card-text"><? echo $actividad['descripcion'];?></p>
                       <!--<a href="app_act_info.html" class="btn btn-info">mas info</a>-->
                       <a href="app_reserva.php?act_seleccionada=<? echo $actividad['id_actividad'];?>" class="btn btn-primary">Horarios</a>
+                      <!--<a href="" class="btn btn-info">Consulta</a>-->
                     </div>
             </div>
       </div>

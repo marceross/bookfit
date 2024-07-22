@@ -1,0 +1,197 @@
+html{
+    height: 100%;
+}
+body {
+    padding-top: 50px;
+    height: 100%;
+}
+
+/*.container {
+
+margin-top
+margin-right
+margin-bottom
+margin-left  
+
+todos los márgenes en una sóla propiedad, en ese orden
+margin: 25px 50px 75px 100px;
+
+
+    margin-top: 4vw;
+    align-content: center;
+}
+
+/*
+@media (min-width: 500px) {
+    .logosize {
+        width:"200";
+    }
+}
+
+@media (max-width: 499px) {
+    .logosize {
+        width:"120";
+    }
+}
+*/
+
+/*
+#logosize {
+    width: 5vw;
+}
+*/
+
+.caja_actividad {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*.caja_individual {
+    box-shadow: 3px 4px darkgray;
+}*/
+
+.caja_imagen {
+    padding: 2px;
+    margin-bottom: 5px;
+    /*border: 1px solid orange;*/
+}
+
+/*.titulo {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size:x-large;
+    font-weight: 900;
+}*/
+
+#btn-act{
+  clear:both;
+  /*color:#fff;*/
+  color:rgb(105, 76, 63);
+  text-align:center;
+  text-decoration:none;
+  /*background:rgba(0,0,0,0.2);*/
+  /*box-shadow:0 0 0px 3px rgba(0,0,0,0.2);*/
+  /*opacity:0.5*/
+}
+#btn-act:hover{
+    color:rgba(252,91,0,255);opacity:0.8
+}
+#btn-act:active {
+    color:rgba(105, 76, 63);opacity:0.6
+}
+
+.caja_precio {
+    margin: 2vw;
+}
+
+.vert_line {
+    border-right: 1px solid lightgray;
+}
+
+.hori_line {/* no saco como hacer para que dibuje la linea en la segunda fila*/
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid lightgray;
+}
+
+.row_boton {
+    padding-top: 15px;
+    padding-bottom: 70px; /* asi resolvi el espacio con el footer*/
+}
+
+.boton_horario { 
+    margin: 2px;
+    width: 75px;
+}
+
+/* hacer que el boton se vea de otro color  */
+
+button :active {
+    background-color: orangered;
+}
+:after {
+    background-color: blue;
+}
+:before {
+    background-color: green;
+    border-color: orangered;
+}
+
+footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 1px;
+ }
+ 
+img.barra {
+   height: 25px;
+   margin-left: 2vw;
+   margin-right: 2vw;
+   opacity: 0.8;
+}
+
+h6.chica {
+    font-size: x-small;
+    text-shadow: 1px 1px lightgray;
+    opacity: 0.6;
+}
+    .grande {
+        margin-left: 1vw;
+        margin-right: 1vw;
+}
+
+span.inner {
+    color: darkgray;
+}
+span.outer {
+    color: lightcoral;
+    text-decoration: line-through 2px;
+}
+
+.txt-white {
+    color: white;
+}
+
+.detalle {
+    margin-bottom: 15px;    
+}
+div.badge {
+    text-align: left;
+}
+
+input.nom {
+    border: 2px solid red;
+    border-radius: 10px;
+}
+
+.span__check {
+    font-weight: bolder;
+    color: #008000;
+  }
+
+.arrow {
+border: solid black;
+border-radius: 2px;
+border-width: 0 4px 4px 0;
+display: inline-block;
+padding: 3px;
+}
+
+.up {
+transform: rotate(-135deg);
+-webkit-transform: rotate(-135deg);
+}
+
+.down {
+transform: rotate(45deg);
+-webkit-transform: rotate(45deg);
+}
+
+p.pflecha {
+    padding: 0px;
+    margin: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}

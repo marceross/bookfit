@@ -199,7 +199,7 @@ else
 }
 if(mysqli_query($mysqli,"INSERT INTO registrados(nombre,apellido,dni,mail,nacimiento,comentario,foto,fecha,celular,clave)VALUES ('$nom','$ape','$dni','$mai','$nac','$com','$ruta','$fecha','$tel','$cla')"))
 	{
-		mail("mibanez23@hotmail.com","LOKALES ALTA REGISTRADOS",$nom." ".$ape,"From:".$mai);
+		//mail("mibanez23@hotmail.com","LOKALES ALTA REGISTRADOS",$nom." ".$ape,"From:".$mai);
 		mail($mai,"CONFIRMA REGISTRO LOKALES","Usuario: ".$dni."\nClave: ".$cla."\nGracias por registrarte, haz clic en el link de abajo para confirmar el registro:\nhttp://www.lokales.com.ar/login_mail_confirmar.php?usuario=".$dni."\nTu mail para recuparar la cuenta es: ".$mai,"From:hola@lokales.com.ar");
 		?>
 

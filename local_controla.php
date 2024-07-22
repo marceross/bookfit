@@ -1,5 +1,5 @@
 <?
-session_name("app_reservas"); // AGREGAR session_name('app_sistema'); a los otros archivos, los que son del sistema anterior
+session_name("app_admin");
 session_start();
 date_default_timezone_set('America/Argentina/Cordoba');
 /*
@@ -15,17 +15,16 @@ Verifica que el usuario este autenticado, y no haga mas de 5 minutos que no real
     	{//Verifica si el usuario esta autenticado                           
       	 	//session_destroy();
 			//echo $_SESSION["autentificado"];
-              header("Location: login.html");
-              exit();
+     	 	header("Location: local_inicio.php");
 	    }     
-		/*//------------------------------------------   
+		//------------------------------------------   
         else
         {        
             $hora_actual=gettimeofday();//Obtiene la hora actual.
             $hora_entrada=$_SESSION["hora"];//Obtiene la hora de la ultima peticion.
             $diferencia=$hora_actual["sec"]-$hora_entrada;//Calcula la diferencia entre la hora de ingreso y                                                                                       // la hora actual.
-             if($diferencia>300)
-             {//Si la diferencia es mayor a 5 minutos, el usuario es desconectado y enviado a la pantalla de
+             if($diferencia>18000)
+             {//Si la diferencia es mayor a 5 horas, el usuario es desconectado y enviado a la pantalla de
                                  //login.
                   session_destroy();
                   header("Location: local_inicio.php");
@@ -35,12 +34,11 @@ Verifica que el usuario este autenticado, y no haga mas de 5 minutos que no real
                   $_SESSION["hora"]=$hora_actual["sec"];//Actualiza la hora de la ultima peticion.
               }           
            }
-		   //---------------------------------------------------- */
+		   //----------------------------------------------------
 	}
 	else
 	{		  
 		$_SESSION['autentificado']="NO";
-        header("Location: login.html");
-        exit();
+		header("Location: local_inicio.php");
     }
 ?>

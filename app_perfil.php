@@ -220,6 +220,10 @@ else
   </div>
 </div>
 
+<div>
+    <button id="toggleButton" onclick="toggleReservaAuto()">Toggle Reserva Auto</button>
+</div>
+
 
 <footer class="fixed-bottom bg-light">
       <div class="row">
@@ -241,6 +245,8 @@ else
         </div>
       </div>
 </footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>

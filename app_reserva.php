@@ -12,11 +12,17 @@ $_SESSION['procedencia']='app_reserva.php';
 $actividad=mysqli_query($mysqli,"SELECT * FROM actividad WHERE id_actividad='$id_actividad'");
 $act=mysqli_fetch_array($actividad);
 
+$array_fecha=getdate();
+$fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
+
+$datos_usuarios=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='".$_SESSION['usuario_act']."'");
+$dato_usuario=mysqli_fetch_array($datos_usuarios);
+
 if(isset($_SESSION['usuario_act']))
 { 
   //Buscamos el credito del usuario
-	$datos_usuarios=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='".$_SESSION['usuario_act']."'");
-  $dato_usuario=mysqli_fetch_array($datos_usuarios);
+	//$datos_usuarios=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='".$_SESSION['usuario_act']."'");
+  //$dato_usuario=mysqli_fetch_array($datos_usuarios);
   $credito_actual=$dato_usuario['credito'];
   $logueado="S";
 }
@@ -320,8 +326,10 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
 
     <?php  
       //Obtiene la fecha y hora, para ver si puede reservar o no... puede avisar que por la hora no podra cancelar...
-	    $array_fecha=getdate();
-	    $fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
+	    
+      
+      //paso arriba $array_fecha=getdate();
+	    //paso arriba $fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
 	    //$hora=strval($array_fecha['hours']).":".strval($array_fecha['minutes']);
       $hora4=date("H:i:s");
 
@@ -517,7 +525,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
 <!--------------------CIERRE VENTANA MODAL---------------------------->
 <script>
   $("#ventana_invitacion").on("hidden.bs.modal", function () {    
-    total_costo_actualizado=parseInt($('#total_costo').val())-parseInt($('#total_costo_modal').val());      
+    total_costo_actualizado=parseInt($('#total_costo').val())-parseInt($('#total_costo_modal').val());        
     $('#total_costo').val(total_costo_actualizado);
 
     id_boton_abrio=$('#boton_abrio').val();
