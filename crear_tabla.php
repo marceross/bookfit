@@ -1,4 +1,13 @@
 <?php
+
+session_name('app_admin');
+session_start();
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+
 include("conex.php");	
 //include("local_controla_admin2.php");
 include("biblioteca.php");
@@ -49,19 +58,19 @@ if($tipo=='ingresos')
             {
             ?>
             <tr>
-            <td><? echo $ingreso_cliente['fecha'];?></td>
-            <td><? echo $ingreso_cliente['dni'];?></td>
-            <th scope="row"><? echo $ingreso_cliente['nombre']." ".$ingreso_cliente['apellido'];?></th>
-            <td><? echo $ingreso_cliente['cant_compras'];?></td>
-            <td>$<? echo $ingreso_cliente['total_pesos'];?></td>            
+            <td><?php echo $ingreso_cliente['fecha'];?></td>
+            <td><?php echo $ingreso_cliente['dni'];?></td>
+            <th scope="row"><?php echo $ingreso_cliente['nombre']." ".$ingreso_cliente['apellido'];?></th>
+            <td><?php echo $ingreso_cliente['cant_compras'];?></td>
+            <td><?php echo $ingreso_cliente['total_pesos'];?></td>            
             <!--<td><span class="badge badge-success">+ 20 %</span></td>-->
             </tr>
-            <?
+            <?php
             }
             ?>
         </tbody>
         </table>
-<?
+<?php
 }
 if($tipo=="reservas")
 {
@@ -88,17 +97,17 @@ if($tipo=="reservas")
             {
             ?>
             <tr>
-            <td><? echo $reserva_cliente['dni'];?></td>
-            <th scope="row"><? echo $reserva_cliente['nombre']." ".$reserva_cliente['apellido'];?></th>
-            <td><? echo $reserva_cliente['cant_reservas'];?></td>            
+            <td><?php echo $reserva_cliente['dni'];?></td>
+            <th scope="row"><?php echo $reserva_cliente['nombre']." ".$reserva_cliente['apellido'];?></th>
+            <td><?php echo $reserva_cliente['cant_reservas'];?></td>            
             <!--<td><span class="badge badge-success">+ 20 %</span></td>-->
             </tr>
-            <?
+            <?php
             }
             ?>
         </tbody>
         </table>
-<?
+<?php
 }
 if($tipo=="asistencias")
 {
@@ -126,16 +135,16 @@ if($tipo=="asistencias")
             {
             ?>
             <tr>
-            <td><? echo $asistencia_cliente['dni'];?></td>
-            <th scope="row"><? echo $asistencia_cliente['nombre']." ".$asistencia_cliente['apellido'];?></th>
-            <td><? echo $asistencia_cliente['cant_asistencias'];?></td>            
+            <td><?php echo $asistencia_cliente['dni'];?></td>
+            <th scope="row"><?php echo $asistencia_cliente['nombre']." ".$asistencia_cliente['apellido'];?></th>
+            <td><?php echo $asistencia_cliente['cant_asistencias'];?></td>            
             <!--<td><span class="badge badge-success">+ 20 %</span></td>-->
             </tr>
-            <?
+            <?php
             }
             ?>
         </tbody>
         </table>    
-<?
+<?php
 }
 ?>

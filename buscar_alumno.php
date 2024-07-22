@@ -1,4 +1,7 @@
-<?
+<?php
+
+session_name('app_admin');
+session_start();
   include("conex.php");	
 	include("local_controla.php");
   include("biblioteca.php");
@@ -10,10 +13,10 @@
   {
     $cliente=mysqli_fetch_array($clientes);
   ?>    
-    <td><? echo $cliente['apellido'];?></td>
-    <td><? echo $cliente['nombre'];?></td>
-    <td><button id="btn_agregar_alumno" onclick="agregar_alumno('<? echo $dni_cli;?>', '<? echo $idhorario;?>')">Agregar</button></td>
-  <?
+    <td><?php echo $cliente['apellido'];?></td>
+    <td><?php echo $cliente['nombre'];?></td>
+    <td><button id="btn_agregar_alumno" onclick="agregar_alumno('<?php echo $dni_cli;?>', '<?php echo $idhorario;?>')">Agregar</button></td>
+  <?php
   }  
   else
   {

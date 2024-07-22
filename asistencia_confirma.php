@@ -1,4 +1,7 @@
 <?php
+
+session_name("app_admin");
+session_start();
 include("conex.php");
 include("local_controla.php"); // session_name(''); session_start(); se agrega si no está el controla
 date_default_timezone_set('America/Argentina/Cordoba');

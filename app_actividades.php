@@ -1,8 +1,23 @@
-<?
+<?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+
+
 session_name('app_reservas');
 session_start();
 include("conex.php");
 date_default_timezone_set('America/Argentina/Cordoba'); // poner en todos los archivos
+
+if(isset($_SESSION['usuario_act']))
+{ 
+    
+}else{
+    //header("Location:login_inscripcion.php");
+}
+
+
 $actividades=mysqli_query($mysqli,"SELECT * FROM actividad WHERE activa='S' ORDER BY nombre");
 
 if(isset($_SESSION['usuario_act']))
@@ -25,11 +40,14 @@ else
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
+    <script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
 <script>/*
 document.addEventListener("DOMContentLoaded", function(){
@@ -55,28 +73,28 @@ document.addEventListener("DOMContentLoaded", function(){
           <li class="nav-item">
             <a class="nav-link" href="info_puntos.php"><span class="badge badge-pill badge-info">info puntos</span></a>
           </li>
-        <?
+        <?php
         if(!isset($_SESSION['usuario_act']))
         {
         ?>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Entrar</a>
+            <a class="nav-link" href="login.php">Entrar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+            <a class="nav-link" href="login_inscripcion.php">Registrarte</a>
           </li>
-        <?
+        <?php
         }
         else
         {
         ?>
           <li class="nav-item">
-          <h6><a class="nav-link"><span class="badge badge-pill badge-light"><? echo $dato_usuario['nombre'];?></span><span class="badge badge-pill badge-dark"><? echo $credito_actual;?></span> puntos</a></h6>
+          <h6><a class="nav-link"><span class="badge badge-pill badge-light"><?php echo $dato_usuario['nombre'];?></span><span class="badge badge-pill badge-dark"><?php echo $credito_actual;?></span> puntos</a></h6>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="app_kill.php">cerrar sesión</a>
           </li>
-        <?
+        <?php
         }
         ?>
         </ul>
@@ -90,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function(){
     </nav>
 </header>
 
-<div class="container">
+<div class="container" style="margin-top:30px">
     <?php
     $cuenta_act=0;
     while($actividad=mysqli_fetch_array($actividades))
@@ -108,19 +126,19 @@ document.addEventListener("DOMContentLoaded", function(){
                     
                     <div class="card-body">
                       <!--<h5 class="card-title titulo"><?// echo $actividad['nombre'];?></h5>-->
-                      <h5><a href="app_reserva.php?act_seleccionada=<? echo $actividad['id_actividad'];?>" id="btn-act"><? echo $actividad['nombre'];?></a></h5>
+                      <h5><a href="app_reserva.php?act_seleccionada=<?php echo $actividad['id_actividad'];?>" id="btn-act"><?php echo $actividad['nombre'];?></a></h5>
                       
-                      <img src="<? echo $actividad['imagen'];?>" class="img-fluid caja_imagen" alt="<? echo $actividad['nombre'];?>">
+                      <img src="<?php echo $actividad['imagen'];?>" class="img-fluid caja_imagen" alt="<?php echo $actividad['nombre'];?>">
                       <!--<p class="card-text">Hacé click <span class="badge badge-pill badge-light">reservar</span>para ver horarios disponibles y el valor</p>-->
-                      <p class="card-text"><? echo $actividad['descripcion'];?></p>
+                      <p class="card-text"><?php echo $actividad['descripcion'];?></p>
                       <!--<a href="app_act_info.html" class="btn btn-info">mas info</a>-->
-                      <a href="app_reserva.php?act_seleccionada=<? echo $actividad['id_actividad'];?>" class="btn btn-primary">Horarios</a>
+                      <a href="app_reserva.php?act_seleccionada=<?php echo $actividad['id_actividad'];?>" class="btn btn-primary">Horarios</a>
                       <!--<a href="" class="btn btn-info">Consulta</a>-->
                     </div>
             </div>
       </div>
 
-<?
+<?php
         $cuenta_act++;
 
         
@@ -128,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function(){
         {
     ?>    
             </div>
-    <?
+    <?php
         }
       
 
@@ -137,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function(){
             $cuenta_act=0;
         }
     }
+    
 ?>
 </div>
 <br><br>

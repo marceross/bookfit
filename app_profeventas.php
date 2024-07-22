@@ -1,4 +1,6 @@
-<?
+<?php
+session_name("app_admin");
+session_start();
 	include("conex.php");
 	//Variable que nos dice si hay que cargar la venta o no
 	//$cargar_venta="no";	
@@ -25,9 +27,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
+<link href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
 <script>
 
 function buscar_cliente(dni)
@@ -83,6 +86,9 @@ function buscar_cliente(dni)
                   <label>Mail</label>
                   <input type="email" name="mai" id="mai" class="form-control" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>  
                   
+                  
+                  	
+                  
                   <div class="modal-footer">
                   
 
@@ -95,7 +101,7 @@ function buscar_cliente(dni)
 </div>
 <!------------------------------------------------>
 
-<?
+<?php
 //echo "Cant reg2: ".$_SESSION['cant_items'];
 //Boton agregar
 	//if(isset($_POST['agregar']) or isset($_POST['terminar']))
@@ -156,30 +162,30 @@ function buscar_cliente(dni)
 <td>Precio</td>
 <td>Total</td>
 </tr>
-<?
+<?php
 		$total=0;
 		while($producto_temporal=mysqli_fetch_array($productos_temporales))
 		{
 			$total=$total+$producto_temporal['costo']*$producto_temporal['margen']*$producto_temporal['cant'];		
 ?>		
 	<tr><td>    
-<?    
+<?php    
 			echo $producto_temporal['np']." ".$producto_temporal['nm']." ".$producto_temporal['descripcion']." ($".round ($producto_temporal['costo']*$producto_temporal['margen']).")<br>";
 ?>
 		</td>			
-        <td><? echo $producto_temporal['cant'];?></td>
-        <td><? echo "$".round ($producto_temporal['costo']*$producto_temporal['margen']);?></td>
-        <td><? echo "$".round ($producto_temporal['costo']*$producto_temporal['margen']*$producto_temporal['cant']);?></td>
+        <td><?php echo $producto_temporal['cant'];?></td>
+        <td><?php echo "$".round ($producto_temporal['costo']*$producto_temporal['margen']);?></td>
+        <td><?php echo "$".round ($producto_temporal['costo']*$producto_temporal['margen']*$producto_temporal['cant']);?></td>
         </tr>
-<?        
+<?php        
 		}
 		$total_definitivo=$total;
 		$_SESSION['tot_venta']=$total_definitivo;
 ?>
-	<tr><td>TOTAL</td><td></td><td></td><td><? echo "$".round ($total_definitivo);?></td></tr>
+	<tr><td>TOTAL</td><td></td><td></td><td><?php echo "$".round ($total_definitivo);?></td></tr>
 </table>		
 
-<?
+<?php
 //if($mostrar_registrados==1 or isset($_GET['dni_nuevo']))
 //{
 	//ventas del mes menor a ventas proyectadas
@@ -195,7 +201,7 @@ function buscar_cliente(dni)
 		<label>Ingresa el DNI del cliente</label>
 		<div class="form-row">
 			<div class="form-group col-xs-4">
-				<?
+				<?php
 				if(isset($_GET['dni_nuevo']))
 				{
 					$dni_nuevo=$_GET['dni_nuevo'];
@@ -209,7 +215,7 @@ function buscar_cliente(dni)
 				}
 			
 				?>
-				<input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<? echo $dni_nuevo;?>">
+				<input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<?php echo $dni_nuevo;?>">
 			</div>
 			<div class="form-group col-xs-3">
 				<button type="button" onclick="buscar_cliente(dni_buscado.value)" class="badge badge-info form-control">Buscar</button>
@@ -217,14 +223,17 @@ function buscar_cliente(dni)
 		</div><br>
 		
 		<div id="cliente_encontrado">
-			<input type="text" name="nombre_apellido" id="nombre_apellido" value="<? echo $nom_nuevo;?>" class="form-control" readonly>
+			<input type="text" name="nombre_apellido" id="nombre_apellido" value="<?php echo $nom_nuevo;?>" class="form-control" readonly>
 		</div>
+		
+		<input type="hidden" name="cp" id="cp" value="<?php echo $_GET['cp']; ?>" >
+		
 		<br>
 
 		<input value="Confirmar" class="btn btn-primary" type="submit"/>
 		</form>
 	</div>
-<?
+<?php
 //}
 //else
 //{
@@ -237,24 +246,17 @@ function buscar_cliente(dni)
 //}
 ?>
 
-<?
+<?php
 	//}	
 ?>
 
 	<a href="app_profe.php?v=1#boton_siguiente" class="badge badge-info">Volver</a>
 	
-    <?/*
-	if($mostrar_registrados==0 and !isset($_GET['dni_nuevo']))
-	{
-	?>
-    <a href="app_profeventas2.php?bar=1" class="btn btn-primary">Confirmar</a>
-    <?
-	}*/
-	?>
+    
 
 </body>
 </html>
 
-<?
+<?php
 // ERA local_procesa_ventas.php
 ?>

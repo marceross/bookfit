@@ -1,5 +1,6 @@
-<?
+<?php
 	session_name('app_admin');
+	session_start();
 	include("conex.php");
 	//Variable que nos dice si hay que cargar la venta o no
 	$cargar_venta="no";	
@@ -10,7 +11,7 @@
 	$ventas_fact=mysqli_query($mysqli,"SELECT * FROM ventas_facturacion WHERE mes=".$array_fecha['mon']);
 	$venta_fact=mysqli_fetch_array($ventas_fact);
 	if(!$reg=mysqli_query($mysqli,"SELECT dni, registrados.nombre as nomreg, apellido, actividad.nombre as nomact FROM registrados, actividad WHERE actividad=id_actividad ORDER BY	apellido"))
-	/*SELECT dni, registrados.nombre as nomreg, apellido, actividad.nombre as nomact, profesor.nombre as nomprofe FROM registrados, actividad, profesor WHERE actividad=id_actividad AND profesor=id_profesor ORDER BY	apellido CONSULTA VIEJA, MOSTRANDO LOS PROFESORES*/ 
+	
 	{
 		echo mysqli_error($mysqli);
 		exit();
@@ -21,7 +22,7 @@
 		$mostrar_registrados=0;
 		
 		//Limpio la tabla temporal
-		$id_usuario=$_SESSION['usuario_act'];
+		$id_usuario=$_SESSION['tipo_usuario_act'];
 		mysqli_query($mysqli,"DELETE FROM ventas_temporal WHERE id_usuario='$id_usuario'");
 		for($i=0;$i<$_SESSION['cant_items'];$i++)
 		{
@@ -66,14 +67,14 @@
 <td>Precio Un.</td>
 <td>Subtotal</td>
 </tr>
-<?
+<?php
 		$total=0;
 		while($producto_temporal=mysqli_fetch_array($productos_temporales))
 		{
 			$total=$total+$producto_temporal['costo']*$producto_temporal['margen']*$producto_temporal['cant'];		
 ?>		
 	<tr><td>    
-<?    
+<?php    
 			echo $producto_temporal['np']." ".$producto_temporal['nm']." ".$producto_temporal['descripcion']." ($".round ($producto_temporal['costo']*$producto_temporal['margen']).")<br>";
 ?>
 		</td>			
@@ -81,7 +82,7 @@
         <td><? echo "$".round ($producto_temporal['costo']*$producto_temporal['margen']);?></td>
         <td><? echo "$".round ($producto_temporal['costo']*$producto_temporal['margen']*$producto_temporal['cant']);?></td>
         </tr>
-<?        
+<?php        
 		}
 		$total_definitivo=$total+($total-$efectivo)*$recargo/100-$total*$descuento/100;
 		$_SESSION['tot_venta']=$total_definitivo;
@@ -90,7 +91,7 @@
     <tr><td>DESCUENTO</td><td></td><td></td><td><? echo "$".$total*$descuento/100;?></td></tr>
 	<tr><td>TOTAL</td><td></td><td></td><td><? echo "$".$total_definitivo;?></td></tr>
 </table>		
-<?
+<?php
 	$formas_pago=mysqli_query($mysqli,"SELECT * FROM ventas_forma_pago WHERE id_forma=".$_POST['pago']);
 	$forma_pago=mysqli_fetch_array($formas_pago);
 	echo "Forma de pago: ".$forma_pago['nombre']."<br>";
@@ -101,7 +102,7 @@
 	}
 ?>
 <font color="#FF0000" size="6"><strong>
-<?
+<?php
 //mensaje sobre facturacion
 //$facturatipo=mysqli_query("SELECT productos.id_proveedor, proveedores.id_proveedor, tipo FROM productos, proveedores WHERE productos.id_proveedor=proveedores.id_proveedor AND cod=".$_SESSION['cod_producto'],$mysqli);
 //$facturatip=mysqli_fetch_array($facturatipo);
@@ -115,12 +116,12 @@ if($mostrar_registrados==1)
 ?>
 	<form action="local_procesa_ventas2.php" method="post" enctype="multipart/form-data">
 	<select name="registrado" id="registrado" onchange="buscar_pagos(this.value)">
-      <?
+      <?php
 	while($re=mysqli_fetch_array($reg))
 	{
 ?>
       <option value="<? echo $re['dni'];?>"><? echo $re['apellido']." ".$re['nomreg']." ".$re['nomact']." "/*.$re['nomprofe']*/;?></option>	
-      <?
+      <?php
 		           	
 	}
 
@@ -133,7 +134,7 @@ if($mostrar_registrados==1)
     <div id="pagos_cli">
     
     </div>
-<?
+<?php
 	//{
 	//	echo "FACTURAR";
 	//}
@@ -147,57 +148,8 @@ else
 }
 ?>
 </strong></font>
-<?
-		/*		
-		$id_usuario=$_SESSION['usuario_act'];
-		//Obtiene la fecha y hora
-		$array_fecha=getdate();
-		$fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
-		//$hora=strval($array_fecha['hours']).":".strval($array_fecha['minutes']);
-		$hora4=date("H:i:s",(time()+4*3600));
-		$id_forma=$_POST['pago'];
-		//Creamos el registro en la tabla ventas
-		if(mysqli_query("INSERT INTO ventas (id_usuario, fecha, hora, id_forma) VALUES ('$id_usuario', '$fecha', '$hora4', '$id_forma')",$mysqli))
-		{
-			$id_venta=mysqli_insert_id($mysqli);
-			$error=0;
-			//Cargamos el detalle de la venta
-			$temporales=mysqli_query("SELECT * FROM ventas_temporal",$mysqli);
-			while($temporal=mysqli_fetch_array($temporales))
-			{
-				if($temporal['cant']>0)
-				{
-					$cod_producto=$temporal['cod_producto'];
-					$cantidad=$temporal['cant'];
-					//Buscamos y calculamos el precio del producto
-					$productos=mysqli_query("SELECT * FROM productos, categorias WHERE categorias.cod=cod_cat AND productos.cod='$cod_producto'",$mysqli);
-					$producto=mysqli_fetch_array($productos);
-					$precio=$producto['costo']*$producto['margen'];
-					if(!mysqli_query("INSERT INTO ventas_detalle (id_venta, cod_producto, cantidad, precio) VALUES ('$id_venta', '$cod_producto', '$cantidad', '$precio')",$mysqli))
-					{
-						echo mysqli_error($mysqli);
-					}
-					//Actualizamos stock
-					mysqli_query("UPDATE productos SET stock=stock-'$cantidad' WHERE cod='$cod_producto'",$mysqli);
-					//Borramos la tabla temporal
-					mysqli_query("DELETE FROM ventas_temporal",$mysqli);
-					//Volvemos a inicio y destruimos la variable autentificado
-					if($_SESSION['tipo_usuario_act']==2)
-					{
-						unset($_SESSION['autentificado']);
-						header("Location: local_inicio.php");
-					}
-					else
-					{
-						header("Location:local_datos.php");
-					}
-				}
-			}
-		}
-		else
-		{
-			$error=3;
-		}*/
+<?php
+		
 		
 	}	
 ?>
@@ -228,12 +180,12 @@ else
 <table width="463" border="0" cellspacing="0">
   <tr>
     <td width="290"><a href="local_ventas.php">Volver</a></td>
-    <?
+    <?php
 	if($mostrar_registrados==0)
 	{
 	?>
     	<td width="169"><a href="local_procesa_ventas2.php?bar=1">Confirmar</a></td>
-    <?
+    <?php
 	}
 	?>
   </tr>

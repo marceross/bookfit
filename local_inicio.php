@@ -15,8 +15,19 @@
 <title>LOKALES TRAINING SPOT</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ <LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
+<link rel="stylesheet" href="js/bootstrap.min.css" >
+
+<script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+<style>
+    
+    @media only screen and (max-width: 767px) {
+  .m_query{width:100%!important;}
+}
+</style>
 </head>
 
 <body>
@@ -25,20 +36,20 @@
       <a class="navbar-brand" href="#"><img src="logo.gif" class="img-fluid" alt="Lokales Training spot logo image" width="200"></a>
 </header>
 
-<div class="container">
+<div class="container" style="margin-top:30px;">
 <br><br><br>
-<form action="local_procesa_inicio.php" method="post" name="" id="">
+<form action="local_procesa_inicio.php" method="post" style="width:40%;margin:0 auto;box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);padding:20px;" class="m_query">
 <div class="div-menu">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-12">
         <label for="usuario">Usuario</label>
         <input type="text" class="form-control" name="usuario" id="usuario">
     </div>
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-12">
         <label for="clave">Clave</label>
         <input name="clave" class="form-control" type="password" id="clave">
     </div>
-    <div> 
+    <div class="form-group" style="width:100%;margin:0 auto;text-align:center">
         <input type="submit" name="Submit" value="Entrar" class="btn btn-primary">
     </div>
 </div>

@@ -1,4 +1,4 @@
-<?
+<?php
 include("conex.php");
 date_default_timezone_set('America/Argentina/Cordoba');
 $dni_cli=$_POST['dni'];
@@ -8,6 +8,7 @@ $clientes=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='$dni_cli' 
 $cliente=mysqli_fetch_array($clientes);
 $cla=$cliente['clave'];
 
+$error = '';
 
 if(!strpos($mai,"@") or !strpos($mai,"."))
 {
@@ -30,11 +31,19 @@ if ($dni_cli<=0 or strlen($dni_cli)<6)
 <meta name="author" content="Lokales Training Spot">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<link href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+<style>
+    
+    @media only screen and (max-width: 767px) {
+  .m_query{width:100%!important;}
+}
+</style>
 
 </head>
 
@@ -48,10 +57,10 @@ if ($dni_cli<=0 or strlen($dni_cli)<6)
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="login.html">Entrar</a>
+                <a class="nav-link" href="login.php">Entrar</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+                <a class="nav-link" href="login_inscripcion.php">Registrarte</a>
               </li>
             </ul>
             <!--
@@ -64,23 +73,23 @@ if ($dni_cli<=0 or strlen($dni_cli)<6)
         </nav>
 </header>
 
-<?
+<?php
 if($error==1)
 {
 ?>
-	<h2><?echo "El e-mail ingresado no es válido"?></h2><br><br>
+	<h2><?php echo "El e-mail ingresado no es válido"?></h2><br><br>
 	<input type=button class="btn btn-primary" value=Atrás onclick=history.back()>
-	<?exit();?>
-<?
+	<?php exit();?>
+<?php
 }
 if($error==2)
 {
 ?>
 	<br><br>
-  <h4><?echo "El DNI ingresado no es válido"?></h4><br><br>
+  <h4><?php echo "El DNI ingresado no es válido"?></h4><br><br>
 	<input type=button class="btn btn-primary" value=Atrás onclick=history.back()>
-	<?exit();?>
-<?
+	<?php exit();?>
+<?php
 }
 
 if($mai==$cliente['mail'] and $dni_cli==$cliente['dni'])
@@ -88,16 +97,20 @@ if($mai==$cliente['mail'] and $dni_cli==$cliente['dni'])
     mail($mai,"CLAVE LOKALES","Usuario: ".$dni_cli."\nClave: ".$cla."\nSi no te acordabas la clave es buen momento para CAMBIARLA!!!\nTu mail de recuperacion es: ".$mai,"From:hola@lokales.com.ar");
     ?>
 		<br><br>
-    <h4><?echo "Te mandamos un mail con tu datos de inicio"?></h4><br><br>
-		<a href="login.html" class="btn btn-primary">Comenzar</a>
-		<?
+		
+		<div style="width:40%;margin:0 auto;box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);padding:20px;" class="m_query">
+		
+    <h4><?php echo "Te mandamos un mail con tu datos de inicio" ?></h4><br>
+		<a href="login.php" class="btn btn-primary">Comenzar</a>
+		</div>
+		<?php
   }
 else
   {?>
     <br><br>
-    <h4><?echo "LOS DATOS INGRESADOS NO COINCIDEN" //echo mysqli_error($mysqli);?></h4><br><br>
+    <h4><?php echo "LOS DATOS INGRESADOS NO COINCIDEN" //echo mysqli_error($mysqli);?></h4><br><br>
     <input type=button class="btn btn-primary" value=Atrás onclick=history.back()>
-  <?
+  <?php
   }
 ?>
 

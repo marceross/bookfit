@@ -1,37 +1,59 @@
-<?
+<?php
 session_name('app_reservas');
 session_start();
 include("conex.php");
 include("biblioteca.php");
 date_default_timezone_set('America/Argentina/Cordoba'); //-3
-//date_default_timezone_set('Pacific/Honolulu'); //-10
-//date_default_timezone_set('Pacific/Auckland'); // +12
-//$actividades=mysqli_query($mysqli,"SELECT * FROM actividad ORDER BY nombre");
-$_SESSION['actividad_sel']=$id_actividad=$_GET['act_seleccionada'];
+
+$_SESSION['actividad_sel']=$id_actividad= $_GET['act_seleccionada'];
 $_SESSION['procedencia']='app_reserva.php';
 $actividad=mysqli_query($mysqli,"SELECT * FROM actividad WHERE id_actividad='$id_actividad'");
 $act=mysqli_fetch_array($actividad);
 
 $array_fecha=getdate();
+
+
+
 $fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
 
+
+
+if(isset($_SESSION['usuario_act']))
+{ 
 $datos_usuarios=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='".$_SESSION['usuario_act']."'");
 $dato_usuario=mysqli_fetch_array($datos_usuarios);
+
+}
+
+
+if(isset($_SESSION['usuario_act']))
+{ 
+    
+}else{
+    //header("Location:login_inscripcion.php");
+}
+
+
 
 if(isset($_SESSION['usuario_act']))
 { 
   //Buscamos el credito del usuario
-	//$datos_usuarios=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='".$_SESSION['usuario_act']."'");
-  //$dato_usuario=mysqli_fetch_array($datos_usuarios);
+	$datos_usuarios=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='".$_SESSION['usuario_act']."'");
+  $dato_usuario=mysqli_fetch_array($datos_usuarios);	
   $credito_actual=$dato_usuario['credito'];
   $logueado="S";
 }
 else
 {
   $credito_actual=0;
-  $logueado="N";
+   $logueado="N";
 }
 
+
+//exit();
+
+if(isset($_SESSION['usuario_act']))
+{ 
 // verifico si los puntos estan vencidos
 if(strtotime($dato_usuario['vencimiento'])<strtotime($fecha))
 {
@@ -40,6 +62,7 @@ if(strtotime($dato_usuario['vencimiento'])<strtotime($fecha))
 else
 {
   $clase_vencido="badge-info";
+}
 }
 ?>
 <!DOCTYPE html>
@@ -50,12 +73,16 @@ else
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+<script src="js/jquery.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
 
 <script>
 //funcion para contar el costo total de las actividades seleccionadas y cambiar la condicion de los botones de hora
@@ -174,11 +201,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
 
 <body>
 <br><br>
-<?
-//echo "Hoy es " . date("d.m.Y") . "<br>";
-//echo "La hora es " . date("h:i:sa");
-//exit();
-?>
+
 
     <!--------------------VENTANA MODAL INVITACION---------------------------->
 <div class="modal fade" id="ventana_invitacion">
@@ -272,28 +295,28 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
       </button>
       <div class="navbar-collapse collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-        <?
+        <?php
         if(!isset($_SESSION['usuario_act']))
         {
         ?>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Entrar</a>
+            <a class="nav-link" href="login.php">Entrar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+            <a class="nav-link" href="login_inscripcion.php">Registrarte</a>
           </li>
-        <?
+        <?php
         }
         else
         {
         ?>
           <li class="nav-item">
-          <h6><a class="nav-link"><span class="badge badge-pill badge-light"><? echo $dato_usuario['nombre'];?></span><span class="badge badge-pill badge-dark"><? echo $credito_actual;?></span> puntos</a></h6>
+          <h6><a class="nav-link"><span class="badge badge-pill badge-light"><? echo $dato_usuario['nombre'];?></span><span class="badge badge-pill badge-dark"><?php echo $credito_actual;?></span> puntos</a></h6>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="app_kill.php">cerrar sesión</a>
           </li>
-        <?
+        <?php
         }
         ?>
         </ul>
@@ -310,7 +333,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
 <div class="container">
   <div class="row justify-content-center">
     <!--<div class="col-6">-->
-      <h3 class="card-title"><span class="badge badge-pill badge-light"><? echo $act['nombre']; ?></span></h3>
+      <h3 class="card-title"><span class="badge badge-pill badge-light"><?php echo $act['nombre']; ?></span></h3>
     <!--</div>-->
   </div> 
     <div class="row justify-content-center">
@@ -325,20 +348,16 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
     </div>
 
     <?php  
-      //Obtiene la fecha y hora, para ver si puede reservar o no... puede avisar que por la hora no podra cancelar...
-	    
+    
+   
       
-      //paso arriba $array_fecha=getdate();
-	    //paso arriba $fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
-	    //$hora=strval($array_fecha['hours']).":".strval($array_fecha['minutes']);
       $hora4=date("H:i:s");
 
-      //$hora4='23:00:00';
-      //echo "La hora es " . $hora4;
-
-      //$fecha_final=$fecha+7;
+      
       $dias_fecha='';
       $fecha_evaluar = date_create($fecha);
+      
+       
       
       for($i=0;$i<=6;$i++)
       {        
@@ -351,8 +370,14 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
         date_add($fecha_evaluar, date_interval_create_from_date_string("1 day"));
         //echo date_format($fecha_evaluar,"d-m-Y")."<br>";
       } 
+      
+      
+      
+      
      // echo $dias_fecha;
       $orden_dias=explode(",",$dias_fecha);//funcion que toma cadena de caracteres y divide tomando como base un caracter 6, 0, 1, 2, 3, 4, 5
+      
+     
      ?>
     <!-- DIV DE LA FILA DE DIASSSSSSSSS---------------------------------------------->
     <div class="row hori_line justify-content-center">
@@ -362,31 +387,49 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
       {
           $numero_dia_mes=date('d', strtotime(date_format($fecha_evaluar,"Y-m-d"))); 
           $fecha_clase=date_format($fecha_evaluar,"Y-m-d");
+          
+          
           $dias_actividades=mysqli_query($mysqli, "SELECT * FROM actividad_horarios, actividad_dias WHERE actividad_dias_id_dia=".$orden_dias[$i]." AND actividad_dias_id_dia=id_dia AND actividad_id_actividad='$id_actividad' AND activo='S' GROUP BY actividad_dias_id_dia");
+          /*
+          $dias_actividades=mysqli_query($mysqli, "SELECT * FROM actividad_horarios, actividad_dias WHERE actividad_dias_id_dia=".$orden_dias[$i]." AND  actividad_id_actividad='$id_actividad' AND activo='S' GROUP BY actividad_dias_id_dia");
+          */
+          
+         
+          
           $dia_actividad=mysqli_fetch_array($dias_actividades);
-          $actividad_dias_id_dia=$dia_actividad['id_dia'];
+          
+          if($dia_actividad){
+          
+          //print_r($dia_actividad);
+          
+          $actividad_dias_id_dia = $dia_actividad['id_dia'];
+          
+          //echo $actividad_dias_id_dia;
+         
+          
+          
           $horarios=mysqli_query($mysqli, "SELECT * FROM actividad_horarios WHERE actividad_id_actividad='$id_actividad' AND actividad_dias_id_dia=".$actividad_dias_id_dia." AND activo='S' ORDER BY hora");
           
       ?>
       <!-- DIV DE LAS COLUMNAS DIASSSSSSSSS---------------------------------------------->
       <div class="col vert_line flex-grow-0">
-        <?
+        <?php
         if($dia_actividad['nombre_dia']<>'')
         {
         ?>
-          <h6><span class="badge badge-light"><? echo mb_substr($dia_actividad['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><? echo $numero_dia_mes;?></span></h6>
-       <?
+          <h6><span class="badge badge-light"><?php echo mb_substr($dia_actividad['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><?php echo $numero_dia_mes;?></span></h6>
+       <?php
         }
         else
         {
           $nombres_dias=mysqli_query($mysqli,"SELECT * FROM actividad_dias WHERE id_dia=".$orden_dias[$i]);          
           $nombre_dia=mysqli_fetch_array($nombres_dias);          
         ?>
-          <h6><span class="badge badge-light"><? echo mb_substr($nombre_dia['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><? echo $numero_dia_mes;?></span></h6>
-        <?
+          <h6><span class="badge badge-light"><?php echo mb_substr($nombre_dia['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><?php echo $numero_dia_mes;?></span></h6>
+        <?php
         }
         ?>
-        <?
+        <?php
         /////////////////////////////////////////////pinta color de boton de acuerdo al cupo
         while($horario=mysqli_fetch_array($horarios))
         {
@@ -456,39 +499,32 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
         <div>
           <div>
 
-          <input type="hidden" id="horario_<? echo $horario['id_horario'];?>" name="id_horario[]" value="<? echo $horario['id_horario'];?>_0">
+          <input type="hidden" id="horario_<?php echo $horario['id_horario'];?>" name="id_horario[]" value="<?php echo $horario['id_horario'];?>_0">
 
-          <input type="hidden" id="fecha_clase_<? echo $horario['id_horario'];?>" name="fecha_clase[]" value="<? echo $fecha_clase;?>">
+          <input type="hidden" id="fecha_clase_<?php echo $horario['id_horario'];?>" name="fecha_clase[]" value="<?php echo $fecha_clase;?>">
 
-          <input type="hidden" id="costo_<? echo $horario['id_horario'];?>" name="costo[]" value="<? echo $horario['costo'];?>">
+          <input type="hidden" id="costo_<?php echo $horario['id_horario'];?>" name="costo[]" value="<?php echo $horario['costo'];?>">
 
-          <input type="hidden" id="desc_especifica_<? echo $horario['id_horario'];?>" name="desc_especifica[]" value="<? echo $horario['desc_especifica'];?>" class="descripciones">
+          <input type="hidden" id="desc_especifica_<?php echo $horario['id_horario'];?>" name="desc_especifica[]" value="<?php echo $horario['desc_especifica'];?>" class="descripciones">
 
           <!---------------------BOTON DE HORARIOS DE CLASES Y COSTO------------------------------------->
-          <button name="boton_<? echo $horario['id_horario'];?>" id="boton_<? echo $horario['id_horario'];?>" onClick="calcular_costo(costo_<? echo $horario['id_horario'];?>.value, this.id, 'horario_<? echo $horario['id_horario'];?>', <? echo $credito_actual;?>, '<? echo $logueado;?>', '<? echo $fecha_clase;?>')" 
-          type="button" class="btn <? echo $clase_boton; ?> boton_horario btn-sm"><? echo date('H:i',strtotime($horario['hora']));?> <span class="badge valorpunto">
-          <? echo $horario['costo'];?>
+          <button name="boton_<?php echo $horario['id_horario'];?>" id="boton_<?php echo $horario['id_horario'];?>" onClick="calcular_costo(costo_<?php echo $horario['id_horario'];?>.value, this.id, 'horario_<?php echo $horario['id_horario'];?>', <?php echo $credito_actual;?>, '<?php echo $logueado;?>', '<?php echo $fecha_clase;?>')" 
+          type="button" class="btn <?php echo $clase_boton; ?> boton_horario btn-sm"><?php echo date('H:i',strtotime($horario['hora']));?> <span class="badge valorpunto">
+          <?php echo $horario['costo'];?>
           </span>
-          <?
-          /*if(isset($_SESSION['usuario_act']))
-          {
-          ?>
-          <i class="bi bi-info-square-fill"></i>
-          <?
-          }*/
-          ?>
+          
           </button>
           </div>
         </div>
 
-          <?
+          <?php
             if($boton_habilitado==0)
             {
           ?>
               <script>
-                $('#boton_<? echo $horario['id_horario'];?>').attr('disabled', 'true');
+                $('#boton_<?php echo $horario['id_horario'];?>').attr('disabled', 'true');
               </script>
-          <?
+          <?php
             }
           ?>
 
@@ -498,6 +534,8 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
         </div>
         <?php
           date_add($fecha_evaluar, date_interval_create_from_date_string("1 day"));
+          
+      }
         }
         ?>
 
@@ -512,14 +550,57 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
           </div>
               <h6 class="card-subtitle mb-2 text-muted">costo: <input type="text" readonly value="0" id="total_costo" name="total_costo" class="form-control"> puntos</h6>
               <div id="mensaje_credito" style="display:none;"><span class="badge badge-danger">Faltan puntos</span></div>
+              
+              <?php 
+                if(isset($_SESSION['usuario_act']))
+{ 
+              ?>
               <input type="submit" value="Confirmar" class="btn btn-primary" id="boton_confirmar" disabled>
+              
+              <?php }else{?>
+                     <input  value="Confirmar" class="btn btn-primary" data-toggle="modal" data-target="#btn_login_model"  >
+                     
+                     
+                     
+              <?php } ?>
           </div>
       </div>
     </form>
-    
-    <h6 class="grande"><span class="badge badge-pill badge-info"><? echo $credito_actual;?></span> puntos <span class="badge badge-pill <? echo $clase_vencido; ?>"><? echo formato_latino ($dato_usuario['vencimiento']);?></span> vencimiento</h6>
+    <?php 
+                if(isset($_SESSION['usuario_act']))
+{ 
+              ?>
+    <h6 class="grande"><span class="badge badge-pill badge-info"><?php echo $credito_actual;?></span> puntos <span class="badge badge-pill <?php echo $clase_vencido; ?>"><?php echo formato_latino ($dato_usuario['vencimiento']);?></span> vencimiento</h6>
     
     <br><br>
+    <?php } ?>
+    
+    
+    <div class="modal fade" id="btn_login_model">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header" style="background:#007bff;color:#fff;font-weight:bold;">
+          <h4 class="modal-title">Alerta</h4>
+         
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Por favor registre-se ou faça o Entrar?
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <a href="login_inscripcion.php" class="btn btn-primary">Registrarte</a>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
 
 
 <!--------------------CIERRE VENTANA MODAL---------------------------->
@@ -547,7 +628,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
 
     $('#boton_confirmar').attr('disabled', 'true');
       
-    <? 
+    <?php 
     unset($_SESSION['invitacion']); 
     unset($_SESSION['id_horario_guardados']);
     ?>
@@ -562,7 +643,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
     id_boton_abrio=$('#boton_abrio_no_credit').val();
     $('#'+id_boton_abrio).css('opacity', '1');    
     
-    if(total_costo_actualizado<=<? echo $credito_actual;?>)
+    if(total_costo_actualizado<=<?php echo $credito_actual;?>)
     {
       $('#mensaje_credito').css('display', 'none');
       $('#boton_confirmar').removeAttr("disabled");
@@ -578,7 +659,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
 
     $('#boton_confirmar').attr('disabled', 'true');
 
-    <? 
+    <?php 
     unset($_SESSION['invitacion']); 
     unset($_SESSION['id_horario_guardados']);
     ?>

@@ -9,14 +9,24 @@
 <meta name="author" content="Lokales Training Spot">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<link href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
+ <script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
-
+<style>
+    
+    @media only screen and (max-width: 767px) {
+  .m_query{width:100%!important;}
+}
+</style>
 </head>
+
+
 
 <body>
 
@@ -29,10 +39,10 @@
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="login.html">Entrar</a>
+                <a class="nav-link" href="login.php">Entrar</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+                <a class="nav-link" href="login_inscripcion.php">Registrarte</a>
               </li>
             </ul>
             <!--
@@ -46,27 +56,33 @@
     </header>
 
 <div class="container">
-  <br>
-  <h2>Recuparar clave</h2>
-  <br><br>
-  <h6><span id=span1>Ingresa tu datos y recibirás un e-mail con tu clave</h6>
-  <form action="login_recuperar2.php" method="post" name="" id="">
-    <div class="form-group col-6">
+  
+  
+  
+  
+  <form action="login_recuperar2.php" method="post"  class="m_query" style="width:40%;margin:0 auto;box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);padding:20px;margin-top:40px">
+      <div class="form-group col-12">
+      <h2>Recuparar clave</h2>
+      <h6><span id=span1>Ingresa tu datos y recibirás un e-mail con tu clave</span></h6>
+      </div>
+    <div class="form-group col-12">
       <label for="usuario">Usuario</label>
       <input type="text" class="form-control" id="dni" placeholder="dni" name="dni" pattern="[0-9]+" required>
     </div>
-    <div class="form-group col-6">
+    <div class="form-group col-12">
       <label for="email">Email</label>
       <input type="email" class="form-control" id="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
     </div>
-    <div>
+    <div class="form-group col-12" style="width:100%;margin:0 auto;text-align:center">
       <button type="submit" class="btn btn-primary">Mandar link</button>
     </div>
-    </form>
-    <br>
+    
+    <div class="form-group col-12" style="margin-top:20px;">
     <h6>O si no recuerdas el mail pidele a tu profesor!</h6>
-    <br>
-    <p><a href="login.html" class="badge badge-info">Volver</a></p>
+   
+    <p><a href="login.php" class="badge badge-info">Volver</a></p>
+     </div>
+    </form>
 </div>
 
 </body>

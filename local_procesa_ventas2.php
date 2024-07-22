@@ -1,5 +1,6 @@
-<?
+<?php
 	session_name('app_admin');
+	session_start();
 	include("conex.php");
 	include("local_controla.php");
 	//Meses en espanol
@@ -15,7 +16,10 @@
 	//$nombre_meses[10]="Octubre";
 	//$nombre_meses[11]="Noviembre";
 	//$nombre_meses[12]="Diciembre";		
-	$id_usuario=$_SESSION['usuario_act'];
+	$id_usuario=$_SESSION['tipo_usuario_act'];
+	
+	
+	
 	if(isset($_POST['registrado']))
 	{
 		$dni_registrado=$_POST['registrado'];
@@ -81,8 +85,12 @@
 	{
 		$recargo=0;
 	}
+	
+$ca_id = 	$_SESSION['cantidad'];
+	
+	
 	//Creamos el registro en la tabla ventas
-	if(mysqli_query($mysqli,"INSERT INTO ventas (id_usuario, fecha, hora, id_forma, descuento, recargo, efectivo, id_registrados) VALUES ('$id_usuario', '$fecha', '$hora4', '$id_forma', '$descuento', '$recargo', '$efectivo', '$dni_registrado')"))
+	if(mysqli_query($mysqli,"INSERT INTO ventas (id_usuario, fecha, hora, id_forma, descuento, recargo, efectivo, id_registrados) VALUES ('$ca_id', '$fecha', '$hora4', '$id_forma', '$descuento', '$recargo', '$efectivo', '$dni_registrado')"))
 	{
 		$id_venta=mysqli_insert_id($mysqli);
 		//Actualizamos venta mensual
@@ -117,7 +125,7 @@
 				$productos=mysqli_query($mysqli,"SELECT * FROM productos, categorias WHERE categorias.cod=cod_cat AND productos.cod='$cod_producto'");
 				$producto=mysqli_fetch_array($productos);
 				$precio=$producto['costo']*$producto['margen'];
-				if(!mysqli_query($mysqli,"INSERT INTO ventas_detalle (id_venta, cod_producto, cantidad, precio) VALUES ('$id_venta', '$cod_producto', '$cantidad', '$precio')"))
+				if(!mysqli_query($mysqli,"INSERT INTO ventas_detalle (id_venta, cod_producto, cantidad, precio) VALUES ('$id_venta', '$cod_producto', '$ca_id', '$precio')"))
 				{
 					echo mysqli_error($mysqli);
 				}
@@ -140,7 +148,9 @@
 				}
 				else
 				{
-					header("Location:local_datos.php");
+					//header("Location:local_datos.php");
+					
+					header("Location:local_ventas.php");
 				}
 			}
 		}
@@ -160,7 +170,7 @@
 </head>
 
 <body>
-<?
+<?php
 	if($error==0)
 	{
 		echo "ERROR!!! la venta NO se cargo, desconectar y volver a cargar.";

@@ -1,4 +1,4 @@
-<?
+<?php
 include ("conex.php");
 //include("local_controla.php");//controla2 usuario admin.
 include("biblioteca.php");
@@ -36,7 +36,7 @@ $profesores=mysqli_query($mysqli,"SELECT * FROM profesor ORDER BY nombre");
                       de nacimiento</font></strong></font> (<font color="#FF0000">*</font>)</td>
                     <td><label> 
                       <select name="dia" id="dia">
-                        <?
+                        <?php
 					for($i=1;$i<=31;$i++)
 					{
 						if($i<10)
@@ -48,16 +48,16 @@ $profesores=mysqli_query($mysqli,"SELECT * FROM profesor ORDER BY nombre");
 							$d=$i;
 						}
 ?>
-                        <option value="<? echo $d;?>"> 
-                        <? echo $d;?>
+                        <option value="<?php echo $d;?>"> 
+                        <?php echo $d;?>
                         </option>
                         <?
 					}
 ?>
                       </select>
-                      / 
+                      
                       <select name="mes" id="mes">
-                        <?
+                        <?php
 					for($i=1;$i<=12;$i++)
 					{
 						if($i<10)
@@ -69,23 +69,23 @@ $profesores=mysqli_query($mysqli,"SELECT * FROM profesor ORDER BY nombre");
 							$d=$i;
 						}
 ?>
-                        <option value="<? echo $d;?>"> 
-                        <? echo $d;?>
+                        <option value="<?php echo $d;?>"> 
+                        <?php echo $d;?>
                         </option>
-                        <?
+                        <?php
 					}
 ?>
                       </select>
-                      / 
+                      
                       <select name="anio" id="anio">
-                        <?
+                        <?php
 					for($i=1950;$i<=2014;$i++)
 					{						
 ?>
                         <option value="<? echo $i;?>"> 
-                        <? echo $i;?>
+                        <?php echo $i;?>
                         </option>
-                        <?
+                        <?php
 					}
 ?>
                       </select>
@@ -118,12 +118,12 @@ $profesores=mysqli_query($mysqli,"SELECT * FROM profesor ORDER BY nombre");
                     <td align="right"><strong><font color="#666666" face="Times New Roman, Times, serif">Actividad</font></strong><font face="Times New Roman, Times, serif"> 
                       (<font color="#FF0000">*</font>)</font></td>
                     <td><select name="act" id="act">
-    <?
+    <?php
 	while($actividad=mysqli_fetch_array($actividades))
 	{
 	?>
-    	<option value="<? echo $actividad['id_actividad'];?>" selected="selected"><? echo $actividad['nombre'];?></option>
-    <?
+    	<option value="<?php echo $actividad['id_actividad'];?>" selected="selected"><?php echo $actividad['nombre'];?></option>
+    <?php
 	}
 	?>
     </select></td>
@@ -132,12 +132,12 @@ $profesores=mysqli_query($mysqli,"SELECT * FROM profesor ORDER BY nombre");
                     <td align="right"><font color="#666666"><strong><font face="Times New Roman, Times, serif">Profesor</font></strong></font><font face="Times New Roman, Times, serif"> 
                       (<font color="#FF0000">*</font>)</font></td>
                     <td><select name="pro" id="pro">
-    <?
+    <?php
 	while($profesor=mysqli_fetch_array($profesores))
 	{
 	?>
-    	<option value="<? echo $profesor['id_profesor'];?>"><? echo $profesor['nombre'];?></option>
-    <?
+    	<option value="<?php echo $profesor['id_profesor'];?>"><?php echo $profesor['nombre'];?></option>
+    <?php
 	}
 	?>
     </select></td>

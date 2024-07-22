@@ -1,9 +1,18 @@
-<?
+<?php
 session_name("app_reservas");
 session_start();
 include("conex.php");
 
 date_default_timezone_set('America/Argentina/Cordoba'); // poner en todos los archivos
+
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	    
+	}else{
+	    header("Location: app_actividades.php");
+		 exit();
+	}
+
+
 
 	/*if(isset($_SESSION['invitacion']))
 	{
@@ -27,14 +36,14 @@ date_default_timezone_set('America/Argentina/Cordoba'); // poner en todos los ar
 		 {//Verifica si el usuario esta autenticado                           
 				//session_destroy();
 			 //echo $_SESSION["autentificado"];
-			   header("Location: login.html");
+			   header("Location: login.php");
 			   exit();
 		 }		
 	 }
 	 else
 	 {		  
 		 $_SESSION['autentificado']="NO";
-		 header("Location: login.html");
+		 header("Location: login.php");
 		 exit();
 	 }
 
@@ -120,7 +129,7 @@ date_default_timezone_set('America/Argentina/Cordoba'); // poner en todos los ar
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="http://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
 <!--
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -129,33 +138,34 @@ date_default_timezone_set('America/Argentina/Cordoba'); // poner en todos los ar
 -->
 
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
 
 </head>
 
 <body>
-<?	
+<?php	
 	if($error==1)
 	{
 ?>
 		<div class="alert alert-danger">
 			<p>No tenés suficientes puntos</p>
 			<br>
-			<p><a href="app_reserva.php?act_seleccionada=<? echo $_SESSION['actividad_sel'];?>" class="btn btn-primary">Volver</a></p>
+			<p><a href="app_reserva.php?act_seleccionada=<?php echo $_SESSION['actividad_sel'];?>" class="btn btn-primary">Volver</a></p>
 		</div>
-<?
+<?php
 	}
+	
 	if($error==2)
 	{
 ?>
 		<div class="alert alert-danger">
 			<p>Esa reserva ya existe.</p>
-			<p><? echo mysqli_error($mysqli);?></p>
+			<p><?php echo mysqli_error($mysqli);?></p>
 			<br>
-			<p><a href="app_reserva.php?act_seleccionada=<? echo $_SESSION['actividad_sel'];?>" class="btn btn-primary">Volver</a></p>
+			<p><a href="app_reserva.php?act_seleccionada=<?php echo $_SESSION['actividad_sel'];?>" class="btn btn-primary">Volver</a></p>
 		</div>
-<?
+<?php
 	}
 	if($error==3)
 	{

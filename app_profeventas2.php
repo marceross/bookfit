@@ -1,7 +1,16 @@
-<?
+<?php
+session_name("app_admin");
+session_start();
 	include("conex.php");
 	include("local_controla.php"); 	// session_name('app_admin'); session_start(); se agrega si no está el controla	
-	$id_usuario=$_SESSION['usuario_act'];
+	$id_usuario=$_SESSION['tipo_usuario_act'];
+	
+	
+
+	
+	$cod_producto = $_POST['cp'];
+	
+	
 	$error=0;
 	if(isset($_POST['dni_buscado']))
 	{
@@ -23,7 +32,12 @@
 		$fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
 		//$hora4=date("H:i:s",(time()-3*3600));
 		$hora4=date("H:i:s",time());
+		
+		if(isset($_SESSION['pago'])){
 		$id_forma=$_SESSION['pago'];
+		}else{
+		    $id_forma = 1;
+		}
 		
 		//--------------------------------------------------------------------
 		//Creamos el registro en la tabla ventas
@@ -52,56 +66,27 @@
 			}
 			
 			
-			//Cargamos el detalle de la venta
-			$temporales=mysqli_query($mysqli,"SELECT * FROM ventas_temporal WHERE id_usuario='$id_usuario'");
-			while($temporal=mysqli_fetch_array($temporales))
-			{
-				if($temporal['cant']>0)
-				{
-					$cod_producto=$temporal['cod_producto'];
-					$cantidad=$temporal['cant'];
+			
+			
+				
 
 					//--------------------------------------------------------------------
 					//Buscamos y calculamos el precio del producto
 					$productos=mysqli_query($mysqli,"SELECT * FROM productos, categorias WHERE categorias.cod=cod_cat AND productos.cod='$cod_producto'");
 					$producto=mysqli_fetch_array($productos);
 					$precio=$producto['costo']*$producto['margen'];
-					if(!mysqli_query($mysqli,"INSERT INTO ventas_detalle (id_venta, cod_producto, cantidad, precio) VALUES ('$id_venta', '$cod_producto', '$cantidad', '$precio')"))
+					if(!mysqli_query($mysqli,"INSERT INTO ventas_detalle (id_venta, cod_producto, cantidad, precio) VALUES ('$id_venta', '$cod_producto', '$id_usuario', '$precio')"))
 					{
 						echo mysqli_error($mysqli);
 					}
 
 
-					//--------------------------------------------------------------------
-					// Actualizo crédito
-					/*$registrados=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='$dni_registrado'");
-					$registrado=mysqli_fetch_array($registrados);
 					
-					$credito_viejo=$registrado['credito'];
-					$credito_compra=$producto['cantp'];*/
-
-					/*if(strtotime($registrado['vencimiento'])<strtotime($fecha))
-					{					
-						//si esta vencida se suman solo los puntos nuevos
-						$credito_nuevo=($credito_viejo-$credito_viejo+$credito_compra);
-					}
-					else//si no esta vencida se suman los puntos nuevos a los viejos
-					{
-						$credito_nuevo=($credito_viejo+$credito_compra); 							
-					}
-
-
-					
-					if(!mysqli_query($mysqli,"UPDATE registrados SET credito='$credito_nuevo' WHERE dni='$dni_registrado'"))
-					{
-						echo  "Error: ".mysqli_error($mysqli);
-						exit();
-					}*/
 
 
 					//--------------------------------------------------------------------
 					//Actualizo stock
-					mysqli_query($mysqli,"UPDATE productos SET stock=stock-'$cantidad' WHERE cod='$cod_producto'");
+					mysqli_query($mysqli,"UPDATE productos SET stock=stock-'$id_usuario' WHERE cod='$cod_producto'");
 
 
 					//--------------------------------------------------------------------
@@ -144,8 +129,8 @@
 					header("Location:app_profe.php");
 					
 				}
-			}
-		}
+			
+		
 	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -153,7 +138,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
-
+<link href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 </head>
 <body>
 	<?php
@@ -165,6 +150,6 @@
 </body>
 </html>
 
-<?
+<?php
 // ERA local_procesa_ventas2.php
 ?>

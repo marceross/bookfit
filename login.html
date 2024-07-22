@@ -9,11 +9,17 @@
   <meta name="author" content="Lokales Training Spot">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="estilo.css" rel="stylesheet" type="text/css">
-  <LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+  <LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
   <script src="js/jquery-3.6.0.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
+  <script src="js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+   <script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+  
+  
+<link rel="stylesheet" href="js/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <style>
   
@@ -61,6 +67,15 @@ a:active {
 }
 */
 </style>
+
+<style>
+    
+    @media only screen and (max-width: 767px) {
+  .m_query{width:100%!important;}
+}
+</style>
+
+
 </head>
 
 <body>
@@ -77,7 +92,7 @@ a:active {
             <a class="nav-link" href="login.html">Entrar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+            <a class="nav-link" href="login_inscripcion.php">Registrarte</a>
           </li>
         </ul>
         <!--
@@ -92,34 +107,34 @@ a:active {
 
 <div class="container">
   <br><br><br>
-  <form action="login_procesa.php" method="post" name="" id="">
+  <form action="login_procesa.php" method="post" class="m_query" style="width:40%;margin:0 auto;box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);padding:20px;">
     <div class="div-menu">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-12">
               <label for="usuario">Usuario</label>
               <input type="text" class="form-control" id="usuario" placeholder="dni" name="usuario" pattern="[0-9]+">
       </div>
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-12">
           <label for="clave">Clave</label>
           <input type="password" class="form-control" id="clave" placeholder="tu clave personal" name="clave">
       </div>
       <br>
-      <div class="form-group">
-        <!--<div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">Recordame</label>
-        </div>-->
+      <div class="form-group" style="width:100%;margin:0 auto;text-align:center">
+       <input type="submit" name="Submit" value="Entrar" class="btn btn-primary">   
+       
+       <h6 style="margin-top:20px"><a href="login_inscripcion.php">Primera vez acá? <span class="badge badge-success">Registrate</span></a></h6>
+  <h6><a href="login_recuperar.html">Olvidaste la clave? <span class="badge badge-warning">Recuparar</span></a></h6>
       <div>
-          <input type="submit" name="Submit" value="Entrar" class="btn btn-primary">    
+           
       </div>
     </div>
-    </form>
+   
     <br><br>
   </div>
-
-  <div class="div-footer">
-  <h6><a href="login_inscripcion.html">Primera vez acá? <span class="badge badge-success">Registrate</span></a></h6>
-  <h6><a href="login_recuperar.html">Olvidaste la clave? <span class="badge badge-warning">Recuparar</span></a></h6>
-  </div>
+ </form>
+ 
+  
+  
+  
 </div>
 </body>
 </html>

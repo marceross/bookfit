@@ -1,4 +1,7 @@
-<?
+<?php
+
+    session_name('app_admin');
+session_start();
     include("conex.php");	
 	include("local_controla.php");
     include("biblioteca.php");

@@ -1,4 +1,6 @@
-<?
+<?php
+session_name("app_admin");
+session_start();
 	include("conex.php");	
 	include("local_controla.php");
 	$array_fecha=getdate();
@@ -19,6 +21,7 @@
 		$precio_s_dto=$precio_base*$puntos_paquete;
 		return $precio_s_dto;
 	}
+
 
 	function calcular_porcentaje_dto($precio_paquete, $puntos_paquete, $precio_base)
 	{
@@ -85,15 +88,7 @@
 <script src="js/jquery-3.6.0.js"></script>
 
 <script>
-/*
-document.addEventListener("DOMContentLoaded", function(){
-                // llamamos cada 500 segundos ;)
-                const milisegundos = 500 *1000;
-                setInterval(function(){
-                    // No esperamos la respuesta de la petición porque no nos importa
-                    fetch("./refrescar.php");
-                },milisegundos);
-            });*/
+
 
 	function buscar_cliente(dni)
 	{	
@@ -154,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 <div class="container">
 
-<?
+<?php
   $paquetes=mysqli_query($mysqli,"SELECT productos.cod as cp, productos.nombre as np, costo, stock, descripcion, margen, marcas.nombre as nm, cantp, duracion FROM productos, categorias, marcas WHERE productos.id_marca=marcas.id_marca AND cod_cat=categorias.cod AND cod_cat=11 AND activo='S' ORDER BY productos.cantp DESC");
   //ORDER BY productos.cantp, marcas.nombre" CAMBÍE--------------------------------
   
@@ -168,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <div class="row">
 
 
-<?
+<?php
   while($paquete=mysqli_fetch_array($paquetes))
 
   {
@@ -191,25 +186,25 @@ document.addEventListener("DOMContentLoaded", function(){
 ?>
 
     <div class="card text-dark bg-light mb-3 caja_precio">
-        <h5 class="card-header bg-info text-light">Puntos <span class="badge badge-pill badge-light"><? echo $paquete['cantp'];?></span></h5>
+        <h5 class="card-header bg-info text-light">Puntos <span class="badge badge-pill badge-light"><?php echo $paquete['cantp'];?></span></h5>
         <div class="card-body">
 
 			<!-- % off 1-((precio paquete/puntos paquete)/precio base))*100---------------------------------------------------------->
-			<h5 class="card-title"><? echo "$ ".$paquete['costo']." ";?><span class="badge <? echo $clase_descuento;?>"><? echo $porcentaje_descuento."% off";?></span></h5>
+			<h5 class="card-title"><?php echo "$ ".$paquete['costo']." ";?><span class="badge <?php echo $clase_descuento;?>"><? echo $porcentaje_descuento."% off";?></span></h5>
 
 			<!-- precio antes precio base * puntos paquete---------------------------------------------------------->
-			<h6 class="card-title">Sin descuento <span class="outer"><span class="inner"><? echo "$ ".calcular_precio_s_dto ($precio_punto['costo'], $paquete['cantp'])."  .";?></span></span></h6>
+			<h6 class="card-title">Sin descuento <span class="outer"><span class="inner"><?php echo "$ ".calcular_precio_s_dto ($precio_punto['costo'], $paquete['cantp'])."  .";?></span></span></h6>
 
 			<!-- el punto te queda en... $... precio paquete/ puntos paquete ---------------------------------------------------------->
-			<span class="badge badge-info"><? echo "El punto te queda en $ ".calcular_dto($paquete['costo'], $paquete['cantp']);?></span>
+			<span class="badge badge-info"><?php echo "El punto te queda en $ ".calcular_dto($paquete['costo'], $paquete['cantp']);?></span>
 
-			<p class="card-text"><?echo "Duración ".$paquete['duracion']." días";?></p>
+			<p class="card-text"><?php echo "Duración ".$paquete['duracion']." días";?></p>
 			<br><br>
-			<a href="app_profeventas.php?cp=<? echo $paquete['cp'];?>" class="btn btn-success">Cargar</a>
+			<a href="app_profeventas.php?cp=<?php echo $paquete['cp'];?>" class="btn btn-success">Cargar</a>
         </div>
     </div>
 
-<?
+<?php
   }
 ?>
 
@@ -233,8 +228,8 @@ document.addEventListener("DOMContentLoaded", function(){
     </thead>
     <tbody>
         <tr>
-        <td><? echo $reserva['cant_reservas'];?></td>
-        <td><? echo $asistencia['cant_asistencias'];?></td>
+        <td><?php echo $reserva['cant_reservas'];?></td>
+        <td><?php echo $asistencia['cant_asistencias'];?></td>
         </tr>
     </tbody>
     </table>
@@ -256,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function(){
 </body>
 </html>
 
-<?
+<?php
 // funciones LLAMADA AJAX se comporta distinto en compu que en celu
 // onchange
 // onkeyup, habría que agregar una condición si está vació para que no aparezca la ventana

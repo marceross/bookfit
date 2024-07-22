@@ -1,4 +1,6 @@
-<?
+<?php
+session_name("app_admin");
+session_start();
 include("conex.php");
 include("local_controla.php");
 date_default_timezone_set('America/Argentina/Cordoba'); //-3
@@ -33,11 +35,11 @@ else
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <script>
@@ -68,7 +70,7 @@ function calcular_costo(id_boton, id_horario, fecha_clase)
 
 <body>
 <br><br>
-<?
+<?php
 //echo "Hoy es " . date("d.m.Y") . "<br>";
 //echo "La hora es " . date("h:i:sa");
 //exit();
@@ -77,7 +79,7 @@ function calcular_costo(id_boton, id_horario, fecha_clase)
 <div class="container">
   <div class="row justify-content-center">
     <!--<div class="col-6">-->
-      <h3 class="card-title"><span class="badge badge-pill badge-light"><? echo $act['nombre']; ?></span></h3>
+      <h3 class="card-title"><span class="badge badge-pill badge-light"><?php echo $act['nombre']; ?></span></h3>
     <!--</div>-->
   </div> 
     
@@ -125,30 +127,40 @@ function calcular_costo(id_boton, id_horario, fecha_clase)
           $numero_dia_mes=date('d', strtotime(date_format($fecha_evaluar,"Y-m-d"))); 
           $fecha_clase=date_format($fecha_evaluar,"Y-m-d");
           $dias_actividades=mysqli_query($mysqli, "SELECT * FROM actividad_horarios, actividad_dias WHERE actividad_dias_id_dia=".$orden_dias[$i]." AND actividad_dias_id_dia=id_dia AND actividad_id_actividad='$id_actividad' GROUP BY actividad_dias_id_dia");
+          
+          
+          
+          
           $dia_actividad=mysqli_fetch_array($dias_actividades);
+          
+          if($dia_actividad){
+          
           $actividad_dias_id_dia=$dia_actividad['id_dia'];
+          
+          
+          
           $horarios=mysqli_query($mysqli, "SELECT * FROM actividad_horarios WHERE actividad_id_actividad='$id_actividad' AND actividad_dias_id_dia=".$actividad_dias_id_dia." ORDER BY hora");
           
       ?>
       <!-- DIV DE LAS COLUMNAS DIASSSSSSSSS---------------------------------------------->
       <div class="col vert_line flex-grow-0">
-        <?
+        <?php
         if($dia_actividad['nombre_dia']<>'')
         {
         ?>
-          <h6><span class="badge badge-light"><? echo mb_substr($dia_actividad['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><? echo $numero_dia_mes;?></span></h6>
-       <?
+          <h6><span class="badge badge-light"><?php echo mb_substr($dia_actividad['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><?php echo $numero_dia_mes;?></span></h6>
+       <?php
         }
         else
         {
           $nombres_dias=mysqli_query($mysqli,"SELECT * FROM actividad_dias WHERE id_dia=".$orden_dias[$i]);          
           $nombre_dia=mysqli_fetch_array($nombres_dias);          
         ?>
-          <h6><span class="badge badge-light"><? echo mb_substr($nombre_dia['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><? echo $numero_dia_mes;?></span></h6>
-        <?
+          <h6><span class="badge badge-light"><?php echo mb_substr($nombre_dia['nombre_dia'],0,3);?></span><span class="badge badge-pill badge-dark"><?php echo $numero_dia_mes;?></span></h6>
+        <?php
         }
         ?>
-        <?
+        <?php
         /////////////////////////////////////////////pinta color de boton de acuerdo al cupo
         while($horario=mysqli_fetch_array($horarios))
         {
@@ -186,17 +198,17 @@ function calcular_costo(id_boton, id_horario, fecha_clase)
         <div>
           <div>
 
-          <input type="hidden" id="horario_<? echo $horario['id_horario'];?>" name="id_horario[]" value="<? echo $horario['id_horario'];?>_0">
+          <input type="hidden" id="horario_<?php echo $horario['id_horario'];?>" name="id_horario[]" value="<?php echo $horario['id_horario'];?>_0">
 
-          <input type="hidden" id="fecha_clase_<? echo $horario['id_horario'];?>" name="fecha_clase[]" value="<? echo $fecha_clase;?>">
+          <input type="hidden" id="fecha_clase_<?php echo $horario['id_horario'];?>" name="fecha_clase[]" value="<?php echo $fecha_clase;?>">
                   
 
           <!---------------------BOTON DE HORARIOS DE CLASES Y COSTO------------------------------------->
-          <button name="boton_<? echo $horario['id_horario'];?>" id="boton_<? echo $horario['id_horario'];?>" onClick="calcular_costo(this.id, 'horario_<? echo $horario['id_horario'];?>', '<? echo $fecha_clase;?>')" 
-          type="button" class="btn <? echo $clase_boton; ?> boton_horario btn-sm"><? echo date('H:i',strtotime($horario['hora']));?> <span class="badge badge-light">
-          <? echo $horario['costo'];?>
+          <button name="boton_<?php echo $horario['id_horario'];?>" id="boton_<?php echo $horario['id_horario'];?>" onClick="calcular_costo(this.id, 'horario_<?php echo $horario['id_horario'];?>', '<?php echo $fecha_clase;?>')" 
+          type="button" class="btn <?php echo $clase_boton; ?> boton_horario btn-sm"><?php echo date('H:i',strtotime($horario['hora']));?> <span class="badge badge-light">
+          <?php echo $horario['costo'];?>
           </span>
-          <?
+          <?php
           /*if(isset($_SESSION['usuario_act']))
           {
           ?>
@@ -208,14 +220,14 @@ function calcular_costo(id_boton, id_horario, fecha_clase)
           </div>
         </div>
 
-          <?
+          <?php
             if($boton_habilitado==0)
             {
           ?>
               <script>
-                $('#boton_<? echo $horario['id_horario'];?>').attr('disabled', 'true');
+                $('#boton_<?php echo $horario['id_horario'];?>').attr('disabled', 'true');
               </script>
-          <?
+          <?php
             }
           ?>
 
@@ -225,6 +237,8 @@ function calcular_costo(id_boton, id_horario, fecha_clase)
         </div>
         <?php
           date_add($fecha_evaluar, date_interval_create_from_date_string("1 day"));
+          
+      }
         }
         ?>
 

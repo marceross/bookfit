@@ -1,4 +1,7 @@
 <?php
+
+session_name('app_admin');
+session_start();
 include("conex.php");
 include("local_controla.php"); // session_name(''); session_start(); se agrega si no está el controla
 date_default_timezone_set('America/Argentina/Cordoba');
@@ -12,6 +15,9 @@ if ($_SESSION['autentificado'] != "SI" || $_SESSION['tipo_usuario_act'] != 3 )
     die();
 }
 
+if (isset($_POST['ac']))
+{
+
 if ($_POST['ac'] == "cambiar_asistencia")
 {
     $dni = $_POST['dni'];
@@ -20,7 +26,11 @@ if ($_POST['ac'] == "cambiar_asistencia")
     
     if ($asiste)
     {
-        $query = mysqli_query($mysqli,"INSERT INTO actividad_reservas_asist (actividad_horarios_id_horario, registrados_dni, fecha, id_usuario) VALUES (" . $idhorario . ",'" . $dni . "','$fecha', ".$_SESSION['usuario_act'].")");
+        
+        
+        
+        
+        $query = mysqli_query($mysqli,"INSERT INTO actividad_reservas_asist (actividad_horarios_id_horario, registrados_dni, fecha, id_usuario) VALUES (" . $idhorario . ",'" . $dni . "','$fecha', ".$_SESSION['tipo_usuario_act'].")");
     }
     else
     {
@@ -28,6 +38,8 @@ if ($_POST['ac'] == "cambiar_asistencia")
     }
     
     die("1");
+}
+
 }
 
 if (isset($_GET['idhorario']))
@@ -69,20 +81,43 @@ if (isset($_GET['idhorario']))
 else
 {
     $query = mysqli_query($mysqli,"SELECT * FROM actividad, actividad_reservas, actividad_horarios WHERE (actividad_horarios_id_horario=id_horario AND actividad_id_actividad=id_actividad) AND fecha='$fecha'");
+    
+   
+    
+    
     while ($fetch_actividad = mysqli_fetch_array($query))
     {
+        
+        //print_r($fetch_actividad);
+        
+        
         if($fetch_actividad['id_usuario']==0)//verifica si id_usuario existe en la tabla actividades_reservas
         {
             $horarios[$fetch_actividad["id_horario"]]["id"] = $fetch_actividad["id_horario"];
             $horarios[$fetch_actividad["id_horario"]]["hora"] = $fetch_actividad["hora"];
             $horarios[$fetch_actividad["id_horario"]]["nombre"] = $fetch_actividad["nombre"];
             $horarios[$fetch_actividad["id_horario"]]["desc"] = $fetch_actividad["desc_especifica"];
+            
+            $horarios[$fetch_actividad["id_horario"]]["dni"] = $fetch_actividad["registrados_dni"];
         }
     }
     
 }
 
 ?>
+
+<style>
+    
+
+
+@media screen and (max-width: 767px) {
+  .table td, .table th {
+    padding: .25rem!important;
+   font-size: 14px;
+}
+}
+</style>
+
 <!DOCTYPE html>
 <html lang="es">
 <!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -102,7 +137,7 @@ else
 		//alert("DNI: "+dni);
             $.ajax({			
                 url: 'buscar_alumno.php',
-                data: 'dni_cli=' + dni + '&idhorario=' + <? echo $_GET['idhorario'];?>,
+                data: 'dni_cli=' + dni + '&idhorario=' + <?php echo $_GET['idhorario'];?>,
                 success: function(resp) {				
                     if(resp!='no encontrado')
                     {					
@@ -130,7 +165,7 @@ else
                         alert("El alumno no tiene suficiente crédito");
                         
                     }
-                    window.location.href="asiste.php?idhorario="+idhorario;
+                    window.location.href="asiste.php?idhorario="+idhorario+"&dni="+dni;
                 }
             });
 	    }
@@ -143,7 +178,7 @@ else
             }
             else
             {
-                location.href='asistencia_confirma.php?idhorario=<? echo $_GET['idhorario'];?>';
+                location.href='asistencia_confirma.php?idhorario=<?php echo $_GET['idhorario'];?>';
             }
         }
 
@@ -153,11 +188,24 @@ else
     <body>
         <div class="container">
             <div class="head">
+                
+                <?php 
+                    if(isset($actividad)){
+                        
+                    
+                ?>
+                
+                
+                
                 <h5>Asistencia<?php echo ($actividad == "" ? "" : " | " . $actividad." ".date('H:i',strtotime($hora)));?></h5>
+                
+                <?php }else{?>
+                <h5>Asistencia : </h5>
+                <?php }?>
             </div>
             <div class="body">
                 <?php
-                if ($enActividad)
+                if (isset($enActividad))
                 {
                     ?>
                 <div class="table-responsive">
@@ -207,7 +255,8 @@ else
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<? echo $dni_nuevo;?>">
+                                    <input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<?php //echo 
+                                    $_GET['dni'];?>" >
                                     <button type="button" onclick="buscar_cliente(dni_buscado.value)" class="badge badge-info form-control">Buscar</button>
                                 </td> 
                             </tr>
@@ -221,7 +270,7 @@ else
                         <thead>
                             <tr>
                                 <td>
-                                <input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<? echo $dni_nuevo;?>">
+                                <input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<?php echo $dni_nuevo;?>">
                                 <button type="button" onclick="buscar_cliente(dni_buscado.value)" class="badge badge-info form-control">Buscar</button>
                                 </td>
                             </tr>
@@ -247,6 +296,8 @@ else
                         </thead>
                         <tbody>
                             <?php
+                            if(isset($horarios)){
+                            
                             foreach ($horarios as $horario=>$id)
                             {
                                 ?>
@@ -255,35 +306,49 @@ else
                                     <td><?php echo $id["desc"];?></td>
                                     <td><?php echo $id["hora"];?></td>
                                     <td>
-                                        <?
                                         
-                                        $temporales=mysqli_query($mysqli, "SELECT * FROM actividad_reservas_asist, usuarios WHERE actividad_reservas_asist.id_usuario=usuarios.id_usuario AND fecha='$fecha' AND actividad_horarios_id_horario=".$id["id"]." AND actividad_reservas_asist.id_usuario<>".$_SESSION['usuario_act']);
-
+                                        <?php 
+                                        
+                                        
+                                            
+                                            
+                                            $temporales=mysqli_query($mysqli,"
+                                            SELECT * FROM actividad_reservas_asist, usuarios WHERE actividad_reservas_asist.id_usuario=usuarios.id_usuario AND fecha=".$fecha." AND actividad_horarios_id_horario=".$id["id"]."  
+                                            ");
+                                        ?>
+                                        
+                                        
+                                        
+                                        <?php
+                                        
+                                        /*$temporales=mysqli_query($mysqli, "SELECT * FROM actividad_reservas_asist, usuarios WHERE actividad_reservas_asist.id_usuario=usuarios.id_usuario AND fecha='".$fecha."' AND actividad_horarios_id_horario='".$id["id"].'" AND actividad_reservas_asist.id_usuario<>'.$_SESSION['usuario_act'].');
+*/
                                         if(mysqli_num_rows($temporales)==0)
                                         {
                                         ?>
-                                            <a href="asiste.php?idhorario=<?php echo $id["id"];?>">GESTIONAR</a>
-                                        <?
+                                            <a href="asiste.php?idhorario=<?php echo $id["id"];?>&dni=<?php echo $id["dni"];?>">GESTIONAR</a>
+                                        <?php
                                         }
                                         else
                                         {
                                             $usu = mysqli_fetch_array($temporales);
                                             ?>
-                                            <h5><span class="badge badge-light"><?echo $usu['usuario'];?></span></h5>
-                                            <?
+                                            <h5><span class="badge badge-light"><?php echo $usu['usuario'];?></span></h5>
+                                            <?php
                                             /*
                                             $usu = mysqli_fetch_array($temporales);
                                             $usuario=mysqli_query($mysqli, "SELECT usuario FROM usuarios WHERE id_usuario=$usu");
                                             $nombre=mysqli_fetch_array($usuario);
                                             echo $nombre['usuario'];*/
                                             ?>
-                                        <?
+                                        <?php
                                         }
                                         ?>
 
                                     </td>
                                 </tr>
                                 <?php
+                            }
                             }
                             ?>
                         </tbody>
@@ -297,7 +362,7 @@ else
                 ?>
 
                 <?php
-                    if($enActividad)
+                    if(isset($enActividad))
                     {
                 ?>
                          <div class="footer">
@@ -307,9 +372,9 @@ else
                             $segundos_minutoAnadir=3600;
                             $hora_con_margen2=date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);  
                             ?>
-                            <button id="boton_confirmar" onclick="permitir_confirmar('<? echo $hora4;?>', '<? echo $hora_con_margen2;?>');">Confirmar</button>   
+                            <button id="boton_confirmar" onclick="permitir_confirmar('<?php echo $hora4;?>', '<?php echo $hora_con_margen2;?>');">Confirmar</button>   
                         </div>
-                <?
+                <?php
                     }
                 ?>
                 </div>
@@ -321,7 +386,7 @@ else
         <script src="js/bootstrap.min.js"></script>
         <script>
             <?php
-            if ($enActividad)
+            if (isset($enActividad))
             {
                 ?>
             function asistencia(dni,asiste,button)

@@ -1,4 +1,4 @@
-<?
+<?php
 include("conex.php");
 include("local_controla_app.php"); // session_name(''); session_start(); se agrega si no está el controla
 include("biblioteca.php");
@@ -38,10 +38,14 @@ else
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js"  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
+
+ <script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -53,34 +57,34 @@ else
       </button>
       <div class="navbar-collapse collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-        <?
+        <?php
         if(!isset($_SESSION['usuario_act']))
         {
         ?>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Entrar</a>
+            <a class="nav-link" href="login.php">Entrar</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
           </li>
-        <?
+        <?php
         }
         else
         {
         ?>
           <!--<li class="nav-item">
-           <p><a class="nav-link" href="app_perfil.php"><img src="<?// echo $re['foto'];?>" alt="Foto perfil" width="32"></a></p>
+           <p><a class="nav-link" href="app_perfil.php"><img src="<?php echo $re['foto'];?>" alt="Foto perfil" width="32"></a></p>
           </li>-->
           <li class="nav-item">
-            <h6><a class="nav-link"><span class="badge badge-pill badge-light"><? echo $re['nombre'];?></span></a></h6>
+            <h6><a class="nav-link"><span class="badge badge-pill badge-light"><?php echo $re['nombre'];?></span></a></h6>
           </li>
           <li class="nav-item">
-            <h6><a class="nav-link"><span class="badge badge-pill badge-dark"><? echo $credito_actual;?></span> puntos</a></h6>
+            <h6><a class="nav-link"><span class="badge badge-pill badge-dark"><?php echo $credito_actual;?></span> puntos</a></h6>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="app_kill.php">cerrar sesión</a>
           </li>
-        <?
+        <?php
         }
         ?>
         </ul>
@@ -94,63 +98,79 @@ else
     </nav>
 </header>
 
-<div class="container">
+<div class="container" style="margin-top:30px;">
   <div class="row">
-      <h5 class="grande"><span class="badge badge-pill badge-info"><? echo $credito_actual;?></span> puntos</h5>
-      <h5 class="grande"><span class="badge badge-pill <? echo $clase_vencido; ?>"><? echo formato_latino ($re['vencimiento']);?></span> vencimiento</h5>
+      <h5 class="grande"><span class="badge badge-pill badge-info"><?php echo $credito_actual;?></span> puntos</h5>
+      <h5 class="grande"><span class="badge badge-pill <?php echo $clase_vencido; ?>"><?php echo formato_latino ($re['vencimiento']);?></span> vencimiento</h5>
       <!--<h5><a class="nav-link" href="app_comprapuntos.php"><span class="badge badge-pill badge-info">Compra puntos</span></a></h5>-->
 
   </div>
-</div>
+
 
 <br>
 <div class="div-menu">
-	<div class="form-group col-md-6">
-    <form name="form1" method="post" action="app_perfil_mod_procesa.php?dni=<? echo $dni;?>">
+	<div class="form-group">
+    <form name="form1" method="post" action="app_perfil_mod_procesa.php?dni=<?php echo $dni;?>">
+        <div class="row">
+        <div class="col-sm-6">
         <p>nombre 
-          <input name="nom" type="text" class="form-control" id="nom" value="<? echo $re['nombre'];?>"/ required>
+          <input name="nom" type="text" class="form-control" id="nom" value="<?php echo $re['nombre'];?>"/ required>
         </p>
+        
+        </div>
+        <div class="col-sm-6">
         <p>apellido
-          <input name="ape" type="text" class="form-control" id="ape" value="<? echo $re['apellido'];?>"/>
+          <input name="ape" type="text" class="form-control" id="ape" value="<?php echo $re['apellido'];?>"/>
         </p>
+        </div>
+        <div class="col-sm-6">
         <p>dni
-          <input name="dni" type="text" class="form-control" id="dni" value="<? echo $re['dni'];?>" readonly/>
+          <input name="dni" type="text" class="form-control" id="dni" value="<?php echo $re['dni'];?>" readonly/>
         </p>
+         </div>
+         <div class="col-sm-6">
         <p>fecha de nacimento 
-          <input name="nac" type="date" class="form-control" id="nac" value="<? echo $re['nacimiento'];?>"/>
+          <input name="nac" type="date" class="form-control" id="nac" value="<?php echo $re['nacimiento'];?>"/>
         MM-DD-AAAA</p>
+        </div>
+        <div class="col-sm-6">
         <p>celular 
-          <input name="cel" type="text" class="form-control" id="cel" value="<? echo $re['celular'];?>"/ required>
+          <input name="cel" type="text" class="form-control" id="cel" value="<?php echo $re['celular'];?>"/ required>
         </p>
+          </div>
         <!--<p>comentario
-          <input name="com" type="text" class="form-control" id="com" value="<? echo $re['comentario'];?>" size="80" maxlength="500"/>
+          <input name="com" type="text" class="form-control" id="com" value="<?php echo $re['comentario'];?>" size="80" maxlength="500"/>
         </p>-->
+        <div class="col-sm-6">
         <p>mail
-          <input name="mai" type="text" class="form-control" id="mai" value="<? echo $re['mail'];?>"/ pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+          <input name="mai" type="text" class="form-control" id="mai" value="<?php echo $re['mail'];?>"/ pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
         </p>
+        </div>
+        <div class="col-sm-6">
         <p>clave
-          <input name="cla" type="password" maxlength="15" class="form-control" id="cla" value="<? echo $re['clave'];?>"/ required>
+          <input name="cla" type="password" maxlength="15" class="form-control" id="cla" value="<?php echo $re['clave'];?>"/ required>
         </p>
+        </div>
 
-        <!--<p>actividad 
+        <?php /*?><p>actividad 
           <select name="act" id="act">
     	
-    <?
+    <?php
 	while($actividad=mysqli_fetch_array($actividades))
 	{
 		if($actividad['id_actividad']<>$re['actividad'])
 		{
 	?>
-    		<option value="<? echo $actividad['id_actividad'];?>"><? echo $actividad['nombre'];?></option>
-    <?
+    		<option value="<?php echo $actividad['id_actividad'];?>"><?php echo $actividad['nombre'];?></option>
+    <?php
          }
          else
          {
    ?>
-   			<option selected value="<? echo $actividad['id_actividad'];?>"><? echo $actividad['nombre'];?></option>
+   			<option selected value="<?php echo $actividad['id_actividad'];?>"><?php echo $actividad['nombre'];?></option>
    			   
          
-    <?
+    <?php
 		}
 	}
 	?>
@@ -159,21 +179,21 @@ else
         <p>profesor 
           <select name="pro" id="pro">
     	
-    <?
+    <?php
 	while($profesor=mysqli_fetch_array($profesores))
 	{
 		if($profesor['id_profesor']<>$re['profesor'])
 		{
 		
 	?>
-    		<option value="<? echo $profesor['id_profesor'];?>"><? echo $profesor['nombre'];?></option>
-    <?
+    		<option value="<?php echo $profesor['id_profesor'];?>"><?php echo $profesor['nombre'];?></option>
+    <?php
 		}
 		else
 		{
 	?>
-    		<option selected value="<? echo $profesor['id_profesor'];?>"><? echo $profesor['nombre'];?></option>
-    <?
+    		<option selected value="<?php echo $profesor['id_profesor'];?>"><?php echo $profesor['nombre'];?></option>
+    <?php
 		}
 	}
 	?>
@@ -181,49 +201,48 @@ else
         </p>
         <p>
           autorizacion 
-          <?
+          <?php
 		  if($re['autorizacion']=='N')
 		  {
 		  ?>
           	<input name="aut" type="checkbox" id="aut" value="S">
-         <?
+         <?php
 		  }
 		  else
 		  {
 		 ?>
          	<input checked name="aut" type="checkbox" id="aut" value="S">
-         <?
+         <?php
 		  }
 		 ?>
         </p>
         <p>
           certificado
-            <?
+            <?php
 		  if($re['certificado']=='N')
 		  {
 		  ?>
           	<input name="cer" type="checkbox" id="cer" value="S">
-         <?
+         <?php
 		  }
 		  else
 		  {
 		 ?>
          	<input checked name="cer" type="checkbox" id="cer" value="S">
-         <?
+         <?php
 		  }
 		 ?>
-        </p>-->
+        </p><?php */?>
+         <div class="col-sm-12">
         <p> 
-          <input class="btn btn-primary" type="submit" name="Submit" value="Enviar">
+          <input class="btn btn-primary" type="submit" name="Submit" value="Actualizar">
         </p>
+        </div>
+        </div>
       </form><br><br>
   </div>
 </div>
-
-<div>
-    <button id="toggleButton" onclick="toggleReservaAuto()">Toggle Reserva Auto</button>
 </div>
-
 
 <footer class="fixed-bottom bg-light">
       <div class="row">
@@ -245,8 +264,6 @@ else
         </div>
       </div>
 </footer>
-
-<script src="script.js"></script>
 
 </body>
 </html>

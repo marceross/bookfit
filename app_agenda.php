@@ -1,4 +1,4 @@
-<?
+<?php
 include("conex.php");
 include("local_controla_app.php"); // session_name(''); session_start(); se agrega si no está el controla
 include("confirmacion.js");
@@ -37,7 +37,7 @@ $reservas=mysqli_query($mysqli,"SELECT actividad.nombre AS nombre_actividad, act
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<LINK href="https://www.lokales.com.ar/favico.ico" rel="shortcut icon">
+<LINK href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
 
 <!--
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -46,8 +46,12 @@ $reservas=mysqli_query($mysqli,"SELECT actividad.nombre AS nombre_actividad, act
 -->
 
 <script src="js/jquery-3.6.0.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="js/bootstrap.min.css" >
+
+ <script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -60,28 +64,28 @@ $reservas=mysqli_query($mysqli,"SELECT actividad.nombre AS nombre_actividad, act
       </button>
       <div class="navbar-collapse collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-        <?
+        <?php
         if(!isset($_SESSION['usuario_act']))
         {
         ?>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Entrar</a>
+            <a class="nav-link" href="login.php">Entrar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login_inscripcion.html">Registrarte</a>
+            <a class="nav-link" href="login_inscripcion.php">Registrarte</a>
           </li>
-        <?
+        <?php
         }
         else
         {
         ?>
           <li class="nav-item">
-          <h6><a class="nav-link"><span class="badge badge-pill badge-light"><? echo $dato_usuario['nombre'];?></span><span class="badge badge-pill badge-dark"><? echo $credito_actual;?></span> puntos</a></h6>
+          <h6><a class="nav-link"><span class="badge badge-pill badge-light"><?php echo $dato_usuario['nombre'];?></span><span class="badge badge-pill badge-dark"><?php echo $credito_actual;?></span> puntos</a></h6>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="app_kill.php">cerrar sesión</a>
           </li>
-        <?
+        <?php
         }
         ?>
         </ul>
@@ -95,10 +99,10 @@ $reservas=mysqli_query($mysqli,"SELECT actividad.nombre AS nombre_actividad, act
     </nav>
 </header>
 
-<div class="container">
+<div class="container" style="margin-top:30px">
 
 <h3 class="card-title">Tus reservas</h3>
-<?
+<?php
 while($reserva=mysqli_fetch_array($reservas))
 {
   $numero_dia_mes=date('d', strtotime($reserva['fecha_reserva'])); 
@@ -113,32 +117,32 @@ while($reserva=mysqli_fetch_array($reservas))
   
 ?>
   <div class="row justify-content-center">
-    <h4><span class="badge badge-light"><? echo $nombre_dia['nombre_dia'];?></span></h4>
-    <h4><span class="badge badge-dark"><? echo $numero_dia_mes;?></span></h4>
+    <h4><span class="badge badge-light"><?php echo $nombre_dia['nombre_dia'];?></span></h4>
+    <h4><span class="badge badge-dark"><?php echo $numero_dia_mes;?></span></h4>
    
   </div>
     
   <div class="row">
-    <h3 class="card-title"><span class="badge badge-pill badge-light"><? echo $reserva['nombre_actividad'];?></span></h3>
+    <h3 class="card-title"><span class="badge badge-pill badge-light"><?php echo $reserva['nombre_actividad'];?></span></h3>
   </div>
 
 
-<?
+<?php
    //Mostrar Reservas
    while($horario=mysqli_fetch_array($horarios))
    {
 ?>
   <div class="row hori_line">
     <div class="col">
-    <button type="button" class="btn btn-success btn-sm" value="disabled"><? echo $horario['hora'];?></button>
+    <button type="button" class="btn btn-success btn-sm" value="disabled"><?php echo $horario['hora'];?></button>
     </div>
     <div class="col">
-    <h6 class="card-title"><span class="badge badge-pill badge-info"><? echo $horario['desc_especifica'];?></span></h6>
-    <!--<span class="badge badge-info"><? echo $horario['desc_especifica'];?></span>-->
+    <h6 class="card-title"><span class="badge badge-pill badge-info"><?php echo $horario['desc_especifica'];?></span></h6>
+    <!--<span class="badge badge-info"><?php echo $horario['desc_especifica'];?></span>-->
     <!--<button type="button" class="btn btn-primary">Invitar</button>-->
     </div>
     <div class="col">
-  <?
+  <?php
 // VER SI PUEDE CANCELAR O NO
       //$fecha_c=strtotime($reserva['fecha_reserva']);
       //$fecha_a=strtotime($fecha);
@@ -155,14 +159,14 @@ while($reserva=mysqli_fetch_array($reservas))
        //($diferencia>=1 and $fecha_c==$fecha_a or $fecha_c>=$fecha_a)
        {
   ?>
-          <a class="btn btn-outline-danger btn-sm" href="javascript:confirmar('¿Vas a cancelar la reserva?', 'app_cancela_reserva.php?idr=<? echo $horario['id_reserva'];?>')">cancelar</a>
-    <?
+          <a class="btn btn-outline-danger btn-sm" href="javascript:confirmar('¿Vas a cancelar la reserva?', 'app_cancela_reserva.php?idr=<?php echo $horario['id_reserva'];?>')">cancelar</a>
+    <?php
        }
        else
        {
     ?>
         <a class="btn btn-outline-danger btn-sm" href="javascript:alert('Se puede cancelar hasta una hora antes de que empiece la clase')">cancelar</a>
-    <?
+    <?php
        }
     ?>
 
@@ -170,7 +174,7 @@ while($reserva=mysqli_fetch_array($reservas))
   </div>
 
 
-<?
+<?php
    }
     //Mostrar Invitaciones VER MENSAJE DE CANCELACIÓN, COMPARAR CON EL DE RESERVA...
     while($invitacion=mysqli_fetch_array($invitaciones))
@@ -178,13 +182,13 @@ while($reserva=mysqli_fetch_array($reservas))
     ?>
       <div class="row hori_line">
         <div class="col">
-          <button type="button" class="btn btn-info btn-sm" value="disabled"><? echo $invitacion['hora'];?></button>
+          <button type="button" class="btn btn-info btn-sm" value="disabled"><?php echo $invitacion['hora'];?></button>
         </div>
         <div class="col">
-          <h3 class="card-title"><span class="badge badge-pill badge-light"><? echo $invitacion['nombre'];?></span></h3>          
+          <h3 class="card-title"><span class="badge badge-pill badge-light"><?php echo $invitacion['nombre'];?></span></h3>          
         </div>
         <div class="col">
-<?
+<?php
 // VER SI PUEDE CANCELAR O NO
       //$fecha_c=strtotime($reserva['fecha_reserva']);
       //$fecha_a=strtotime($fecha);
@@ -202,22 +206,22 @@ while($reserva=mysqli_fetch_array($reservas))
 ?>
 
 
-        <a class="btn btn-outline-danger btn-sm" href="javascript:confirmar('¿Vas a cancelar la reserva?', 'app_cancela_reserva.php?idr=<? echo $invitacion['id_reserva'];?>')">cancelar</a>
+        <a class="btn btn-outline-danger btn-sm" href="javascript:confirmar('¿Vas a cancelar la reserva?', 'app_cancela_reserva.php?idr=<?php echo $invitacion['id_reserva'];?>')">cancelar</a>
 
-    <?
+    <?php
        }
        else
        {
     ?>
         <a class="btn btn-outline-danger btn-sm" href="javascript:alert('Se puede cancelar hasta una hora antes de que empiece la clase')">cancelar</a>
-    <?
+    <?php
        }
     ?>
 
         </div>
       </div>
 
-    <?
+    <?php
    }
 }
 ?>
@@ -225,7 +229,7 @@ while($reserva=mysqli_fetch_array($reservas))
 
 
 <h3 class="card-title">Clases pasadas</h3> 
-<?
+<?php
 // FROM registrados WHERE  registrados.dni=actividad_reservas.registrados_dni
 $reservas_viejas=mysqli_query($mysqli,"SELECT actividad.nombre AS nombre_actividad, actividad_reservas.fecha AS fecha_reserva, actividad_dias_id_dia, id_actividad, id_reserva, usuario FROM actividad, actividad_reservas, actividad_horarios, usuarios WHERE usuarios.id_usuario=actividad_reservas.id_usuario AND actividad_horarios.id_horario=actividad_reservas.actividad_horarios_id_horario AND actividad_horarios.actividad_id_actividad=actividad.id_actividad  AND registrados_dni='$id_usuario' AND actividad_reservas.fecha<'$fecha' AND asiste=1 GROUP BY actividad.nombre, actividad_reservas.fecha, actividad_dias_id_dia  ORDER BY fecha ASC LIMIT 5");
 
@@ -235,17 +239,17 @@ $reservas_viejas=mysqli_query($mysqli,"SELECT actividad.nombre AS nombre_activid
 ?>
   <div class="row hori_line">
     <div class="col">
-    <button type="button" class="btn btn-info" onClick="window.location='app_reserva.php?act_seleccionada=<? echo $reserva_vieja['id_actividad'];?>'" ><? echo $reserva_vieja['nombre_actividad'];?></button>
+    <button type="button" class="btn btn-info" onClick="window.location='app_reserva.php?act_seleccionada=<?php echo $reserva_vieja['id_actividad'];?>'" ><?php echo $reserva_vieja['nombre_actividad'];?></button>
     </div>
     <div class="col">
-    <h3 class="card-title">Profe <span class="badge badge-pill badge-light"><? echo $reserva_vieja['usuario'];?></span></h3>          
+    <h3 class="card-title">Profe <span class="badge badge-pill badge-light"><?php echo $reserva_vieja['usuario'];?></span></h3>          
     </div>
     <div class="col">
-    <a class="btn btn-outline-primary" href="app_reserva.php?act_seleccionada=<? echo $reserva_vieja['id_actividad'];?>">repetir</a>
+    <a class="btn btn-outline-primary" href="app_reserva.php?act_seleccionada=<?php echo $reserva_vieja['id_actividad'];?>">repetir</a>
 
     </div>
   </div>
-<?
+<?php
 }
 ?>
 
