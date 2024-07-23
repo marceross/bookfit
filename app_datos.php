@@ -32,10 +32,16 @@ $fecha_inicial=$array_fecha['year']."-".$array_fecha['mon']."-01";
 
 //Ventas totales
 $ventas_totales=mysqli_query($mysqli,"SELECT COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_ventas  FROM ventas, ventas_detalle WHERE ventas.id_venta=ventas_detalle.id_venta AND (fecha>='$fecha_inicial' AND fecha<='$fecha_final')");
+
+//echo "SELECT COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_ventas  FROM ventas, ventas_detalle WHERE ventas.id_venta=ventas_detalle.id_venta AND (fecha>='$fecha_inicial' AND fecha<='$fecha_final')";
+
 $venta_total=mysqli_fetch_array($ventas_totales);
 
 //Puntos activos
 $puntos_activos=mysqli_query($mysqli,"SELECT SUM(credito) as total_puntos, COUNT(*) as socios_activos FROM registrados WHERE vencimiento>'$fecha_final'");
+
+//echo "SELECT SUM(credito) as total_puntos, COUNT(*) as socios_activos FROM registrados WHERE vencimiento>'$fecha_final'";
+
 $puntos_activo=mysqli_fetch_array($puntos_activos);
 
 // si quisiera saber cuanto socios en el periodo del ultimo mes...
@@ -117,11 +123,16 @@ $fecha_final_mesanterior = $date->format("Y-m-d");;
 
 //Ventas totales mes anterior
 $ventas_totales_mesanterior=mysqli_query($mysqli,"SELECT SUM(ventas_detalle.precio) AS total_ventas  FROM ventas, ventas_detalle WHERE ventas.id_venta=ventas_detalle.id_venta AND (fecha>='$fecha_inicial_mesanterior' AND fecha<='$fecha_final_mesanterior')");
+
+//echo "SELECT SUM(ventas_detalle.precio) AS total_ventas  FROM ventas, ventas_detalle WHERE ventas.id_venta=ventas_detalle.id_venta AND (fecha>='$fecha_inicial_mesanterior' AND fecha<='$fecha_final_mesanterior')";
+
 $venta_total_mesanterior=mysqli_fetch_array($ventas_totales_mesanterior);
 
 //Puntos activos mes anterior
 // Consulta de tabla indicadores
 $puntos_activos_mesanterior=mysqli_query($mysqli,"SELECT puntos_activos as total_puntos, clientes_activos as socios_activos FROM indicadores ORDER BY fecha DESC LIMIT 1");
+
+//echo "SELECT puntos_activos as total_puntos, clientes_activos as socios_activos FROM indicadores ORDER BY fecha DESC LIMIT 1";
 
 //$puntos_activos_mesanterior=mysqli_query($mysqli,"SELECT SUM(credito) as total_puntos, COUNT(*) as socios_activos FROM registrados WHERE vencimiento>'$fecha_final_mesanterior'");
 $puntos_activo_mesanterior=mysqli_fetch_array($puntos_activos_mesanterior);
@@ -312,7 +323,14 @@ function crear_tabla(tipo, id_boton)
         
         <td><?php echo $puntos_activo['total_puntos'];?><br>
         <span class="badge resultados"><?php echo $puntos_activo['total_puntos']-$puntos_activo_mesanterior_1;?></span>
-        <h2><?php echo $p2;?>%</h2>
+        <h2>
+            
+           
+            
+            <?php echo   round($p2, 2);?>%
+            
+            
+            </h2>
         </td>
         
         
@@ -339,11 +357,16 @@ function crear_tabla(tipo, id_boton)
         
         <td><?php echo $puntos_activo['socios_activos'];?><br>
         <span class="badge resultados"><?php echo $puntos_activo['socios_activos']-$puntos_activo_mesanterior_2;?></span>
-        <h2><?php echo $q2;?>%</h2>
+        <h2>
+            <?php echo   round($q2, 2);?>
+            
+            %</h2>
         </td>
         <td><?php echo $reserva['cant_reservas'];?><br>
         <span class="badge resultados"><?php echo $reserva['cant_reservas']-$reserva_mesanterior;?></span>
-        <h2><?php echo $r2?>%</h2>
+        <h2>
+            <?php echo   round($r2, 2);?>
+            %</h2>
         </td>
         
         <?php
@@ -366,7 +389,8 @@ function crear_tabla(tipo, id_boton)
         
         <td><?php echo $asistencia['cant_asistencias'];?><br>
         <span class="badge resultados"><?php echo $asistencia['cant_asistencias']-$a1;?></span>
-        <h2><?php echo $a2;?>%</h2>
+        <h2>
+            <?php echo   round($a2, 2);?>%</h2>
         </td>
         </tr>
         
