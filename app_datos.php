@@ -79,19 +79,15 @@ $recompra=mysqli_fetch_array($recompras);
 
 //Tabla Profesores
 $ventas_profe = mysqli_query($mysqli,
-"SELECT usuarios.usuario, COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_pesos, SUM(cantp) as total_puntos
+"SELECT usuarios.usuario,usuarios.id_usuario, COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_pesos, SUM(cantp) as total_puntos
 FROM ventas, ventas_detalle, productos, usuarios
 WHERE (ventas.id_venta=ventas_detalle.id_venta AND ventas_detalle.cod_producto=productos.cod AND ventas.id_usuario=usuarios.id_usuario  AND ventas.id_forma=1) AND (fecha>='$fecha_inicial' AND fecha<='$fecha_final')
 GROUP BY usuarios.usuario
 ORDER BY total_pesos DESC");
 
-/*
-echo "SELECT usuarios.usuario, COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_pesos, SUM(cantp) as total_puntos
-FROM ventas, ventas_detalle, productos, usuarios
-WHERE (ventas.id_venta=ventas_detalle.id_venta AND ventas_detalle.cod_producto=productos.cod AND ventas.id_usuario=usuarios.id_usuario  AND ventas.id_forma=1) AND (fecha>='$fecha_inicial' AND fecha<='$fecha_final')
-GROUP BY usuarios.usuario
-ORDER BY total_pesos DESC";
-*/
+
+
+
 
 
 ////////////////////////// consulta para ver las ventas de un profesor entre fechas
@@ -139,28 +135,13 @@ $asistencias_mesanterior=mysqli_query($mysqli,"SELECT COUNT(*) as cant_asistenci
 $asistencia_mesanterior=mysqli_fetch_array($asistencias_mesanterior);
 
 //Tabla profes mes anterior
-if(!$ventas_profe_mesanterior=mysqli_query($mysqli,
-"SELECT usuarios.usuario, COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_pesos, SUM(cantp) as total_puntos
-FROM ventas_detalle, productos, ventas RIGHT JOIN usuarios ON ventas.id_usuario=usuarios.id_usuario
-WHERE (ventas.id_venta=ventas_detalle.id_venta AND ventas_detalle.cod_producto=productos.cod AND ventas.id_forma=1) AND (fecha>='$fecha_inicial_mesanterior' AND fecha<='$fecha_final_mesanterior')
-GROUP BY usuarios.usuario
-ORDER BY total_pesos DESC"))
 
 
 
 
-{
-    echo "Error: ".mysqli_error($mysqli);
-    exit();
-}
 
-/*
-echo "SELECT usuarios.usuario, COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_pesos, SUM(cantp) as total_puntos
-FROM ventas_detalle, productos, ventas RIGHT JOIN usuarios ON ventas.id_usuario=usuarios.id_usuario
-WHERE (ventas.id_venta=ventas_detalle.id_venta AND ventas_detalle.cod_producto=productos.cod AND ventas.id_forma=1) AND (fecha>='$fecha_inicial_mesanterior' AND fecha<='$fecha_final_mesanterior')
-GROUP BY usuarios.usuario
-ORDER BY total_pesos DESC";
-*/
+
+
 
 //echo "SELECT dni, registrados.nombre, apellido, COUNT(*) AS cant_compras, SUM(ventas_detalle.precio) AS total_pesos FROM ventas, ventas_detalle, productos, registrados WHERE (ventas.id_venta=ventas_detalle.id_venta AND ventas_detalle.cod_producto=productos.cod AND ventas.id_registrados=registrados.dni  AND ventas.id_forma=1) AND (ventas.fecha>='$fecha_inicial' AND ventas.fecha<='$fecha_final') GROUP BY dni ORDER BY dni<br><br>";
 
@@ -454,6 +435,18 @@ function crear_tabla(tipo, id_boton)
         <?php
             while($venta_profe=mysqli_fetch_array($ventas_profe))
             {
+                
+                $ventas_profe_mesanterior=mysqli_query($mysqli,
+"SELECT usuarios.usuario, COUNT(*) AS cant_ventas, SUM(ventas_detalle.precio) AS total_pesos, SUM(cantp) as total_puntos
+FROM ventas_detalle, productos, ventas RIGHT JOIN usuarios ON ventas.id_usuario=usuarios.id_usuario
+WHERE (ventas.id_venta=ventas_detalle.id_venta AND ventas_detalle.cod_producto=productos.cod AND ventas.id_forma=1 AND ventas.id_usuario=".$venta_profe['id_usuario'].") AND (fecha>='$fecha_inicial_mesanterior' AND fecha<='$fecha_final_mesanterior')
+GROUP BY usuarios.usuario
+ORDER BY total_pesos DESC");
+
+
+                
+                
+                
                 $venta_profe_mesanterior=mysqli_fetch_array($ventas_profe_mesanterior);
                 
                 
