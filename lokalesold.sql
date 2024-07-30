@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 30, 2024 at 12:03 PM
+-- Generation Time: Jul 30, 2024 at 12:06 PM
 -- Server version: 10.6.18-MariaDB-cll-lve
 -- PHP Version: 8.1.28
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lokalesold`
+-- Database: `lokalespark`
 --
 
 -- --------------------------------------------------------
@@ -42,6 +42,7 @@ CREATE TABLE `actividad` (
 --
 
 CREATE TABLE `actividad_asistencia` (
+  `id` int(255) NOT NULL,
   `actividad` int(11) NOT NULL,
   `dni` int(8) NOT NULL,
   `fecha` date NOT NULL
@@ -110,6 +111,7 @@ CREATE TABLE `actividad_reservas` (
 --
 
 CREATE TABLE `actividad_reservas_asist` (
+  `id` int(255) NOT NULL,
   `registrados_dni` int(8) NOT NULL,
   `fecha` date NOT NULL DEFAULT '0000-00-00',
   `actividad_horarios_id_horario` int(11) NOT NULL,
@@ -123,6 +125,7 @@ CREATE TABLE `actividad_reservas_asist` (
 --
 
 CREATE TABLE `actividad_reserva_auto` (
+  `id` int(255) NOT NULL,
   `registrados_dni` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -164,6 +167,7 @@ CREATE TABLE `caja` (
 --
 
 CREATE TABLE `caja_aporte` (
+  `id` int(255) NOT NULL,
   `billetes` int(11) NOT NULL,
   `monedas` double NOT NULL,
   `concepto` varchar(100) NOT NULL,
@@ -194,6 +198,7 @@ CREATE TABLE `caja_cierre` (
 --
 
 CREATE TABLE `caja_extraccion` (
+  `id` int(255) NOT NULL,
   `billetes` int(11) NOT NULL,
   `monedas` double NOT NULL,
   `concepto` int(11) NOT NULL,
@@ -374,7 +379,7 @@ CREATE TABLE `indicadores_clientes_temp` (
 --
 
 CREATE TABLE `indicador_botones` (
-  `cod` int(11) NOT NULL,
+  `cod` int(255) NOT NULL,
   `nombre` varchar(10) NOT NULL,
   `clicks` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -627,10 +632,10 @@ CREATE TABLE `proveedores` (
 --
 
 CREATE TABLE `registrados` (
-  `alias` varchar(20) NOT NULL,
+  `alias` int(255) NOT NULL,
   `nombre` varchar(20) NOT NULL DEFAULT '',
   `apellido` varchar(20) NOT NULL DEFAULT '',
-  `dni` int(8) NOT NULL,
+  `dni` int(11) NOT NULL,
   `mail` varchar(40) NOT NULL,
   `nacimiento` date NOT NULL,
   `comentario` mediumtext NOT NULL,
@@ -702,6 +707,7 @@ CREATE TABLE `ventas` (
 --
 
 CREATE TABLE `ventas_detalle` (
+  `id` int(255) NOT NULL,
   `id_venta` int(11) NOT NULL,
   `cod_producto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
@@ -757,6 +763,12 @@ ALTER TABLE `actividad`
   ADD PRIMARY KEY (`id_actividad`);
 
 --
+-- Indexes for table `actividad_asistencia`
+--
+ALTER TABLE `actividad_asistencia`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `actividad_dias`
 --
 ALTER TABLE `actividad_dias`
@@ -766,74 +778,67 @@ ALTER TABLE `actividad_dias`
 -- Indexes for table `actividad_horarios`
 --
 ALTER TABLE `actividad_horarios`
-  ADD PRIMARY KEY (`id_horario`),
-  ADD KEY `fk_actividad_horarios_actividad_dias1_idx` (`actividad_dias_id_dia`),
-  ADD KEY `fk_actividad_horarios_actividad1_idx` (`actividad_id_actividad`);
+  ADD PRIMARY KEY (`id_horario`);
 
 --
 -- Indexes for table `actividad_horarios_susp`
 --
 ALTER TABLE `actividad_horarios_susp`
-  ADD PRIMARY KEY (`actividad_horarios_id_horario2`,`fecha`) USING BTREE;
+  ADD PRIMARY KEY (`actividad_horarios_id_horario2`);
 
 --
 -- Indexes for table `actividad_reservas`
 --
 ALTER TABLE `actividad_reservas`
-  ADD PRIMARY KEY (`id_reserva`),
-  ADD UNIQUE KEY `no_repetir_invitacion` (`registrados_dni`,`fecha`,`actividad_horarios_id_horario`),
-  ADD KEY `fk_reservas_registrados1_idx` (`registrados_dni`),
-  ADD KEY `fk_actividad_reservas_actividad_horarios1_idx` (`actividad_horarios_id_horario`);
+  ADD PRIMARY KEY (`id_reserva`);
 
 --
 -- Indexes for table `actividad_reservas_asist`
 --
 ALTER TABLE `actividad_reservas_asist`
-  ADD PRIMARY KEY (`registrados_dni`,`fecha`,`actividad_horarios_id_horario`),
-  ADD KEY `fk_reservas_registrados1_idx` (`registrados_dni`),
-  ADD KEY `fk_actividad_reservas_actividad_horarios1_idx` (`actividad_horarios_id_horario`),
-  ADD KEY `indprofe` (`id_usuario`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `actividad_reserva_auto`
+--
+ALTER TABLE `actividad_reserva_auto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `auditoria`
 --
 ALTER TABLE `auditoria`
-  ADD PRIMARY KEY (`cod`),
-  ADD KEY `ind_usuario` (`usu`);
+  ADD PRIMARY KEY (`cod`);
 
 --
 -- Indexes for table `caja`
 --
 ALTER TABLE `caja`
-  ADD PRIMARY KEY (`id_caja`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD PRIMARY KEY (`id_caja`);
 
 --
 -- Indexes for table `caja_aporte`
 --
 ALTER TABLE `caja_aporte`
-  ADD PRIMARY KEY (`fecha`,`hora`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `caja_cierre`
 --
 ALTER TABLE `caja_cierre`
-  ADD PRIMARY KEY (`id_cierre`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD PRIMARY KEY (`id_cierre`);
 
 --
 -- Indexes for table `caja_extraccion`
 --
 ALTER TABLE `caja_extraccion`
-  ADD PRIMARY KEY (`fecha`,`hora`),
-  ADD KEY `concepto` (`concepto`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `caja_extraccion_concepto`
 --
 ALTER TABLE `caja_extraccion_concepto`
-  ADD PRIMARY KEY (`id_concepto`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+  ADD PRIMARY KEY (`id_concepto`);
 
 --
 -- Indexes for table `categorias`
@@ -845,9 +850,7 @@ ALTER TABLE `categorias`
 -- Indexes for table `compra`
 --
 ALTER TABLE `compra`
-  ADD PRIMARY KEY (`id_compra`),
-  ADD KEY `id_proveedor` (`id_proveedor`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD PRIMARY KEY (`id_compra`);
 
 --
 -- Indexes for table `compra_detalle`
@@ -865,22 +868,19 @@ ALTER TABLE `compra_temporal`
 -- Indexes for table `consultas`
 --
 ALTER TABLE `consultas`
-  ADD PRIMARY KEY (`numero`),
-  ADD KEY `id_mail` (`id_mail`);
+  ADD PRIMARY KEY (`numero`);
 
 --
 -- Indexes for table `contacto`
 --
 ALTER TABLE `contacto`
-  ADD PRIMARY KEY (`codigo`),
-  ADD KEY `id_mail` (`id_mail`);
+  ADD PRIMARY KEY (`codigo`);
 
 --
 -- Indexes for table `foro`
 --
 ALTER TABLE `foro`
-  ADD PRIMARY KEY (`id_comentario`),
-  ADD KEY `mail` (`mail`);
+  ADD PRIMARY KEY (`id_comentario`);
 
 --
 -- Indexes for table `indicadores`
@@ -893,6 +893,12 @@ ALTER TABLE `indicadores`
 --
 ALTER TABLE `indicadores_clientes_temp`
   ADD PRIMARY KEY (`dni`);
+
+--
+-- Indexes for table `indicador_botones`
+--
+ALTER TABLE `indicador_botones`
+  ADD PRIMARY KEY (`cod`);
 
 --
 -- Indexes for table `inscripcion_eventos`
@@ -916,22 +922,19 @@ ALTER TABLE `inscripcion_eventos_undiadewake`
 -- Indexes for table `mails`
 --
 ALTER TABLE `mails`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `mail` (`mail`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `marcas`
 --
 ALTER TABLE `marcas`
-  ADD PRIMARY KEY (`id_marca`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+  ADD PRIMARY KEY (`id_marca`);
 
 --
 -- Indexes for table `mensajes`
 --
 ALTER TABLE `mensajes`
-  ADD PRIMARY KEY (`id_mensaje`),
-  ADD KEY `id_usuario_rem` (`id_usuario_rem`);
+  ADD PRIMARY KEY (`id_mensaje`);
 
 --
 -- Indexes for table `mensajes_conversaciones`
@@ -943,51 +946,43 @@ ALTER TABLE `mensajes_conversaciones`
 -- Indexes for table `mensajes_internos`
 --
 ALTER TABLE `mensajes_internos`
-  ADD PRIMARY KEY (`id_mensaje`),
-  ADD KEY `id_usuario_rem` (`id_usuario_rem`);
+  ADD PRIMARY KEY (`id_mensaje`);
 
 --
 -- Indexes for table `mensajes_internos_destinatarios`
 --
 ALTER TABLE `mensajes_internos_destinatarios`
-  ADD PRIMARY KEY (`id_usuario`,`id_mensaje`),
-  ADD KEY `id_mensaje` (`id_mensaje`);
+  ADD PRIMARY KEY (`id_usuario`,`id_mensaje`);
 
 --
 -- Indexes for table `pedidos`
 --
 ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`nro_ped`),
-  ADD KEY `id_proveedor` (`id_proveedor`);
+  ADD PRIMARY KEY (`nro_ped`);
 
 --
 -- Indexes for table `pedidos_detalle`
 --
 ALTER TABLE `pedidos_detalle`
-  ADD PRIMARY KEY (`nro_det`),
-  ADD KEY `cod` (`cod`),
-  ADD KEY `nro_ped` (`nro_ped`);
+  ADD PRIMARY KEY (`nro_det`);
 
 --
 -- Indexes for table `productos`
 --
 ALTER TABLE `productos`
-  ADD PRIMARY KEY (`cod`),
-  ADD KEY `id_marca` (`id_marca`);
+  ADD PRIMARY KEY (`cod`);
 
 --
 -- Indexes for table `productos_imagenes`
 --
 ALTER TABLE `productos_imagenes`
-  ADD PRIMARY KEY (`cod`,`foto`),
-  ADD KEY `cod` (`cod`);
+  ADD PRIMARY KEY (`cod`);
 
 --
 -- Indexes for table `productos_usados`
 --
 ALTER TABLE `productos_usados`
-  ADD PRIMARY KEY (`cod`),
-  ADD KEY `id_marca` (`id_marca`);
+  ADD PRIMARY KEY (`cod`);
 
 --
 -- Indexes for table `profesor`
@@ -999,21 +994,19 @@ ALTER TABLE `profesor`
 -- Indexes for table `proveedores`
 --
 ALTER TABLE `proveedores`
-  ADD PRIMARY KEY (`id_proveedor`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+  ADD PRIMARY KEY (`id_proveedor`);
 
 --
 -- Indexes for table `registrados`
 --
 ALTER TABLE `registrados`
-  ADD PRIMARY KEY (`dni`);
+  ADD PRIMARY KEY (`alias`);
 
 --
 -- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id_usuario`),
-  ADD KEY `id_tipo_usuario` (`id_tipo_usuario`);
+  ADD PRIMARY KEY (`id_usuario`);
 
 --
 -- Indexes for table `usuarios_tipos`
@@ -1025,14 +1018,13 @@ ALTER TABLE `usuarios_tipos`
 -- Indexes for table `ventas`
 --
 ALTER TABLE `ventas`
-  ADD PRIMARY KEY (`id_venta`),
-  ADD KEY `id_forma` (`id_forma`);
+  ADD PRIMARY KEY (`id_venta`);
 
 --
 -- Indexes for table `ventas_detalle`
 --
 ALTER TABLE `ventas_detalle`
-  ADD PRIMARY KEY (`id_venta`,`cod_producto`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `ventas_facturacion`
@@ -1044,8 +1036,7 @@ ALTER TABLE `ventas_facturacion`
 -- Indexes for table `ventas_forma_pago`
 --
 ALTER TABLE `ventas_forma_pago`
-  ADD PRIMARY KEY (`id_forma`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+  ADD PRIMARY KEY (`id_forma`);
 
 --
 -- Indexes for table `ventas_temporal`
@@ -1062,6 +1053,12 @@ ALTER TABLE `ventas_temporal`
 --
 ALTER TABLE `actividad`
   MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `actividad_asistencia`
+--
+ALTER TABLE `actividad_asistencia`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `actividad_dias`
@@ -1088,6 +1085,18 @@ ALTER TABLE `actividad_reservas`
   MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `actividad_reservas_asist`
+--
+ALTER TABLE `actividad_reservas_asist`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `actividad_reserva_auto`
+--
+ALTER TABLE `actividad_reserva_auto`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `auditoria`
 --
 ALTER TABLE `auditoria`
@@ -1100,10 +1109,22 @@ ALTER TABLE `caja`
   MODIFY `id_caja` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `caja_aporte`
+--
+ALTER TABLE `caja_aporte`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `caja_cierre`
 --
 ALTER TABLE `caja_cierre`
   MODIFY `id_cierre` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `caja_extraccion`
+--
+ALTER TABLE `caja_extraccion`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categorias`
@@ -1134,6 +1155,12 @@ ALTER TABLE `contacto`
 --
 ALTER TABLE `foro`
   MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `indicador_botones`
+--
+ALTER TABLE `indicador_botones`
+  MODIFY `cod` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inscripcion_eventos`
@@ -1220,6 +1247,12 @@ ALTER TABLE `proveedores`
   MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `registrados`
+--
+ALTER TABLE `registrados`
+  MODIFY `alias` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -1238,6 +1271,12 @@ ALTER TABLE `ventas`
   MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `ventas_detalle`
+--
+ALTER TABLE `ventas_detalle`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `ventas_forma_pago`
 --
 ALTER TABLE `ventas_forma_pago`
@@ -1248,104 +1287,6 @@ ALTER TABLE `ventas_forma_pago`
 --
 ALTER TABLE `ventas_temporal`
   MODIFY `id_venta_temporal` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `actividad_horarios`
---
-ALTER TABLE `actividad_horarios`
-  ADD CONSTRAINT `fk_actividad_horarios_actividad1` FOREIGN KEY (`actividad_id_actividad`) REFERENCES `actividad` (`id_actividad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_actividad_horarios_actividad_dias1` FOREIGN KEY (`actividad_dias_id_dia`) REFERENCES `actividad_dias` (`id_dia`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `actividad_reservas`
---
-ALTER TABLE `actividad_reservas`
-  ADD CONSTRAINT `fk_actividad_reservas_actividad_horarios1` FOREIGN KEY (`actividad_horarios_id_horario`) REFERENCES `actividad_horarios` (`id_horario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_reservas_registrados1` FOREIGN KEY (`registrados_dni`) REFERENCES `registrados` (`dni`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Constraints for table `actividad_reservas_asist`
---
-ALTER TABLE `actividad_reservas_asist`
-  ADD CONSTRAINT `actividad_reservas_asist_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
-
---
--- Constraints for table `auditoria`
---
-ALTER TABLE `auditoria`
-  ADD CONSTRAINT `auditoria_ibfk_1` FOREIGN KEY (`usu`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
-
---
--- Constraints for table `caja_extraccion`
---
-ALTER TABLE `caja_extraccion`
-  ADD CONSTRAINT `caja_extraccion_ibfk_1` FOREIGN KEY (`concepto`) REFERENCES `caja_extraccion_concepto` (`id_concepto`);
-
---
--- Constraints for table `compra`
---
-ALTER TABLE `compra`
-  ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
-
---
--- Constraints for table `compra_detalle`
---
-ALTER TABLE `compra_detalle`
-  ADD CONSTRAINT `compra_detalle_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id_compra`) ON DELETE CASCADE;
-
---
--- Constraints for table `mensajes_internos`
---
-ALTER TABLE `mensajes_internos`
-  ADD CONSTRAINT `mensajes_internos_ibfk_1` FOREIGN KEY (`id_usuario_rem`) REFERENCES `usuarios` (`id_usuario`);
-
---
--- Constraints for table `mensajes_internos_destinatarios`
---
-ALTER TABLE `mensajes_internos_destinatarios`
-  ADD CONSTRAINT `mensajes_internos_destinatarios_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
-  ADD CONSTRAINT `mensajes_internos_destinatarios_ibfk_2` FOREIGN KEY (`id_mensaje`) REFERENCES `mensajes_internos` (`id_mensaje`);
-
---
--- Constraints for table `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`);
-
---
--- Constraints for table `pedidos_detalle`
---
-ALTER TABLE `pedidos_detalle`
-  ADD CONSTRAINT `pedidos_detalle_ibfk_1` FOREIGN KEY (`nro_ped`) REFERENCES `pedidos` (`nro_ped`) ON DELETE CASCADE,
-  ADD CONSTRAINT `pedidos_detalle_ibfk_2` FOREIGN KEY (`cod`) REFERENCES `productos` (`cod`);
-
---
--- Constraints for table `productos_imagenes`
---
-ALTER TABLE `productos_imagenes`
-  ADD CONSTRAINT `productos_imagenes_ibfk_1` FOREIGN KEY (`cod`) REFERENCES `productos` (`cod`);
-
---
--- Constraints for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `usuarios_tipos` (`id_tipo_usuario`);
-
---
--- Constraints for table `ventas`
---
-ALTER TABLE `ventas`
-  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_forma`) REFERENCES `ventas_forma_pago` (`id_forma`);
-
---
--- Constraints for table `ventas_detalle`
---
-ALTER TABLE `ventas_detalle`
-  ADD CONSTRAINT `ventas_detalle_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id_venta`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
