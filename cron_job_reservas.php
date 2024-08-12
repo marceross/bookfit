@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 include("conex.php");
 
 
@@ -45,18 +49,31 @@ while ($user = mysqli_fetch_assoc($eligibleUsersQuery)) {
             if (mysqli_num_rows($isSuspendedQuery) == 0) {
                 // Check if the user has enough credits for the reservation
                 if ($user['credito'] >= $costo) {
+                    
+                    $if_check = "SELECT * FROM actividad_reservas WHERE registrados_dni='" . $user['dni'] . "' AND fecha='" . $fecha . "' AND actividad_horarios_id_horario='".$id_horario."'";
+                    //echo $if_check;
+                    $if_check = mysqli_query($mysqli,$if_check);
+                    
+                    if (mysqli_num_rows($if_check) == 0) {
+                    
+                   
+                    
                     // Insert reservation record
                     mysqli_query($mysqli, "INSERT INTO actividad_reservas (registrados_dni, fecha, actividad_horarios_id_horario) VALUES ('" . $user['dni'] . "', '" . $fecha . "', '" . $id_horario . "')");
 
                     // Deduct the cost from the user's credits
                     mysqli_query($mysqli, "UPDATE registrados SET credito = credito - " . $costo . " WHERE dni = '" . $user['dni'] . "'");
 
-                    echo "Reservation made for User: " . $user['name'] . ", DNI: " . $user['dni'] . " for the same time slot as last week<br>";
+                    echo "Reservation made for User: " . $user['nombre'] . ", DNI: " . $user['dni'] . " for the same time slot as last week<br>";
+                    }else{
+                        echo 'Already Reservation maded ';
+                    }
+                    
                 } else {
-                    echo "Insufficient credits for User: " . $user['name'] . ", DNI: " . $user['dni'] . " for the same time slot as last week<br>";
+                    echo "Insufficient credits for User: " . $user['nombre'] . ", DNI: " . $user['dni'] . " for the same time slot as last week<br>";
                 }
             } else {
-                echo "Reservation not made for User: " . $user['name'] . ", DNI: " . $user['dni'] . " for the same time slot as last week due to suspension<br>";
+                echo "Reservation not made for User: " . $user['nombre'] . ", DNI: " . $user['dni'] . " for the same time slot as last week due to suspension<br>";
             }
         }
     }
