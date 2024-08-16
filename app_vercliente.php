@@ -99,6 +99,22 @@ function buscar_alias(dni)
       <label for="clave">clave</label>
         <input name="cla" type="password" class="form-control" id="cla" value="<?php echo $re['clave'];?>" readonly>
     </div>
+    
+   <div class="form-group col-md-3">
+<ol class="switches">
+  <li>
+    <input type="checkbox" id="1" name="auto_reserva" value="1" <?php if ($re['reserva_auto'] == 1) { echo "checked='checked'"; } ?>>
+    <label for="1">
+      <span>Auto Reserva</span>
+      <span></span>
+    </label>
+  </li>
+  
+</ol>
+    </div>
+    
+    
+    
 
           <!--<p>actividad
             <select name="act" id="act">
@@ -181,19 +197,135 @@ function buscar_alias(dni)
         }
       ?>
           </p>-->
+          	<div class="form-group col-md-12">	
           <p> 
             <input class="btn btn-primary" type="submit" name="Submit" value="Enviar">
           </p>
+          </div>
         </form>
     </div>
   </div>
 </div>
 
 <div class="div-menu">
-	<div class="form-group col-md-6">	
-		<p><a href="app_profe.php?v=1#boton_siguiente" class="badge badge-info">Volver</a></p>
+	<div class="form-group col-md-12">	
+		<p style="text-align:center"><a href="app_profe.php?v=1#boton_siguiente"  class="badge badge-info"><< Volver</a></p>
 	</div>
 </div>
+
+<style>
+    
+    
+    ol {
+  list-style: none;
+  padding: 0px;
+}
+
+label {
+  cursor: pointer;
+}
+
+[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+
+
+
+.switches li {
+  position: relative;
+  counter-increment: switchCounter;
+}
+
+
+
+.switches li::before {
+
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--pink);
+}
+
+.switches label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.switches span:last-child {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+  background: var(--gray);
+  transition: all 0.3s;
+}
+
+.switches span:last-child::before,
+.switches span:last-child::after {
+  content: "";
+  position: absolute;
+}
+
+.switches span:last-child::before {
+  left: 1px;
+  top: 1px;
+  width: 24px;
+  height: 24px;
+  background: var(--white);
+  border-radius: 50%;
+  z-index: 1;
+  transition: transform 0.3s;
+}
+
+.switches span:last-child::after {
+  top: 50%;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/uncheck-switcher.svg);
+  background-size: 12px 12px;
+}
+
+.switches [type="checkbox"]:checked + label span:last-child {
+  background: var(--green);
+}
+
+.switches [type="checkbox"]:checked + label span:last-child::before {
+  transform: translateX(24px);
+}
+
+.switches [type="checkbox"]:checked + label span:last-child::after {
+  width: 14px;
+  height: 14px;
+  /*right: auto;*/
+  left: 8px;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/checkmark-switcher.svg);
+  background-size: 14px 14px;
+}
+
+@media screen and (max-width: 600px) {
+  .switches li::before {
+    display: none;
+  }
+}
+
+    
+    
+        
+
+    </style>
+    
+
+
 </body>
 </html>
 
