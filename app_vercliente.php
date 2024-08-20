@@ -34,7 +34,9 @@ else
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
-
+  <script src="js/jquery-3.2.1.min.js"></script>
+<link href="js/lobibox.css" rel="stylesheet" type="text/css" />
+<script src="js/lobibox.min.js"></script>
 <script>
 //no funciona todavía
 function buscar_alias(dni)
@@ -52,13 +54,13 @@ function buscar_alias(dni)
 
 <body>
 
-<div class="container">
+<div class="container effect1">
 
   <h6><span class="badge badge-pill badge-light"><?php echo $re['nombre'];?></span><span class="badge badge-pill badge-dark"><?php echo $re['credito'];?></span> puntos
   <span class="badge badge-pill <?php echo $clase_vencido; ?> "><?php echo formato_latino ($re['vencimiento']);?></span> vencimiento</h6>
 
   <form name="form1" method="post" action="app_vercliente_mod_procesa.php?dni=<?php echo $dni;?>">
-  <div class="div-menu">
+  <div class="div-menu row">
     <!--<div class="form-group col-md-4">
       <label for="nombre">Alias</label>
       <input name="ali" type="text" class="form-control" id="ali" value="<?// echo $re['alias'];?>" onkeyup="buscar_cliente(this.value)">
@@ -100,18 +102,7 @@ function buscar_alias(dni)
         <input name="cla" type="password" class="form-control" id="cla" value="<?php echo $re['clave'];?>" readonly>
     </div>
     
-   <div class="form-group col-md-3">
-<ol class="switches">
-  <li>
-    <input type="checkbox" id="1" name="auto_reserva" value="1" <?php if ($re['reserva_auto'] == 1) { echo "checked='checked'"; } ?>>
-    <label for="1">
-      <span>Auto Reserva</span>
-      <span></span>
-    </label>
-  </li>
-  
-</ol>
-    </div>
+   
     
     
     
@@ -197,17 +188,30 @@ function buscar_alias(dni)
         }
       ?>
           </p>-->
-          	<div class="form-group col-md-12">	
+          	<div class="form-group col-md-6">	
           <p> 
             <input class="btn btn-primary" type="submit" name="Submit" value="Enviar">
           </p>
           </div>
+          <div class="form-group col-md-6">
+<ol class="switches">
+  <li>
+    <input type="checkbox" id="auto_reserva" name="auto_reserva" value="1" <?php if ($re['reserva_auto'] == 1) { echo "checked='checked'"; } ?>>
+    <label for="1">
+      <span style="font-weight:bold;">Auto Reserva</span>
+      <span></span>
+    </label>
+  </li>
+  
+</ol>
+    </div>
+          
         </form>
     </div>
   </div>
 </div>
 
-<div class="div-menu">
+<div class="div-menu" style="margin-top:20px">
 	<div class="form-group col-md-12">	
 		<p style="text-align:center"><a href="app_profe.php?v=1#boton_siguiente"  class="badge badge-info"><< Volver</a></p>
 	</div>
@@ -215,7 +219,7 @@ function buscar_alias(dni)
 
 <style>
     
-    
+   
     ol {
   list-style: none;
   padding: 0px;
@@ -232,7 +236,13 @@ label {
 
 
 
+.effect1{
+  box-shadow: rgba(25, 25, 25, 0.04) 0 0 5px 0, rgba(0, 0, 0, 0.1) 3px 2px 4px 5px;
+  padding:30px;
+}
 
+
+}
 .switches li {
   position: relative;
   counter-increment: switchCounter;
@@ -324,11 +334,60 @@ label {
 
     </style>
     
+<script>
+    $('.switches').on('click',function (e) {
+    
+        //e.preventDefault();
+        
+        
+       if ($('#auto_reserva').is(':checked')) {
+            var auto_reserva = 0;
+        }else{
+             var auto_reserva = 1;
+        }
+        
+        
+        
+        var url = 'ajax/app_vercliente_ajax.php';
+       
+        //var auto_reserva = $('#auto_reserva').val();
+        var dni = $('#dni').val();
+				
+			$.ajax({
+                type: 'POST',
+                url: url,
+                data: {auto_reserva:auto_reserva,dni:dni},
+                
+                success: function(Onj) {
+					
+					
+    					Lobibox.notify('success', {
+    					size: 'mini',
+    					rounded: true,
+    					delayIndicator: false,
+    					position: "bottom right",
+    					sound: false, 
+    					msg: 'Auto Reserva Modificado Con Exito',
+					
 
+				});
+					
+					if(Onj == 1){
+					    $('#auto_reserva').prop('checked', true);
+
+					}else{
+					    $('#auto_reserva').prop('checked', false);
+					}		
+				
+                },
+                error: function(data) {}
+            });	
+				
+				
+				
+    });
+</script>
 
 </body>
 </html>
 
-<?php
-// ERA registrados_mod.php
-?>
