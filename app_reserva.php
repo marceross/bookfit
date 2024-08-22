@@ -5,6 +5,11 @@ include("conex.php");
 include("biblioteca.php");
 date_default_timezone_set('America/Argentina/Cordoba'); //-3
 
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 $_SESSION['actividad_sel']=$id_actividad= $_GET['act_seleccionada'];
 $_SESSION['procedencia']='app_reserva.php';
 $actividad=mysqli_query($mysqli,"SELECT * FROM actividad WHERE id_actividad='$id_actividad'");
@@ -14,7 +19,16 @@ $array_fecha=getdate();
 
 
 
+
+
 $fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
+
+
+//$fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval(02);
+
+//print_r($array_fecha);
+//print_r($fecha);
+//exit();
 
 
 
@@ -80,7 +94,6 @@ else
 <link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-<script src="js/jquery.slim.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
 
@@ -188,7 +201,9 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
 		//alert("DNI: "+dni);
 		$.ajax({			
 			url: 'buscar_cliente_invitacion.php',
+			type : 'POST',
 			data: 'dni_cli=' + dni,
+			
 			success: function(resp) {
 				$('#cliente_encontrado').html(resp)
 
@@ -374,7 +389,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
       
       
       
-     // echo $dias_fecha;
+     //echo $dias_fecha;
       $orden_dias=explode(",",$dias_fecha);//funcion que toma cadena de caracteres y divide tomando como base un caracter 6, 0, 1, 2, 3, 4, 5
       
      
@@ -383,22 +398,39 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
     <div class="row hori_line justify-content-center">
       <?php
       $fecha_evaluar = date_create($fecha);
+      $d=0;
       for($i=0;$i<sizeof($orden_dias);$i++) //calcula el tamano de 6, 0, 1, 2, 3, 4, 5
       {
-          $numero_dia_mes=date('d', strtotime(date_format($fecha_evaluar,"Y-m-d"))); 
-          $fecha_clase=date_format($fecha_evaluar,"Y-m-d");
           
+          
+          //date_add($fecha_evaluar,date_interval_create_from_date_string("$d days"));
+          
+          
+          
+          //echo date_format($fecha_evaluar,"Y-m-d").'<br>';
+
+//print_r($fecha_evaluar) ;
+          
+          $numero_dia_mes =date('d', strtotime(date_format($fecha_evaluar,"Y-m-d"))); 
+          $fecha_clase =date_format($fecha_evaluar,"Y-m-d");
+          
+           
+
+          //echo $d;
           
           $dias_actividades=mysqli_query($mysqli, "SELECT * FROM actividad_horarios, actividad_dias WHERE actividad_dias_id_dia=".$orden_dias[$i]." AND actividad_dias_id_dia=id_dia AND actividad_id_actividad='$id_actividad' AND activo='S' GROUP BY actividad_dias_id_dia");
           /*
           $dias_actividades=mysqli_query($mysqli, "SELECT * FROM actividad_horarios, actividad_dias WHERE actividad_dias_id_dia=".$orden_dias[$i]." AND  actividad_id_actividad='$id_actividad' AND activo='S' GROUP BY actividad_dias_id_dia");
           */
           
-         
+         //echo "SELECT * FROM actividad_horarios, actividad_dias WHERE actividad_dias_id_dia=".$orden_dias[$i]." AND actividad_dias_id_dia=id_dia AND actividad_id_actividad='$id_actividad' AND activo='S' GROUP BY actividad_dias_id_dia";
           
           $dia_actividad=mysqli_fetch_array($dias_actividades);
           
           if($dia_actividad){
+              
+              
+              
           
           //print_r($dia_actividad);
           
@@ -410,6 +442,9 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
           
           $horarios=mysqli_query($mysqli, "SELECT * FROM actividad_horarios WHERE actividad_id_actividad='$id_actividad' AND actividad_dias_id_dia=".$actividad_dias_id_dia." AND activo='S' ORDER BY hora");
           
+      
+      
+      
       ?>
       <!-- DIV DE LAS COLUMNAS DIASSSSSSSSS---------------------------------------------->
       <div class="col vert_line flex-grow-0">
@@ -535,7 +570,10 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
         <?php
           date_add($fecha_evaluar, date_interval_create_from_date_string("1 day"));
           
+      }else{
+          date_add($fecha_evaluar, date_interval_create_from_date_string("1 day"));
       }
+      $d++;
         }
         ?>
 
@@ -588,7 +626,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
         
         <!-- Modal body -->
         <div class="modal-body">
-          Por favor registre-se ou faça o Entrar?
+          Por favor logueate para reservar
         </div>
         
         <!-- Modal footer -->
