@@ -84,7 +84,8 @@ session_start();
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
 <script src="js/jquery-3.6.0.js"></script>
 
 <script>
@@ -130,7 +131,20 @@ session_start();
 
 <!--<p>mensajes <a href="app_mensajes_profe.php">ver</a><?// echo "(".$cant_mensajes.")";?></p>-->
 <div class="container">
-<h2><a href="asiste.php" class="btn btn-info btn-sm">TOMAR ASISTENCIA</a></h2><br>
+    <?php
+    if ($_SESSION['autentificado'] == "SI" || $_SESSION['tipo_usuario_act'] == 6  )
+{
+    ?>
+    <h2><a href="asiste.php" class="btn btn-info btn-sm">TOMAR ASISTENCIA</a></h2><br>
+    <?php
+}
+
+
+
+
+?>
+    
+
 <span class="badge badge-pill badge-light">ver cliente</span>
 <form action="app_vercliente.php" method="post" enctype="multipart/form-data">
 <div class="form-row">
@@ -150,7 +164,7 @@ session_start();
 <div class="container">
 
 <?php
-  $paquetes=mysqli_query($mysqli,"SELECT productos.cod as cp, productos.nombre as np, costo, stock, descripcion, margen, marcas.nombre as nm, cantp, duracion FROM productos, categorias, marcas WHERE productos.id_marca=marcas.id_marca AND cod_cat=categorias.cod AND cod_cat=11 AND activo='S' ORDER BY productos.cantp DESC");
+  $paquetes=mysqli_query($mysqli,"SELECT productos.cod as cp, productos.nombre as np, costo,cod_cat, stock, descripcion, margen, marcas.nombre as nm, cantp, duracion FROM productos, categorias, marcas WHERE productos.id_marca=marcas.id_marca AND cod_cat=categorias.cod AND (cod_cat=11 OR  cod_cat=8) AND activo='S' ORDER BY productos.cantp DESC");
   //ORDER BY productos.cantp, marcas.nombre" CAMBÍE--------------------------------
   
   //precio base, valor de 1 punto
@@ -183,6 +197,8 @@ session_start();
 		$clase_descuento="badge-danger";
 	  }
 	}
+	
+
 ?>
 
     <div class="card text-dark bg-light mb-3 caja_precio">
@@ -199,7 +215,9 @@ session_start();
 			<span class="badge badge-info"><?php echo "El punto te queda en $ ".calcular_dto($paquete['costo'], $paquete['cantp']);?></span>
 
 			<p class="card-text"><?php echo "Duración ".$paquete['duracion']." días";?></p>
+			<p style="color:#FB051C;font-weight:bold"><?php if($paquete['cod_cat'] == 8){ echo 'Auto Reserva '; }else{ echo '.'; }?></p>
 			<br><br>
+			
 			<a href="app_profeventas.php?cp=<?php echo $paquete['cp'];?>" class="btn btn-success">Cargar</a>
         </div>
     </div>

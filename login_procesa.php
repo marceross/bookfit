@@ -75,6 +75,9 @@ else
 {	
 	$_SESSION['autentificado']="SI";
 	$_SESSION['usuario_act']=$datos_usuario['dni'];	
+	
+	header("Location:app_actividades.php");
+	/*
 	if($_SESSION['procedencia']=='app_reserva.php')
 	{
 		$_SESSION['procedencia']='';		
@@ -84,6 +87,7 @@ else
 	{
 		header("Location:app_actividades.php");
 	}
+	*/
 }
 ?>
 

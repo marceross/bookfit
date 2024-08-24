@@ -1,0 +1,49 @@
+[22-Aug-2024 16:56:04 America/Argentina/Cordoba] PHP Warning:  Undefined array key "usuario_act" in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_profe.php on line 9
+[22-Aug-2024 16:56:04 America/Argentina/Cordoba] PHP Warning:  Undefined array key "tipo_usuario_act" in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_profe.php on line 135
+[22-Aug-2024 19:04:42 America/Argentina/Cordoba] PHP Warning:  Undefined array key "usuario_act" in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_profe.php on line 9
+[22-Aug-2024 19:04:42 America/Argentina/Cordoba] PHP Warning:  Undefined array key "tipo_usuario_act" in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_profe.php on line 135
+[23-Aug-2024 17:11:03 America/Argentina/Cordoba] PHP Warning:  Undefined array key "usuario_act" in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 10
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 18
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 59
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 59
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 60
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 70
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 74
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 78
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 82
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 87
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 91
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 97
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 102
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 116
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 140
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 160
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 177
+[23-Aug-2024 17:13:32 America/Argentina/Cordoba] PHP Warning:  Trying to access array offset on null in /home/w2vrj3tv2owk/public_html/lokales.com.ar/app_vercliente.php on line 199
+[24-Aug-2024 10:57:38 America/Argentina/Cordoba] PHP Warning:  Undefined array key "usuario" in /home/w2vrj3tv2owk/public_html/lokales.com.ar/login_procesa.php on line 15
+[24-Aug-2024 10:57:38 America/Argentina/Cordoba] PHP Warning:  Undefined array key "clave" in /home/w2vrj3tv2owk/public_html/lokales.com.ar/login_procesa.php on line 16
