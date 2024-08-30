@@ -7,6 +7,10 @@ unset($_SESSION['dia']);
 unset($_SESSION['mes']);
 unset($_SESSION['anio']);
 unset($_SESSION['id_proveedor']);
+
+
+
+
 header("Location: local_inicio.php");	
 ?>
 <head>

@@ -7,6 +7,24 @@ include("biblioteca.php");
 $array_fecha=getdate();
 $fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
 //$dni=$_GET['dni'];
+
+
+    if(isset($_SESSION['usuario_act'])){
+	    
+	}else{
+	    header("Location:local_inicio.php");
+	    exit();
+	}
+	
+	 if(isset($_POST['dni_buscado'])){
+	    
+	}else{
+	    header("Location:local_inicio.php");
+	    exit();
+	}
+	
+	
+
 $id_usuario=$_SESSION['usuario_act'];
 $dni=$_POST['dni_buscado'];
 $reg=mysqli_query($mysqli,"SELECT * FROM registrados WHERE dni='$dni'");

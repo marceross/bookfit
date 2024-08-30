@@ -12,6 +12,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 include("conex.php");
 date_default_timezone_set('America/Argentina/Cordoba'); // poner en todos los archivos
+
+if(isset($_POST['usuario'])){
+    
+}else{
+    header("Location:login.php");
+    exit();
+}
+
 $usuario=str_replace("-","",$_POST['usuario']);
 $clave=$_POST['clave'];
 $r=mysqli_query($mysqli,"SELECT * FROM registrados WHERE dni='$usuario' AND clave='$clave'");

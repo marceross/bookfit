@@ -6,6 +6,13 @@ session_start();
 	$array_fecha=getdate();
 	$fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
 	$hora=strval($array_fecha['hours']).":".strval($array_fecha['minutes']);
+	
+	if(isset($_SESSION['usuario_act'])){
+	    
+	}else{
+	    header("Location:local_inicio.php");
+	}
+	
 	$id_usuario=$_SESSION['usuario_act'];
 	//$mensajes=mysqli_query($mysqli,"SELECT * FROM mensajes_internos, mensajes_internos_destinatarios WHERE confirmado<>'S' AND mensajes_internos.id_mensaje=mensajes_internos_destinatarios.id_mensaje AND mensajes_internos_destinatarios.id_usuario='$id_usuario'");
 	//$cant_mensajes=mysqli_num_rows($mensajes);

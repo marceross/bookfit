@@ -10,6 +10,13 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+if(isset($_GET['act_seleccionada'])){
+    
+}else{
+     header("Location:app_actividades.php");
+}
+
+
 $_SESSION['actividad_sel']=$id_actividad= $_GET['act_seleccionada'];
 $_SESSION['procedencia']='app_reserva.php';
 $actividad=mysqli_query($mysqli,"SELECT * FROM actividad WHERE id_actividad='$id_actividad'");
@@ -403,13 +410,7 @@ function buscar_cliente(dni)// busca el cliente de la ventana modal
       {
           
           
-          //date_add($fecha_evaluar,date_interval_create_from_date_string("$d days"));
           
-          
-          
-          //echo date_format($fecha_evaluar,"Y-m-d").'<br>';
-
-//print_r($fecha_evaluar) ;
           
           $numero_dia_mes =date('d', strtotime(date_format($fecha_evaluar,"Y-m-d"))); 
           $fecha_clase =date_format($fecha_evaluar,"Y-m-d");

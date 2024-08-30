@@ -9,11 +9,7 @@ $array_fecha=getdate();
 $fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
 $hora4=date("H:i:s");
 
-if ($_SESSION['autentificado'] != "SI" || $_SESSION['tipo_usuario_act'] != 3 )
-{
-    header("Location:local_inicio.php");
-    die();
-}
+
 
 if (isset($_POST['ac']))
 {
@@ -132,12 +128,24 @@ else
         <link href="http://www.lokales.com.ar/favico.ico" rel="shortcut icon">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">    
         <script>
+        
+        <?php 
+        
+        if(isset($_GET['idhorario'])){
+            $idhorario_i = $_GET['idhorario'];
+        }else{
+            $idhorario_i = '';
+        }
+        
+            
+        ?>
+        
         function buscar_cliente(dni)
 	    {	
 		//alert("DNI: "+dni);
             $.ajax({			
                 url: 'buscar_alumno.php',
-                data: 'dni_cli=' + dni + '&idhorario=' + <?php echo $_GET['idhorario'];?>,
+                data: 'dni_cli=' + dni + '&idhorario=' + <?php echo $idhorario_i;?>,
                 success: function(resp) {				
                     if(resp!='no encontrado')
                     {					
@@ -178,7 +186,7 @@ else
             }
             else
             {
-                location.href='asistencia_confirma.php?idhorario=<?php echo $_GET['idhorario'];?>';
+                location.href='asistencia_confirma.php?idhorario=<?php echo $idhorario_i;?>';
             }
         }
 
@@ -270,7 +278,7 @@ else
                         <thead>
                             <tr>
                                 <td>
-                                <input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<?php echo $dni_nuevo;?>">
+                                <input type="text" name="dni_buscado" id="dni_buscado" class="form-control" required value="<?php //echo $dni_nuevo;?>">
                                 <button type="button" onclick="buscar_cliente(dni_buscado.value)" class="badge badge-info form-control">Buscar</button>
                                 </td>
                             </tr>

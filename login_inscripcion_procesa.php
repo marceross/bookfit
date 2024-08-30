@@ -139,12 +139,7 @@ if($error==1) //clave coincide?
 
 if($error==5) //formato de mail incorrecto
 {
-?>
-	<h2><?echo "El e-mail ingresado no es válido"?></h2><br><br>
-	<input type=button class="btn btn-primary" value=Atrás onclick=history.back()>
-	<?php exit();?>
-<?php
-	//<input type=button value=Atrás onclick=history.back() style=font-family: Verdana; font-size: 8 pt>
+    header("Location:login_inscripcion.php");
 }
 
 if($error==6) //formato de dni incorrecto
@@ -215,7 +210,21 @@ else
 }
 
 
+if(isset($ruta)){
+    
+}else{
+    $ruta = '';
+}
 
+ $clientes=mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni=".$dni);
+ if(mysqli_num_rows($clientes)==1)
+  {
+      header("Location:login_inscripcion.php");
+      
+  }
+
+
+//echo "INSERT INTO registrados(nombre,apellido,dni,mail,nacimiento,comentario,foto,fecha,celular,clave)VALUES ('$nom','$ape','$dni','$mai','$nac','$com','$ruta','$fecha','$tel','$cla')";
 
 if(mysqli_query($mysqli,"INSERT INTO registrados(nombre,apellido,dni,mail,nacimiento,comentario,foto,fecha,celular,clave)VALUES ('$nom','$ape','$dni','$mai','$nac','$com','$ruta','$fecha','$tel','$cla')"))
 	{
@@ -232,9 +241,14 @@ if(mysqli_query($mysqli,"INSERT INTO registrados(nombre,apellido,dni,mail,nacimi
 		<?php
 		if(isset($_GET['invitado']))
 		{
+		    
+		    
 			$_SESSION['invitacion']=1;
 			header("Location:app_reserva_procesa.php");
 			exit();
+		
+			
+				//header("Location:app_actividades.php?invitado_dni=".$dni."&invitado_nom=".$nom."&invitado_mai=".$mai."&invitado_cla=".$cla);
 		}
 		if(isset($_GET['venta']))
 			{

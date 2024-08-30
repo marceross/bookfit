@@ -35,12 +35,11 @@ if(isset($_SESSION['usuario_act']))
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="estilo.css" rel="stylesheet" type="text/css">
 <link href="https://lokales.com.ar/favico.ico" rel="shortcut icon">
-<script src="js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="js/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="js/jquery-3.6.0.js"></script>
- <script src="js/jquery.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+
+<link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
+
+ <script src="js/jquery-3.2.1.min.js"></script>
+
 
 <script>
 function buscar_cliente(dni)
