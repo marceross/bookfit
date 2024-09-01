@@ -39,6 +39,8 @@ if(isset($_SESSION['usuario_act']))
 <link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
 
  <script src="js/jquery-3.2.1.min.js"></script>
+ <link href="js/lobibox.css" rel="stylesheet" type="text/css" />
+<script src="js/lobibox.min.js"></script>
 
 
 <script>
@@ -86,7 +88,7 @@ function buscar_cliente(dni)
     </header>
 
   <div class="container" style="margin-top:40px;">
-    <form action="login_inscripcion_procesa.php" method="post" class="m_query" enctype="multipart/form-data" name="form1" style="width:90%;margin:0 auto;box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);padding:20px;">
+    <form action="login_inscripcion_procesa.php" method="post" id="register_form" class="m_query" enctype="multipart/form-data" name="form1" style="width:90%;margin:0 auto;box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);padding:20px;">
         <div class="row">
           <div class="form-group col-sm-6">
             <label for="dni" class="form-label">Dni  <span class="badge badge-warning">*</span> (obligatorio)</label>
@@ -126,8 +128,8 @@ function buscar_cliente(dni)
 
          
             <div class="form-group col-sm-4">
-              <label for="text">Email <span class="badge badge-warning">*</span></label>
-              <!--<input name="mai" type="text" class="form-control" id="mai" value="<? echo $re['mail'];?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>-->
+              <label for="mai">Email <span class="badge badge-warning">*</span></label>
+            
               <input type="email" class="form-control" id="mai" name="mai" placeholder="Email" required>
             </div>
             <div class="form-group col-sm-4">
@@ -135,11 +137,11 @@ function buscar_cliente(dni)
               <input type="password" maxlength="15" class="form-control" id="cla" name="cla" placeholder="Clave" required>
             </div>
             <div class="form-group col-sm-4">
-              <label for="clave2">Clave <span class="badge badge-warning">*</span></label>
+              <label for="cl2">Repetir Clave <span class="badge badge-warning">*</span></label>
               <input type="password" maxlength="15" class="form-control" id="cl2" name="cla2" placeholder="Repetir clave" required>
             </div>
             <div class="form-group col-sm-12">
-             <button type="submit" class="btn btn-primary">Registrame</button>
+             <button type="button" onclick="registration_form()" class="btn btn-primary">Registrame</button>
              </div>
         </div>
        
@@ -151,6 +153,119 @@ function buscar_cliente(dni)
       
       
     </div>
+    
+        <script>
+            
+            function registration_form() {
+                
+                
+                const email = $('#mai').val();
+                const emailPattern = 
+                /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                const isValid = emailPattern.test(email);
+                
+                
+                var dni = $('#dni').val();
+                var nom = $('#nom').val();
+                var tel = $('#tel').val();
+                
+                var cla = $('#cla').val();
+                var cl2 = $('#cl2').val();
+                
+                
+                
+                if(dni == ''){
+                    Lobibox.notify('error', {
+        					size: 'mini',
+        					rounded: true,
+        					delayIndicator: false,
+        					position: "bottom right",
+        					sound: false, 
+        					msg: 'Please Enter the DNI',
+    					
+    
+    				});
+                }else if(nom == ''){
+                     Lobibox.notify('error', {
+        					size: 'mini',
+        					rounded: true,
+        					delayIndicator: false,
+        					position: "bottom right",
+        					sound: false, 
+        					msg: 'Please Enter the Nombre',
+    					
+    
+    				});
+                }else if(tel == ''){
+                     Lobibox.notify('error', {
+        					size: 'mini',
+        					rounded: true,
+        					delayIndicator: false,
+        					position: "bottom right",
+        					sound: false, 
+        					msg: 'Please Enter the Teléfono',
+    					
+    
+    				});
+                }
+                else if(isValid == false){
+                
+                    Lobibox.notify('error', {
+        					size: 'mini',
+        					rounded: true,
+        					delayIndicator: false,
+        					position: "bottom right",
+        					sound: false, 
+        					msg: 'Please Enter Valid email',
+    					
+    
+    				});
+				
+                }else if(cla == ''){
+                     Lobibox.notify('error', {
+        					size: 'mini',
+        					rounded: true,
+        					delayIndicator: false,
+        					position: "bottom right",
+        					sound: false, 
+        					msg: 'Please Enter the Clave',
+    					
+    
+    				});
+                }else if(cl2 == ''){
+                     Lobibox.notify('error', {
+        					size: 'mini',
+        					rounded: true,
+        					delayIndicator: false,
+        					position: "bottom right",
+        					sound: false, 
+        					msg: 'Please Enter the Repetir Clave',
+    					
+    
+    				});
+                }else if(cl2 != cla){
+                     Lobibox.notify('error', {
+        					size: 'mini',
+        					rounded: true,
+        					delayIndicator: false,
+        					position: "bottom right",
+        					sound: false, 
+        					msg: 'Clave and  Repetir Clave not match',
+    					
+    
+    				});
+                }
+                
+                
+                else{
+				    document.getElementById("register_form").submit();
+                }
+                
+                
+                
+            }
+            
+        </script>
 
 </body>
 </html>

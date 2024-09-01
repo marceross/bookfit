@@ -129,7 +129,7 @@ $fecha=strval($array_fecha['year'])."-".strval($array_fecha['mon'])."-".strval($
 if($error==1) //clave coincide?
 {
 ?>
-	<h2><?echo "Las claves ingresadas no coinciden"?></h2><br><br>
+	<h2><?php echo "Las claves ingresadas no coinciden"?></h2><br><br>
 	<input type=button class="btn btn-primary" value=Atrás onclick=history.back()>
 	<?exit();?>
 <?php
@@ -257,8 +257,8 @@ if(mysqli_query($mysqli,"INSERT INTO registrados(nombre,apellido,dni,mail,nacimi
 	}
 	else
 	{?>
-    	<h2><?php echo "EL USUARIO YA EXISTE" //echo mysqli_error($mysqli);?></h2><br>
-		<h5><?php echo "Comunicate con Lokales para informar un mail y recuperar tu usuario"//echo mysqli_error($mysqli);?></h5><br>
+    	<h2><?php echo "EL USUARIO YA EXISTE" ?></h2><br>
+		<h5><?php echo "Comunicate con Lokales para informar un mail y recuperar tu usuario"?></h5><br>
 		<input type=button class="btn btn-primary" value=Atrás onclick=history.back()>
 	<?php
 	}
@@ -266,6 +266,5 @@ if(mysqli_query($mysqli,"INSERT INTO registrados(nombre,apellido,dni,mail,nacimi
 </div>
 </div>
 
-<!--<p><a class="badge badge-primary" href="login_inscripcion.html">Volver</a></p>-->
 </body>
 </html>
