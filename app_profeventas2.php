@@ -23,6 +23,8 @@ session_start();
 			$error=1;
 		}
 	}
+	
+	
 
 	if($error==0)
 	{
@@ -34,14 +36,19 @@ session_start();
 		$hora4=date("H:i:s",time());
 		
 		if(isset($_SESSION['pago'])){
-		$id_forma=$_SESSION['pago'];
+		    
+		    $id_forma=$_SESSION['pago'];
+		
+		    
 		}else{
+		    
 		    $id_forma = 1;
 		}
 		
 		//--------------------------------------------------------------------
 		//Creamos el registro en la tabla ventas
 		//if(mysqli_query($mysqli,"INSERT INTO ventas (id_usuario, fecha, hora, id_forma, descuento, recargo, efectivo, id_registrados) VALUES ('$id_usuario', '$fecha', '$hora4', '$id_forma', '$descuento', '$recargo', '$efectivo', '$dni_registrado')"))
+		
 		if(mysqli_query($mysqli,"INSERT INTO ventas (id_usuario, fecha, hora, id_forma, id_registrados) VALUES ('$id_usuario', '$fecha', '$hora4', '$id_forma', '$dni_registrado')"))
 		{
 			$id_venta=mysqli_insert_id($mysqli);
@@ -116,10 +123,87 @@ session_start();
 					
 					if(!mysqli_query($mysqli,"UPDATE registrados SET vencimiento='$vencimiento', credito='$credito_nuevo' WHERE dni='$dni_registrado'"))
 					{
+					    
 						echo mysqli_error($mysqli);
 						exit();
 					}
+                    
+                    
+                        
+					    //if($registrado['reserva_auto'] == 1){
+					    
+					    if($producto['cod_cat'] == 8){
+					        
+					        mysqli_query($mysqli,"UPDATE registrados SET reserva_auto=1 WHERE dni='$dni_registrado'");
+					        
+					        //mysqli_query($mysqli,"UPDATE registrados SET reserva_auto=1 WHERE dni='$dni_registrado'");
+					        
+					        $eligibleUsersQuery = mysqli_query($mysqli, "SELECT * FROM registrados WHERE dni='$dni_registrado'");
+					        
+					        
+					        while ($user = mysqli_fetch_assoc($eligibleUsersQuery)) {
+    // Check if the user made reservations last week
+    $lastWeek = strtotime('-1 week');
+    $reservationsLastWeekQuery = mysqli_query($mysqli, "SELECT * FROM actividad_reservas WHERE registrados_dni='" . $user['dni'] . "' AND fecha >= '" . date('Y-m-d', $lastWeek) . "'");
 
+    if (mysqli_num_rows($reservationsLastWeekQuery) > 0) {
+        // User made reservations last week, automate reservations for the same time slots
+
+        // Get the time slots reserved by the user last week (assuming it's the same time slots for demonstration)
+        $timeSlotsLastWeekQuery = mysqli_query($mysqli, "SELECT DISTINCT ahr.actividad_horarios_id_horario, ahr.fecha, ah.costo
+            FROM actividad_reservas ahr
+            JOIN actividad_horarios ah ON ahr.actividad_horarios_id_horario = ah.id_horario
+            WHERE ahr.registrados_dni='" . $user['dni'] . "' AND ahr.fecha >= '" . date('Y-m-d', $lastWeek) . "'");
+        
+        while ($row = mysqli_fetch_assoc($timeSlotsLastWeekQuery)) {
+            $id_horario = $row['actividad_horarios_id_horario'];
+            $fechaLastWeek = new DateTime($row['fecha']);
+            $fechaLastWeek->modify('+1 week');
+            $fecha = $fechaLastWeek->format('Y-m-d');
+            $costo = $row['costo'];
+
+            // Check if the id_horario and fecha combination exists in actividad_horarios_susp
+            $isSuspendedQuery = mysqli_query($mysqli, "SELECT * FROM actividad_horarios_susp WHERE actividad_horarios_id_horario2='" . $id_horario . "' AND fecha='" . $fecha . "'");
+
+            if (mysqli_num_rows($isSuspendedQuery) == 0) {
+                // Check if the user has enough credits for the reservation
+                if ($user['credito'] >= $costo) {
+                    
+                    $if_check = "SELECT * FROM actividad_reservas WHERE registrados_dni='" . $user['dni'] . "' AND fecha='" . $fecha . "' AND actividad_horarios_id_horario='".$id_horario."'";
+                    //echo $if_check;
+                    $if_check = mysqli_query($mysqli,$if_check);
+                    
+                    if (mysqli_num_rows($if_check) == 0) {
+                    
+                   
+                    
+                    // Insert reservation record
+                    mysqli_query($mysqli, "INSERT INTO actividad_reservas (registrados_dni, fecha, actividad_horarios_id_horario) VALUES ('" . $user['dni'] . "', '" . $fecha . "', '" . $id_horario . "')");
+
+                    // Deduct the cost from the user's credits
+                    mysqli_query($mysqli, "UPDATE registrados SET credito = credito - " . $costo . " WHERE dni = '" . $user['dni'] . "'");
+                    
+                    
+
+                    //echo "Reservation made for User: " . $user['nombre'] . ", DNI: " . $user['dni'] . " for the same time slot as last week<br>";
+                    }else{
+                        //echo 'Already Reservation maded ';
+                    }
+                    
+                } else {
+                    //echo "Insufficient credits for User: " . $user['nombre'] . ", DNI: " . $user['dni'] . " for the same time slot as last week<br>";
+                }
+            } else {
+                //echo "Reservation not made for User: " . $user['nombre'] . ", DNI: " . $user['dni'] . " for the same time slot as last week due to suspension<br>";
+            }
+        }
+    }
+}
+					        
+					        
+					    }
+					    
+		//}
 
 					//Borro la tabla temporal
 					//mysqli_query($mysqli,"DELETE FROM ventas_temporal");
