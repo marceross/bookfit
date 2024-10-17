@@ -19,8 +19,8 @@ if(mysqli_num_rows($r)==0)
 else
 {	
 	$_SESSION['autentificado']="SI";
-	$_SESSION['usuario_act']= '';	
-	$_SESSION['tipo_usuario_act']=$datos_usuario['id_usuario'];
+	$_SESSION['usuario_act']=$datos_usuario['id_usuario'];	
+	$_SESSION['tipo_usuario_act']=$datos_usuario['id_tipo_usuario'];
 	//Obtiene la fecha y hora
 	$array_fecha=getdate();
 	$fecha=strval($array_fecha['year']) ."/".strval($array_fecha['mon'])."/".strval($array_fecha['mday']);
