@@ -8,6 +8,11 @@ include("local_controla.php"); // Controla quién está conectado y provee el ID
 // Obtenemos el ID del usuario actual desde la sesión
 $id_usuario = $_SESSION['usuario_act'];
 
+// Obtener puntos actuales del usuario logueado
+$result_user = mysqli_query($mysqli, "SELECT puntos FROM usuarios WHERE id_usuario='$id_usuario'");
+$row_user = mysqli_fetch_assoc($result_user);
+$puntos_actuales = $row_user['puntos'];
+
 // Función para transferir puntos entre usuarios en la tabla 'usuarios'
 function transferPuntosUsuarios($from_id_usuario, $to_id_usuario, $puntos) {
     global $mysqli;
@@ -18,6 +23,10 @@ function transferPuntosUsuarios($from_id_usuario, $to_id_usuario, $puntos) {
     
     if (mysqli_num_rows($result_from) == 1 && mysqli_num_rows($result_to) == 1) {
         $row_from = mysqli_fetch_assoc($result_from);
+        
+        if ($from_id_usuario == $to_id_usuario) {
+            return "No puedes mandarte puntos a ti mismo.";
+        }
         
         if ($row_from['puntos'] >= $puntos) {
             // Restar puntos al usuario que envía
@@ -50,7 +59,7 @@ function transferPuntosToRegistrados($from_id_usuario, $to_dni, $puntos) {
             // Restar puntos al usuario que envía
             mysqli_query($mysqli, "UPDATE usuarios SET puntos = puntos - $puntos WHERE id_usuario='$from_id_usuario'");
             
-            // Sumar puntos al registrado (se debe tener una columna 'puntos' en la tabla 'registrados')
+            // Sumar puntos al registrado (debe tener una columna 'credito' en la tabla 'registrados')
             mysqli_query($mysqli, "UPDATE registrados SET credito = credito + $puntos WHERE dni='$to_dni'");
             
             return "Transferencia exitosa: $puntos puntos transferidos de usuario $from_id_usuario a registrado con DNI $to_dni.";
@@ -68,7 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $to_dni = $_POST['to_dni'];
     $puntos = $_POST['puntos'];
 
-    if (!empty($to_id_usuario)) {
+    // Condición si ambos campos están llenos
+    if (!empty($to_id_usuario) && !empty($to_dni)) {
+        echo "Por favor, completa solo un campo (Usuario ID o DNI) para realizar la transferencia.";
+    } elseif (!empty($to_id_usuario)) {
         // Transferir puntos entre usuarios
         echo transferPuntosUsuarios($id_usuario, $to_id_usuario, $puntos);
     } elseif (!empty($to_dni)) {
@@ -88,6 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <h1>Transferir Puntos</h1>
+    <p>Puntos actuales: <?php echo $puntos_actuales; ?></p>
     <form method="POST" action="">
         <label for="to_id_usuario">Para Usuario ID (opcional):</label>
         <input type="text" name="to_id_usuario"><br><br>
