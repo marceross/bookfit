@@ -93,32 +93,138 @@ if (isset($_GET['mensaje'])) {
 
 ?>
 
-<!-- HTML Formulario para Transferir Puntos -->
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="js/bootstrap.min.css"  crossorigin="anonymous">
     <title>Transferir Puntos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+        }
+
+        .form-group input[type="number"] {
+            width: 50%;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .form-group input[type="number"] {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Transferir Puntos</h1>
-    
-    <?php if (isset($mensaje)) : ?>
-        <p><?php echo $mensaje; ?></p>
-    <?php endif; ?>
-    
-    <p>Puntos actuales: <?php echo $puntos_actuales; ?></p>
-    
-    <form method="POST" action="">
-        <label for="to_id_usuario">Para Usuario ID (opcional):</label>
-        <input type="text" name="to_id_usuario"><br><br>
+    <div class="container">
+        <h1>Transferir Puntos</h1>
+        
+        <?php if (isset($mensaje)) : ?>
+            <p><?php echo $mensaje; ?></p>
+        <?php endif; ?>
+        
+        <p>Puntos actuales: <?php echo $puntos_actuales; ?></p>
+        
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="to_id_usuario">Para Usuario ID (opcional):</label>
+                <input type="text" name="to_id_usuario">
+            </div>
 
-        <label for="to_dni">Para DNI (opcional):</label>
-        <input type="text" name="to_dni"><br><br>
+            <div class="form-group">
+                <label for="to_dni">Para DNI (opcional):</label>
+                <input type="text" name="to_dni">
+            </div>
 
-        <label for="puntos">Puntos a Transferir:</label>
-        <input type="number" name="puntos" required><br><br>
+            <div class="form-group">
+                <label for="puntos">Puntos a Transferir:</label>
+                <input type="number" name="puntos" required>
+            </div>
 
-        <input type="submit" value="Transferir">
-    </form>
+            <div class="form-group">
+                <input type="submit" value="Transferir">
+                <h6><a href="app_profe.php" class="badge badge-success">volver</a></h6><br>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
+
