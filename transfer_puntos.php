@@ -44,9 +44,21 @@ function transferPuntosUsuarios($from_id_usuario, $to_id_usuario, $puntos, &$pun
 function transferPuntosToRegistrados($from_id_usuario, $to_dni, $puntos, &$puntos_actuales) {
     global $mysqli;
 
-    $result_to = mysqli_query($mysqli, "SELECT dni FROM registrados WHERE dni='$to_dni'");
+    $result_to = mysqli_query($mysqli, "SELECT dni, vencimiento FROM registrados WHERE dni='$to_dni'");
     
     if (mysqli_num_rows($result_to) == 1) {
+        $row_to = mysqli_fetch_assoc($result_to);
+        $vencimiento = $row_to['vencimiento'];
+
+        // Convertir la fecha de vencimiento a formato timestamp
+        $vencimiento_timestamp = strtotime($vencimiento);
+        $fecha_actual_timestamp = time(); // Timestamp actual
+
+        // Verificar si la fecha de vencimiento ha pasado
+        if ($vencimiento_timestamp < $fecha_actual_timestamp) {
+            return "No se puede transferir puntos. La cuenta del registrado con DNI $to_dni ha vencido.";
+        }
+
         if ($puntos_actuales >= $puntos) {
             // Restar puntos al usuario que envía
             mysqli_query($mysqli, "UPDATE usuarios SET puntos = puntos - $puntos WHERE id_usuario='$from_id_usuario'");
