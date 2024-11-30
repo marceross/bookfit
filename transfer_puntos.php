@@ -40,6 +40,53 @@ function transferPuntosUsuarios($from_id_usuario, $to_id_usuario, $puntos, &$pun
     }
 }
 
+// Función para transferir puntos desde 'usuarios' hacia 'registrados' Si un registrado tiene vencimiento anterior al día actual, este será ajustado para que sea un día después del día actual. Si el vencimiento ya está en el futuro, no se modifica.
+function transferPuntosToRegistrados($from_id_usuario, $to_dni, $puntos, &$puntos_actuales) {
+    global $mysqli;
+
+    if ($puntos <= 0) {
+        return "Los puntos a transferir deben ser mayores a 0.";
+    }
+
+    $result_to = mysqli_query($mysqli, "SELECT dni, vencimiento FROM registrados WHERE dni='$to_dni'");
+    
+    if (mysqli_num_rows($result_to) == 1) {
+        $row_to = mysqli_fetch_assoc($result_to);
+        $vencimiento = $row_to['vencimiento'];
+
+        // Convertir la fecha de vencimiento a timestamp
+        $vencimiento_timestamp = strtotime($vencimiento);
+        $fecha_actual_timestamp = time(); // Timestamp actual
+
+        if ($vencimiento_timestamp < $fecha_actual_timestamp) {
+            // Fecha de vencimiento ha pasado, sumar un día al actual
+            $nuevo_vencimiento = date('Y-m-d', strtotime('+1 day', $fecha_actual_timestamp));
+        } else {
+            // Fecha de vencimiento es válida, mantenerla
+            $nuevo_vencimiento = date('Y-m-d', $vencimiento_timestamp);
+        }
+
+        if ($puntos_actuales >= $puntos) {
+            // Restar puntos al usuario que envía
+            mysqli_query($mysqli, "UPDATE usuarios SET puntos = puntos - $puntos WHERE id_usuario='$from_id_usuario'");
+            $puntos_actuales -= $puntos;  // Actualizar la variable local
+            
+            // Sumar puntos al registrado
+            mysqli_query($mysqli, "UPDATE registrados SET credito = credito + $puntos, vencimiento = '$nuevo_vencimiento' WHERE dni='$to_dni'");
+            
+            return "Transferencia exitosa: $puntos puntos transferidos de usuario $from_id_usuario a registrado con DNI $to_dni. Nuevo vencimiento: $nuevo_vencimiento.";
+        } else {
+            return "Puntos insuficientes.";
+        }
+    } else {
+        return "Registrado no encontrado.";
+    }
+}
+
+
+
+
+/*
 // Función para transferir puntos desde 'usuarios' hacia 'registrados'
 function transferPuntosToRegistrados($from_id_usuario, $to_dni, $puntos, &$puntos_actuales) {
     global $mysqli;
@@ -75,6 +122,7 @@ function transferPuntosToRegistrados($from_id_usuario, $to_dni, $puntos, &$punto
         return "Registrado no encontrado.";
     }
 }
+*/
 
 // Procesar formulario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -102,7 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (isset($_GET['mensaje'])) {
     $mensaje = urldecode($_GET['mensaje']);
 }
-
 ?>
 
 <!DOCTYPE html>
