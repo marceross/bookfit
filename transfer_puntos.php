@@ -74,7 +74,10 @@ function transferPuntosToRegistrados($from_id_usuario, $to_dni, $puntos, &$punto
             // Sumar puntos al registrado
             mysqli_query($mysqli, "UPDATE registrados SET credito = credito + $puntos, vencimiento = '$nuevo_vencimiento' WHERE dni='$to_dni'");
             
-            return "Transferencia exitosa: $puntos puntos transferidos de usuario $from_id_usuario a registrado con DNI $to_dni. Nuevo vencimiento: $nuevo_vencimiento.";
+            // Convertir nuevo vencimiento a formato DD/MM/YYYY para mostrar en el mensaje
+            $nuevo_vencimiento_latin = date('d/m/Y', strtotime($nuevo_vencimiento));
+            
+            return "Transferencia exitosa: $puntos puntos transferidos de usuario $from_id_usuario a registrado con DNI $to_dni. Nuevo vencimiento: $nuevo_vencimiento_latin.";
         } else {
             return "Puntos insuficientes.";
         }
@@ -82,6 +85,7 @@ function transferPuntosToRegistrados($from_id_usuario, $to_dni, $puntos, &$punto
         return "Registrado no encontrado.";
     }
 }
+
 
 
 
